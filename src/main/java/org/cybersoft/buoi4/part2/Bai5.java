@@ -1,4 +1,4 @@
-package org.cybersoft.buoi4;
+package org.cybersoft.buoi4.part2;
 
 import java.text.DecimalFormat;
 import java.util.Scanner;

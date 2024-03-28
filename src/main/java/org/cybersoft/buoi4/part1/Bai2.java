@@ -1,4 +1,4 @@
-package org.cybersoft.buoi4;
+package org.cybersoft.buoi4.part1;
 
 import java.util.Scanner;
 
