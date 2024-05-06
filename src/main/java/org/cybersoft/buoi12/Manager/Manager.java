@@ -35,7 +35,7 @@ public class Manager extends Employee implements IManager {
     }
 
     @Override
-    public void nhap(Scanner scanner, int id) {
+    public void input(Scanner scanner, int id) {
         System.out.println("Vui lòng nhập vào tên quản lý: ");
         scanner.nextLine();
         this.setName(scanner.nextLine());

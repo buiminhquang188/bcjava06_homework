@@ -43,7 +43,7 @@ public class Employee implements IEmployee {
     }
 
     @Override
-    public void nhap(Scanner scanner, int id) {
+    public void input(Scanner scanner, int id) {
         System.out.println("Vui lòng nhập vào tên nhân viên: ");
         scanner.nextLine();
         this.setName(scanner.nextLine());
@@ -57,7 +57,7 @@ public class Employee implements IEmployee {
     }
 
     @Override
-    public void xuat() {
+    public void print() {
         System.out.println("ID: " + this.getId());
         System.out.println("Tên nhân viên: " + this.getName());
         System.out.println("SĐT: " + this.getPhoneNumber());

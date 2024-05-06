@@ -8,15 +8,15 @@ import java.util.List;
 import java.util.Scanner;
 
 public interface ICompany {
-    void nhapThongTinCongty(Scanner scanner);
+    void inputCompany(Scanner scanner);
 
-    void xuatThongTinCongTy();
+    void printCompany();
 
-    void nhapThongTinNhanVien(Scanner scanner, int id);
+    void inputEmployee(Scanner scanner, int id);
 
-    void nhapThongTinQuanLy(Scanner scanner, int id);
+    void inputManager(Scanner scanner, int id);
 
-    void nhapThongTinGiamDoc(Scanner scanner, int id);
+    void inputDirector(Scanner scanner, int id);
 
     void printAllEmployee(List<Employee> employees);
 

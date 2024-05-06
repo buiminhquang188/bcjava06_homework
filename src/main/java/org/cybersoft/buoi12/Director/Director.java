@@ -20,7 +20,7 @@ public class Director extends Employee implements IDirector {
     }
 
     @Override
-    public void nhap(Scanner scanner, int id) {
+    public void input(Scanner scanner, int id) {
         System.out.println("Vui lòng nhập vào tên giám đốc: ");
         scanner.nextLine();
         this.setName(scanner.nextLine());

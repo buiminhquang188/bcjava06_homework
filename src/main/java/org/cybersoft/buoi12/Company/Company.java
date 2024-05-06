@@ -31,7 +31,7 @@ public class Company implements ICompany {
     }
 
     @Override
-    public void nhapThongTinCongty(Scanner scanner) {
+    public void inputCompany(Scanner scanner) {
         System.out.println("Vui lòng nhập vào tên công ty: ");
         scanner.nextLine();
         this.name = scanner.nextLine();
@@ -42,7 +42,7 @@ public class Company implements ICompany {
     }
 
     @Override
-    public void xuatThongTinCongTy() {
+    public void printCompany() {
         System.out.println("=========================================================");
         System.out.println("Tên công ty: " + this.name);
         System.out.println("Mã số thuế: " + this.taxId);
@@ -52,9 +52,9 @@ public class Company implements ICompany {
     }
 
     @Override
-    public void nhapThongTinNhanVien(Scanner scanner, int id) {
+    public void inputEmployee(Scanner scanner, int id) {
         Employee employee = new Employee();
-        employee.nhap(scanner, id);
+        employee.input(scanner, id);
         this.employees.add(employee);
 
         double employeeTotalSalary = employee.getTotalSalary();
@@ -63,9 +63,9 @@ public class Company implements ICompany {
     }
 
     @Override
-    public void nhapThongTinQuanLy(Scanner scanner, int id) {
+    public void inputManager(Scanner scanner, int id) {
         Manager manager = new Manager();
-        manager.nhap(scanner, id);
+        manager.input(scanner, id);
         this.employees.add(manager);
         manager.addEmployeeForManager(scanner, this.employees);
 
@@ -75,9 +75,9 @@ public class Company implements ICompany {
     }
 
     @Override
-    public void nhapThongTinGiamDoc(Scanner scanner, int id) {
+    public void inputDirector(Scanner scanner, int id) {
         Director director = new Director();
-        director.nhap(scanner, id);
+        director.input(scanner, id);
         this.employees.add(director);
 
         double directorTotalSalary = director.getTotalSalary();
@@ -271,7 +271,7 @@ public class Company implements ICompany {
                         .getManagerId() != null) {
                     this.removeEmployeeRefId(i, employeeId);
                 }
-                
+
                 if (this.employees.get(i) instanceof Manager && !(((Manager) this.employees.get(i)).getEmployees()
                         .isEmpty())) {
                     this.removeManagerRefId(i);

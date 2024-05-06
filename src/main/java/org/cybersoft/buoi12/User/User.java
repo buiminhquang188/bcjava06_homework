@@ -196,9 +196,9 @@ public class User {
 
         this.setCompany(new Company());
         this.company
-                .nhapThongTinCongty(scanner);
+                .inputCompany(scanner);
         this.company
-                .xuatThongTinCongTy();
+                .printCompany();
 
         this.company
                 .setEmployees(new ArrayList<>());
@@ -255,13 +255,13 @@ public class User {
 
         switch (userInput) {
             case 1:
-                this.company.nhapThongTinNhanVien(scanner, atomicInteger.getAndIncrement());
+                this.company.inputEmployee(scanner, atomicInteger.getAndIncrement());
                 break;
             case 2:
-                this.company.nhapThongTinQuanLy(scanner, atomicInteger.getAndIncrement());
+                this.company.inputManager(scanner, atomicInteger.getAndIncrement());
                 break;
             case 3:
-                this.company.nhapThongTinGiamDoc(scanner, atomicInteger.getAndIncrement());
+                this.company.inputDirector(scanner, atomicInteger.getAndIncrement());
                 break;
             default:
                 return;

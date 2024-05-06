@@ -7,7 +7,7 @@ public interface IEmployee {
 
     void validateWorkDays(int userInput, Scanner scanner);
 
-    void nhap(Scanner scanner, int id);
+    void input(Scanner scanner, int id);
 
-    void xuat();
+    void print();
 }
