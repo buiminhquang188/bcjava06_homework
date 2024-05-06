@@ -36,12 +36,9 @@ public class Director extends Employee implements IDirector {
     }
 
     @Override
-    public Director calcTotalIncome(Director director, double totalSalary) {
-        double salary = this.calcSalary(director.getWorkDays(), director.getSalaryOfOneDay());
-        double totalIncome = salary + (this.shareCapacity / 100) * totalSalary;
-
-        director.setTotalIncome(totalIncome);
-        return director;
+    public Director calcTotalIncome(double revenue, double totalSalary) {
+        this.totalIncome = this.getTotalSalary() + (this.shareCapacity / 100) * (revenue - totalSalary);
+        return this;
     }
 
     private void validateShareCapacity(double userInput, Scanner scanner) {

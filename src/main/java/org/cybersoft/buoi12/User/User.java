@@ -4,6 +4,7 @@ import org.cybersoft.buoi12.Company.Company;
 import org.cybersoft.buoi12.Director.Director;
 import org.cybersoft.buoi12.Employee.Employee;
 import org.cybersoft.buoi12.Manager.Manager;
+import org.cybersoft.buoi12.Utils.Helper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,9 +109,9 @@ public class User {
 
                     if (this.company != null && this.company.getEmployees() != null && !this.company.getEmployees()
                             .isEmpty()) {
-                        this.company.printAllEmployee(this.company.getEmployees());
-                        this.company.printAllManager(this.company.getEmployees());
-                        this.company.printAllDirector(this.company.getEmployees());
+                        this.company.printAllEmployeeRole(this.company.getEmployees());
+                        this.company.printAllManagerRole(this.company.getEmployees());
+                        this.company.printAllDirectorRole(this.company.getEmployees());
                         getUserConfirmExit();
 
                     }
@@ -233,7 +234,7 @@ public class User {
             manager = this.company.promoteEmployeeToManager(userInputIdEmployee);
         }
 
-        manager.addEmployeeToManager(scanner, this.getCompany()
+        manager.addEmployeeForManager(scanner, this.getCompany()
                 .getEmployees());
     }
 
@@ -283,9 +284,9 @@ public class User {
         this.company.printAllEmployee(this.company
                 .getEmployees());
 
-        double totalSalary = this.company.calcAllEmployeeSalary();
+        double totalSalary = this.company.getTotalSalary();
 
-        System.out.println("Tổng lương của công ty: " + totalSalary);
+        System.out.println("Tổng lương của công ty: " + Helper.formatCurrency(totalSalary));
         getUserConfirmExit();
     }
 
@@ -310,7 +311,7 @@ public class User {
             return;
         }
 
-        this.company.printAllEmployee(List.of(manager));
+        this.company.printAllManagerRole(List.of(manager));
         getUserConfirmExit();
     }
 

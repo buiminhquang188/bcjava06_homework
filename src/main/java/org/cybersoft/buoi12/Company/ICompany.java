@@ -20,17 +20,17 @@ public interface ICompany {
 
     void printAllEmployee(List<Employee> employees);
 
-    void printAllManager(List<Employee> managers);
+    void printAllEmployeeRole(List<Employee> employees);
 
-    void printAllDirector(List<Employee> directors);
+    void printAllManagerRole(List<Employee> managers);
+
+    void printAllDirectorRole(List<Employee> directors);
 
     void printAllDirectorTotalIncome(List<Director> directors);
 
-    double calcAllEmployeeSalary();
+    Manager promoteEmployeeToManager(int employeeId);
 
-    Manager promoteEmployeeToManager(Integer employeeId);
-
-    void deleteEmployee(Integer employeeId);
+    void deleteEmployee(int employeeId);
 
     List<Employee> sortEmployeeByNameASC();
 

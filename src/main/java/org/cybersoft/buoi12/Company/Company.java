@@ -4,6 +4,7 @@ import org.cybersoft.buoi12.Director.Director;
 import org.cybersoft.buoi12.Employee.Employee;
 import org.cybersoft.buoi12.Employee.IEmployee;
 import org.cybersoft.buoi12.Manager.Manager;
+import org.cybersoft.buoi12.Utils.Helper;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -37,7 +38,7 @@ public class Company implements ICompany {
         System.out.println("Vui lòng nhập vào mã số thuế: ");
         this.taxId = scanner.nextLine();
         System.out.println("Vui lòng nhập vào doanh thu của công ty");
-        this.revenue = scanner.nextDouble();
+        validationRevenue(scanner.nextDouble(), scanner);
     }
 
     @Override
@@ -45,9 +46,9 @@ public class Company implements ICompany {
         System.out.println("=========================================================");
         System.out.println("Tên công ty: " + this.name);
         System.out.println("Mã số thuế: " + this.taxId);
-        System.out.println("Doanh thu: " + this.revenue);
-        System.out.println("Tổng lương nhân viên: " + this.calcAllEmployeeSalary());
-        System.out.println("Lợi nhuận: " + this.calcCompanyProfit());
+        System.out.println("Doanh thu: " + Helper.formatCurrency(this.revenue));
+        System.out.println("Tổng lương nhân viên: " + Helper.formatCurrency(this.totalSalary));
+        System.out.println("Lợi nhuận: " + Helper.formatCurrency(this.calcCompanyProfit()));
     }
 
     @Override
@@ -55,6 +56,10 @@ public class Company implements ICompany {
         Employee employee = new Employee();
         employee.nhap(scanner, id);
         this.employees.add(employee);
+
+        double employeeTotalSalary = employee.getTotalSalary();
+        this.totalSalary += employeeTotalSalary;
+        this.profit = this.revenue - this.totalSalary;
     }
 
     @Override
@@ -62,7 +67,11 @@ public class Company implements ICompany {
         Manager manager = new Manager();
         manager.nhap(scanner, id);
         this.employees.add(manager);
-        manager.addEmployeeToManager(scanner, this.employees);
+        manager.addEmployeeForManager(scanner, this.employees);
+
+        double managerTotalSalary = manager.getTotalSalary();
+        this.totalSalary += managerTotalSalary;
+        this.profit = this.revenue - this.totalSalary;
     }
 
     @Override
@@ -70,13 +79,19 @@ public class Company implements ICompany {
         Director director = new Director();
         director.nhap(scanner, id);
         this.employees.add(director);
+
+        double directorTotalSalary = director.getTotalSalary();
+        this.totalSalary += directorTotalSalary;
+        this.profit = this.revenue - this.totalSalary;
+
+        director.calcTotalIncome(this.revenue, this.totalSalary);
     }
 
     @Override
     public void printAllEmployee(List<Employee> employees) {
-        String leftAlignFormat = "| %-6s | %-7s | %-11s | %-13s | %-16.2f | %-14.2f | %-11s |%n";
+        String leftAlignFormat = "| %-6s | %-7s | %-11s | %-13s | %-16.2f | %-14s | %-11s |%n";
 
-        System.out.println("=========================================== NHÂN VIÊN =============================================");
+        System.out.println("=========================================== NHÂN VIÊN ==============================================");
         System.out.format("+--------+---------+-------------+---------------+------------------+----------------+-------------+%n");
         System.out.format("| ID     | Tên     | SĐT         | Ngày làm việc | Lương cơ bản     | Tổng lương     | Chức vụ     |%n");
         System.out.format("+--------+---------+-------------+---------------+------------------+----------------+-------------+%n");
@@ -88,13 +103,9 @@ public class Company implements ICompany {
                     employee.getPhoneNumber(),
                     employee.getWorkDays(),
                     employee.getSalaryOfOneDay(),
-                    employee.getTotalSalary(),
+                    Helper.formatCurrency(employee.getTotalSalary()),
                     employee.getClass()
-                            .getSimpleName(),
-                    employee instanceof Manager ? ((Manager) employee).getNumberOfEmployee() : null,
-                    employee instanceof Manager ? ((Manager) employee).getEmployees()
-                            .toString() : null,
-                    employee.getManagerId()
+                            .getSimpleName()
             );
         }
 
@@ -102,67 +113,107 @@ public class Company implements ICompany {
     }
 
     @Override
-    public void printAllManager(List<Employee> employees) {
+    public void printAllEmployeeRole(List<Employee> employees) {
+        String leftAlignFormat = "| %-6s | %-7s | %-11s | %-13s | %-16.2f | %-14s | %-11s |%n";
+
+        System.out.println("=========================================== NHÂN VIÊN ==============================================");
+        System.out.format("+--------+---------+-------------+---------------+------------------+----------------+-------------+%n");
+        System.out.format("| ID     | Tên     | SĐT         | Ngày làm việc | Lương cơ bản     | Tổng lương     | ID Quản Lý  |%n");
+        System.out.format("+--------+---------+-------------+---------------+------------------+----------------+-------------+%n");
+
+        for (Employee employee : employees) {
+            if (!(employee instanceof Manager) && !(employee instanceof Director)) {
+                System.out.format(leftAlignFormat,
+                        employee.getId(),
+                        employee.getName(),
+                        employee.getPhoneNumber(),
+                        employee.getWorkDays(),
+                        employee.getSalaryOfOneDay(),
+                        Helper.formatCurrency(employee.getTotalSalary()),
+                        employee.getManagerId()
+                );
+            }
+        }
+
+        System.out.format("+--------+---------+-------------+---------------+------------------+----------------+-------------+%n");
+    }
+
+    @Override
+    public void printAllManagerRole(List<Employee> employees) {
         List<Manager> managers = employees
                 .stream()
                 .filter(manager -> manager instanceof Manager)
                 .map(manager -> (Manager) manager)
                 .toList();
 
-        String leftAlignFormat = "| %-6s | %-7s | %-11s | %-13s | %-16.2f | %-14.2f | %-18s | %-22s |%n";
+        String leftAlignFormat = "| %-6s | %-7s | %-11s | %-13s | %-16.2f | %-14s | %-18s | %-22s |%n";
 
-        System.out.println("================================================================= QUẢN LÝ =========================================================");
+        System.out.println("================================================================= QUẢN LÝ ==========================================================");
         System.out.format("+--------+---------+-------------+---------------+------------------+----------------+--------------------+------------------------+%n");
         System.out.format("| ID     | Tên     | SĐT         | Ngày làm việc | Lương cơ bản     | Tổng lương     | Số lượng nhân viên | ID nhân viên quản lý   |%n");
         System.out.format("+--------+---------+-------------+---------------+------------------+----------------+--------------------+------------------------+%n");
 
-        for (Manager manager : managers) {
-            System.out.format(leftAlignFormat,
-                    manager.getId(),
-                    manager.getName(),
-                    manager.getPhoneNumber(),
-                    manager.getWorkDays(),
-                    manager.getSalaryOfOneDay(),
-                    manager.getTotalSalary(),
-                    manager.getNumberOfEmployee(),
-                    manager.getEmployees()
-                            .toString()
-            );
+        if (!managers.isEmpty()) {
+            for (Manager manager : managers) {
+                System.out.format(leftAlignFormat,
+                        manager.getId(),
+                        manager.getName(),
+                        manager.getPhoneNumber(),
+                        manager.getWorkDays(),
+                        manager.getSalaryOfOneDay(),
+                        Helper.formatCurrency(manager.getTotalSalary()),
+                        manager.getNumberOfEmployee(),
+                        manager.getEmployees()
+                                .toString()
+                );
+            }
+        } else {
+            System.out.format("|                                                      KHÔNG CÓ DỮ LIỆU                                                            |%n");
         }
 
         System.out.format("+--------+---------+-------------+---------------+------------------+----------------+--------------------+------------------------+%n");
     }
 
     @Override
-    public void printAllDirector(List<Employee> employees) {
-        List<Director> directors = this.typeCastList(employees);
+    public void printAllDirectorRole(List<Employee> employees) {
+        List<Director> directors = employees.stream()
+                .filter(element -> element instanceof Director)
+                .map(element -> (Director) element)
+                .toList();
 
-        String leftAlignFormat = "| %-6s | %-7s | %-11s | %-13s | %-16.2f | %-14.2f | %-18s | %-22s |%n";
+        String leftAlignFormat = "| %-6s | %-7s | %-11s | %-13s | %-16s | %-14s | %-7s |%n";
 
-        System.out.println("================================================================= GIÁM ĐỐC =========================================================");
-        System.out.format("+--------+---------+-------------+---------------+------------------+----------------+--------------------+------------------------+%n");
-        System.out.format("| ID     | Tên     | SĐT         | Ngày làm việc | Lương cơ bản     | Tổng lương     | Số lượng nhân viên | ID nhân viên quản lý   |%n");
-        System.out.format("+--------+---------+-------------+---------------+------------------+----------------+--------------------+------------------------+%n");
+        System.out.println("======================================== GIÁM ĐỐC =============================================");
+        System.out.format("+--------+---------+-------------+---------------+------------------+----------------+---------+%n");
+        System.out.format("| ID     | Tên     | SĐT         | Ngày làm việc | Lương cơ bản     | Tổng lương     | Cổ phần |%n");
+        System.out.format("+--------+---------+-------------+---------------+------------------+----------------+---------+%n");
 
-        for (Director director : directors) {
-            System.out.format(leftAlignFormat,
-                    director.getId(),
-                    director.getName(),
-                    director.getPhoneNumber(),
-                    director.getWorkDays(),
-                    director.getSalaryOfOneDay(),
-                    director.getTotalSalary()
-            );
+        if (!directors.isEmpty()) {
+            for (Director director : directors) {
+                System.out.format(leftAlignFormat,
+                        director.getId(),
+                        director.getName(),
+                        director.getPhoneNumber(),
+                        director.getWorkDays(),
+                        director.getSalaryOfOneDay(),
+                        Helper.formatCurrency(director.getTotalSalary()),
+                        director.getShareCapacity(),
+                        Helper.formatCurrency(director.getTotalIncome())
+                );
+            }
+        } else {
+            System.out.format("|                                         KHÔNG CÓ DỮ LIỆU                                     |%n");
         }
 
-        System.out.format("+--------+---------+-------------+---------------+------------------+----------------+--------------------+------------------------+%n");
+
+        System.out.format("+--------+---------+-------------+---------------+------------------+----------------+---------+%n");
     }
 
     @Override
     public void printAllDirectorTotalIncome(List<Director> directors) {
-        String leftAlignFormat = "| %-6s | %-7s | %-11s | %-17s | %-16.2f | %-14.2f | %-24s | %-11s |%n";
+        String leftAlignFormat = "| %-6s | %-7s | %-11s | %-17s | %-16.2f | %-14s | %-24s | %-11s |%n";
 
-        System.out.println("================================================================= QUẢN LÝ ========================================================");
+        System.out.println("================================================================= GIÁM ĐỐC =======================================================");
         System.out.format("+--------+---------+-------------+-------------------+------------------+----------------+--------------------------+-------------+%n");
         System.out.format("| ID     | Tên     | SĐT         | Ngày làm việc     | Lương cơ bản     | Tổng lương     | Tổng thu nhập            | Cổ phần     |%n");
         System.out.format("+--------+---------+-------------+-------------------+------------------+----------------+--------------------------+-------------+%n");
@@ -173,8 +224,8 @@ public class Company implements ICompany {
                     director.getPhoneNumber(),
                     director.getWorkDays(),
                     director.getSalaryOfOneDay(),
-                    director.calcSalary(director.getWorkDays(), director.getSalaryOfOneDay()),
-                    director.getTotalIncome(),
+                    Helper.formatCurrency(director.getTotalSalary()),
+                    Helper.formatCurrency(director.getTotalIncome()),
                     director.getShareCapacity() + "%"
             );
         }
@@ -182,26 +233,8 @@ public class Company implements ICompany {
         System.out.format("+--------+---------+-------------+-------------------+------------------+----------------+--------------------------+-------------+%n");
     }
 
-
     @Override
-    public double calcAllEmployeeSalary() {
-        double totalSalary = 0;
-
-        if (this.employees == null || this.employees.isEmpty()) {
-            this.totalSalary = totalSalary;
-            return totalSalary;
-        }
-
-        for (Employee employee : this.employees) {
-            totalSalary += employee.calcSalary(employee.getWorkDays(), employee.getSalaryOfOneDay());
-        }
-
-        this.totalSalary = totalSalary;
-        return totalSalary;
-    }
-
-    @Override
-    public Manager promoteEmployeeToManager(Integer employeeId) {
+    public Manager promoteEmployeeToManager(int employeeId) {
         Manager manager = null;
         for (int i = 0; i < this.employees.size(); i++) {
             if (this.employees.get(i)
@@ -218,7 +251,9 @@ public class Company implements ICompany {
 
             if (this.employees.get(i)
                     .getId() == employeeId) {
-                manager = (Manager) this.employees.get(i);
+                Employee employee = this.getEmployees()
+                        .get(i);
+                manager = new Manager(employee.getId(), employee.getName(), employee.getPhoneNumber(), employee.getWorkDays());
                 this.employees.set(i, manager);
                 break;
             }
@@ -227,19 +262,19 @@ public class Company implements ICompany {
     }
 
     @Override
-    public void deleteEmployee(Integer employeeId) {
+    public void deleteEmployee(int employeeId) {
         for (int i = 0; i < this.employees.size(); i++) {
             if (this.employees.get(i)
                     .getId() == employeeId) {
 
-                if (this.employees.get(i) instanceof Manager && !((Manager) this.employees.get(i)).getEmployees()
-                        .isEmpty()) {
-                    for (int j = 0; j < ((Manager) this.employees.get(i)).getEmployees()
-                            .size(); j++) {
-                        this.employees.get(((Manager) this.employees.get(i)).getEmployees()
-                                        .get(j) - 1)
-                                .setManagerId(null);
-                    }
+                if (this.employees.get(i)
+                        .getManagerId() != null) {
+                    this.removeEmployeeRefId(i, employeeId);
+                }
+                
+                if (this.employees.get(i) instanceof Manager && !(((Manager) this.employees.get(i)).getEmployees()
+                        .isEmpty())) {
+                    this.removeManagerRefId(i);
                 }
 
                 this.employees.remove(i);
@@ -293,7 +328,7 @@ public class Company implements ICompany {
     @Override
     public List<Employee> sortEmployeeBySalaryDESC() {
         List<Employee> sortEmployeeBySalaryDESC = new ArrayList<>(this.employees);
-        sortEmployeeBySalaryDESC.sort(Comparator.comparingDouble(Employee::getSalaryOfOneDay)
+        sortEmployeeBySalaryDESC.sort(Comparator.comparingDouble(Employee::getTotalSalary)
                 .reversed());
         return sortEmployeeBySalaryDESC;
     }
@@ -318,11 +353,11 @@ public class Company implements ICompany {
     @Override
     public List<Director> calcDirectorIncome() {
         List<Director> directors = new ArrayList<>();
-        double totalSalary = this.calcAllEmployeeSalary();
+        double totalSalary = this.totalSalary;
 
         for (Employee employee : this.employees) {
             if (employee instanceof Director) {
-                Director director = ((Director) employee).calcTotalIncome((Director) employee, totalSalary);
+                Director director = ((Director) employee).calcTotalIncome(this.revenue, totalSalary);
                 directors.add(director);
             }
         }
@@ -331,19 +366,61 @@ public class Company implements ICompany {
     }
 
     private double calcCompanyProfit() {
-        double companyProfit = this.revenue - this.calcAllEmployeeSalary();
+        double companyProfit = this.revenue - this.totalSalary;
         this.profit = companyProfit;
         return companyProfit;
     }
 
-    private <T extends Employee> List<T> typeCastList(List<Employee> originalList) {
-        List<T> castList = originalList
-                .stream()
-                .filter(element -> element instanceof T)
-                .map(element -> (T) element)
-                .toList();
-        return castList;
+    private void validationRevenue(double userInput, Scanner scanner) {
+        while (userInput < 1) {
+            System.out.println("Doanh thu công ty phải lớn hơn 0, vui lòng nhập lại: ");
+            userInput = scanner.nextDouble();
+        }
+
+        this.revenue = userInput;
     }
+
+    private Employee findEmployeeById(int id) {
+        Employee result = null;
+
+        for (Employee employee : this.employees) {
+            if (employee.getId() == id) {
+                result = employee;
+                break;
+            }
+        }
+
+        return result;
+    }
+
+    private void removeEmployeeRefId(int employeeIndex, Integer employeeId) {
+        int managerId = this.employees.get(employeeIndex)
+                .getManagerId();
+        Manager manager = (Manager) this.findEmployeeById(managerId);
+
+        List<Integer> employeeRefIds = manager.getEmployees();
+        Integer employeeRefId = null;
+        for (Integer refId : employeeRefIds) {
+            if (refId.intValue() == employeeId.intValue()) {
+                employeeRefId = refId;
+                break;
+            }
+        }
+        employeeRefIds.remove(employeeRefId);
+        manager.setNumberOfEmployee(manager.getNumberOfEmployee() - 1);
+    }
+
+    private void removeManagerRefId(int employeeIndex) {
+        for (int j = 0; j < ((Manager) this.employees.get(employeeIndex)).getEmployees()
+                .size(); j++) {
+            Integer managerRefId = ((Manager) this.employees.get(employeeIndex)).getEmployees()
+                    .get(j);
+
+            Employee employee = this.findEmployeeById(managerRefId);
+            employee.setManagerId(null);
+        }
+    }
+
 
     public String getName() {
         return name;

@@ -6,5 +6,5 @@ import java.util.List;
 import java.util.Scanner;
 
 public interface IManager {
-    void addEmployeeToManager(Scanner scanner, List<Employee> employees);
+    void addEmployeeForManager(Scanner scanner, List<Employee> employees);
 }

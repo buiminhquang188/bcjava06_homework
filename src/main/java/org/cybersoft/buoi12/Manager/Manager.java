@@ -49,7 +49,7 @@ public class Manager extends Employee implements IManager {
     }
 
     @Override
-    public void addEmployeeToManager(Scanner scanner, List<Employee> employees) {
+    public void addEmployeeForManager(Scanner scanner, List<Employee> employees) {
         int userInput;
         System.out.println("Nhập ID của nhân sự sẽ quản lý hoặc nhập 0 để thoát: ");
         userInput = scanner.nextInt();
@@ -58,13 +58,7 @@ public class Manager extends Employee implements IManager {
             this.employees = new ArrayList<>();
         }
 
-        while (userInput != 0) {
-
-            while (userInput > employees.size()) {
-                System.out.println("ID không hợp lệ, vui lòng nhập lại hoặc nhập 0 để thoát: ");
-                userInput = scanner.nextInt();
-            }
-
+        while (userInput != 0 || userInput > employees.size()) {
             for (Employee employee : employees) {
                 if (employee.getId() == userInput && employee instanceof Director) {
                     System.out.println("ID này không hợp lệ do đang sở hữu chức vụ Giám Đốc, vui lòng sử dụng ID khác");
@@ -89,8 +83,13 @@ public class Manager extends Employee implements IManager {
                 }
             }
 
-            System.out.println("Nhập ID của nhân sự sẽ quản lý hoặc nhập 0 để thoát");
-            userInput = scanner.nextInt();
+            if (userInput > employees.size()) {
+                System.out.println("ID không hợp lệ, vui lòng nhập lại hoặc nhập 0 để thoát: ");
+                userInput = scanner.nextInt();
+            } else {
+                System.out.println("Nhập ID của nhân sự sẽ quản lý hoặc nhập 0 để thoát");
+                userInput = scanner.nextInt();
+            }
         }
     }
 
