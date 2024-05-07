@@ -1,11 +1,62 @@
-<mxfile host="Electron" modified="2024-05-02T11:42:30.471Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.2.5 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="Hdb_SGTms1CNfPJgPhPA" version="24.2.5" type="device">
+<mxfile host="Electron" modified="2024-05-07T02:11:12.642Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.2.5 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="bpQ5ZecwBhOB3Qw-TXrf" version="24.2.5" type="device">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
-    <mxGraphModel dx="2708" dy="1348" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1200" pageHeight="1920" math="0" shadow="0">
+    <mxGraphModel dx="1922" dy="793" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1200" pageHeight="1920" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
-        <mxCell id="baJLvfBL1tSS69TwoIDW-0" value="Employee" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="260" y="190" width="160" height="216" as="geometry" />
+        <mxCell id="480BdLRj5phEdMmWsPwc-4" value="" style="group" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1" connectable="0">
+          <mxGeometry x="-620" y="100" width="350" height="760" as="geometry" />
+        </mxCell>
+        <mxCell id="baJLvfBL1tSS69TwoIDW-49" value="Company" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="480BdLRj5phEdMmWsPwc-4" vertex="1">
+          <mxGeometry y="440" width="350" height="344" as="geometry" />
+        </mxCell>
+        <mxCell id="baJLvfBL1tSS69TwoIDW-50" value="- name: string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="baJLvfBL1tSS69TwoIDW-49" vertex="1">
+          <mxGeometry y="26" width="350" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="baJLvfBL1tSS69TwoIDW-51" value="- taxId: string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="baJLvfBL1tSS69TwoIDW-49" vertex="1">
+          <mxGeometry y="52" width="350" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="baJLvfBL1tSS69TwoIDW-52" value="- revenue: double" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="baJLvfBL1tSS69TwoIDW-49" vertex="1">
+          <mxGeometry y="78" width="350" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="baJLvfBL1tSS69TwoIDW-53" value="- employees: List&amp;lt;Employee&amp;gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="baJLvfBL1tSS69TwoIDW-49" vertex="1">
+          <mxGeometry y="104" width="350" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="baJLvfBL1tSS69TwoIDW-56" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="baJLvfBL1tSS69TwoIDW-49" vertex="1">
+          <mxGeometry y="130" width="350" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="_gTEVnxocZ5BBZML2xNd-0" value="- calcCompanyProfit(): double" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="baJLvfBL1tSS69TwoIDW-49">
+          <mxGeometry y="138" width="350" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="_gTEVnxocZ5BBZML2xNd-1" value="&lt;div&gt;- validationRevenue(double userInput, Scanner scanner): void&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="baJLvfBL1tSS69TwoIDW-49">
+          <mxGeometry y="170" width="350" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="_gTEVnxocZ5BBZML2xNd-2" value="- findEmployeeById(int id): Employee" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="baJLvfBL1tSS69TwoIDW-49">
+          <mxGeometry y="202" width="350" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="_gTEVnxocZ5BBZML2xNd-3" value="&lt;div&gt;- removeEmployeeRefId(int employeeIndex, Integer employeeId): void&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="baJLvfBL1tSS69TwoIDW-49">
+          <mxGeometry y="234" width="350" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="_gTEVnxocZ5BBZML2xNd-4" value="- removeManagerRefId(int employeIndex): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="baJLvfBL1tSS69TwoIDW-49">
+          <mxGeometry y="280" width="350" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="baJLvfBL1tSS69TwoIDW-57" value="&lt;div&gt;+ ...getter/setter&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="baJLvfBL1tSS69TwoIDW-49" vertex="1">
+          <mxGeometry y="312" width="350" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="baJLvfBL1tSS69TwoIDW-59" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;Interface&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;ICompany&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; line-height: 170%;&quot;&gt;+ inputCompany(Scanner scanner): void&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; line-height: 170%;&quot;&gt;+ printCompany(): void&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; line-height: 170%;&quot;&gt;+ inputEmployee(Scanner scanner, int id): void&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; line-height: 170%;&quot;&gt;+ inputManager(Scanner scanner, int id): void&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; line-height: 170%;&quot;&gt;+ inputDirector(Scanner scanner, int id): void&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; line-height: 170%;&quot;&gt;+ printAllEmployee(List&amp;lt;Employee&amp;gt; employees): void&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; line-height: 170%;&quot;&gt;+ printAllEmployeeRole(List&amp;lt;Employee&amp;gt; employees): void&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; line-height: 170%;&quot;&gt;+ printAllManagerRole(List&amp;lt;Employee&amp;gt; managers): void&lt;br&gt;+ printAllDirectorRole(List&amp;lt;Employee&amp;gt; directors): void&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; line-height: 170%;&quot;&gt;+ printAllDirectorTotalIncome(List&amp;lt;Director&amp;gt; employees): void&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; line-height: 170%;&quot;&gt;+ promoteEmployeeToManager(int employeeId): Manager&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; line-height: 170%;&quot;&gt;+ deleteEmployee(int employeeId): void&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; line-height: 170%;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;+ sortEmployeeByNameASC(): List&amp;lt;Employee&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; line-height: 170%;&quot;&gt;+ sortEmployeeBySalayDESC(): List&amp;lt;Employee&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; line-height: 170%;&quot;&gt;+ findEmployeeHighestSalary(): Employee&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; line-height: 170%;&quot;&gt;+ findManagerHaveMostEmployee(): Employee&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; line-height: 170%;&quot;&gt;+ findHighestShareCapacityDirector(): Director&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; line-height: 170%;&quot;&gt;+ calcDirectorIncome(): List&amp;lt;Director&amp;gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="480BdLRj5phEdMmWsPwc-4" vertex="1">
+          <mxGeometry y="-50" width="350" height="422" as="geometry" />
+        </mxCell>
+        <mxCell id="baJLvfBL1tSS69TwoIDW-60" value="" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="480BdLRj5phEdMmWsPwc-4" source="baJLvfBL1tSS69TwoIDW-49" target="baJLvfBL1tSS69TwoIDW-59" edge="1">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="235" y="510" as="sourcePoint" />
+            <mxPoint x="174.5" y="510" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="480BdLRj5phEdMmWsPwc-5" value="" style="group" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1" connectable="0">
+          <mxGeometry x="-190" y="10" width="970" height="880" as="geometry" />
+        </mxCell>
+        <mxCell id="baJLvfBL1tSS69TwoIDW-0" value="Employee" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="480BdLRj5phEdMmWsPwc-5" vertex="1">
+          <mxGeometry x="450" y="180" width="160" height="216" as="geometry" />
         </mxCell>
         <mxCell id="baJLvfBL1tSS69TwoIDW-1" value="- id: int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="baJLvfBL1tSS69TwoIDW-0" vertex="1">
           <mxGeometry y="26" width="160" height="26" as="geometry" />
@@ -31,103 +82,73 @@
         <mxCell id="baJLvfBL1tSS69TwoIDW-3" value="+ ...getter/setter" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="baJLvfBL1tSS69TwoIDW-0" vertex="1">
           <mxGeometry y="190" width="160" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="baJLvfBL1tSS69TwoIDW-17" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;Interface&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;IEmployee&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ calcSalary(int workDays, double salaryOfOneDay): double&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ validateWorkDays(int userInput, Scanner scanner): void&lt;br&gt;+ nhap(Scanner scanner, int id): void&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ xuat(): void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="165" y="10" width="350" height="112" as="geometry" />
+        <mxCell id="baJLvfBL1tSS69TwoIDW-17" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;Interface&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;IEmployee&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ calcSalary(int workDays, double salaryOfOneDay): double&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ validateWorkDays(int userInput, Scanner scanner): void&lt;br&gt;+ input(Scanner scanner, int id): void&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ print(): void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="480BdLRj5phEdMmWsPwc-5" vertex="1">
+          <mxGeometry x="355" width="350" height="112" as="geometry" />
         </mxCell>
-        <mxCell id="baJLvfBL1tSS69TwoIDW-23" value="" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="baJLvfBL1tSS69TwoIDW-0" target="baJLvfBL1tSS69TwoIDW-17" edge="1">
+        <mxCell id="baJLvfBL1tSS69TwoIDW-23" value="" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="480BdLRj5phEdMmWsPwc-5" source="baJLvfBL1tSS69TwoIDW-0" target="baJLvfBL1tSS69TwoIDW-17" edge="1">
           <mxGeometry width="160" relative="1" as="geometry">
-            <mxPoint x="200" y="430" as="sourcePoint" />
-            <mxPoint x="220" y="490" as="targetPoint" />
+            <mxPoint x="390" y="420" as="sourcePoint" />
+            <mxPoint x="410" y="480" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="baJLvfBL1tSS69TwoIDW-24" value="Manager" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="80" y="720" width="170" height="112" as="geometry" />
+        <mxCell id="baJLvfBL1tSS69TwoIDW-24" value="Manager" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="480BdLRj5phEdMmWsPwc-5" vertex="1">
+          <mxGeometry x="190" y="690" width="320" height="112" as="geometry" />
         </mxCell>
         <mxCell id="baJLvfBL1tSS69TwoIDW-25" value="- numberOfEmployee: int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="baJLvfBL1tSS69TwoIDW-24" vertex="1">
-          <mxGeometry y="26" width="170" height="26" as="geometry" />
+          <mxGeometry y="26" width="320" height="26" as="geometry" />
         </mxCell>
         <mxCell id="baJLvfBL1tSS69TwoIDW-26" value="- employees: List&amp;lt;Employee&amp;gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="baJLvfBL1tSS69TwoIDW-24" vertex="1">
-          <mxGeometry y="52" width="170" height="26" as="geometry" />
+          <mxGeometry y="52" width="320" height="26" as="geometry" />
         </mxCell>
         <mxCell id="baJLvfBL1tSS69TwoIDW-31" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="baJLvfBL1tSS69TwoIDW-24" vertex="1">
-          <mxGeometry y="78" width="170" height="8" as="geometry" />
+          <mxGeometry y="78" width="320" height="8" as="geometry" />
         </mxCell>
         <mxCell id="baJLvfBL1tSS69TwoIDW-32" value="+ ...getter/setter" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="baJLvfBL1tSS69TwoIDW-24" vertex="1">
-          <mxGeometry y="86" width="170" height="26" as="geometry" />
+          <mxGeometry y="86" width="320" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="baJLvfBL1tSS69TwoIDW-42" value="Extends" style="endArrow=block;endSize=16;endFill=0;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="baJLvfBL1tSS69TwoIDW-24" target="baJLvfBL1tSS69TwoIDW-3" edge="1">
+        <mxCell id="baJLvfBL1tSS69TwoIDW-42" value="Extends" style="endArrow=block;endSize=16;endFill=0;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="480BdLRj5phEdMmWsPwc-5" source="baJLvfBL1tSS69TwoIDW-24" target="baJLvfBL1tSS69TwoIDW-3" edge="1">
           <mxGeometry width="160" relative="1" as="geometry">
-            <mxPoint x="310" y="320" as="sourcePoint" />
-            <mxPoint x="330" y="450" as="targetPoint" />
+            <mxPoint x="500" y="310" as="sourcePoint" />
+            <mxPoint x="520" y="440" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="baJLvfBL1tSS69TwoIDW-43" value="Director" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="380" y="710" width="170" height="86" as="geometry" />
+        <mxCell id="baJLvfBL1tSS69TwoIDW-43" value="Director" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="480BdLRj5phEdMmWsPwc-5" vertex="1">
+          <mxGeometry x="570" y="700" width="360" height="126" as="geometry" />
         </mxCell>
         <mxCell id="baJLvfBL1tSS69TwoIDW-44" value="- shareCapacity: int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="baJLvfBL1tSS69TwoIDW-43" vertex="1">
-          <mxGeometry y="26" width="170" height="26" as="geometry" />
+          <mxGeometry y="26" width="360" height="26" as="geometry" />
         </mxCell>
         <mxCell id="baJLvfBL1tSS69TwoIDW-46" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="baJLvfBL1tSS69TwoIDW-43" vertex="1">
-          <mxGeometry y="52" width="170" height="8" as="geometry" />
+          <mxGeometry y="52" width="360" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="_gTEVnxocZ5BBZML2xNd-6" value="- validateShareCapacity(double userInput, Scanner scanner): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="baJLvfBL1tSS69TwoIDW-43">
+          <mxGeometry y="60" width="360" height="40" as="geometry" />
         </mxCell>
         <mxCell id="baJLvfBL1tSS69TwoIDW-47" value="+ ...getter/setter" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="baJLvfBL1tSS69TwoIDW-43" vertex="1">
-          <mxGeometry y="60" width="170" height="26" as="geometry" />
+          <mxGeometry y="100" width="360" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="baJLvfBL1tSS69TwoIDW-48" value="Extends" style="endArrow=block;endSize=16;endFill=0;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="baJLvfBL1tSS69TwoIDW-43" target="baJLvfBL1tSS69TwoIDW-3" edge="1">
+        <mxCell id="baJLvfBL1tSS69TwoIDW-48" value="Extends" style="endArrow=block;endSize=16;endFill=0;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="480BdLRj5phEdMmWsPwc-5" source="baJLvfBL1tSS69TwoIDW-43" target="baJLvfBL1tSS69TwoIDW-3" edge="1">
           <mxGeometry width="160" relative="1" as="geometry">
-            <mxPoint x="310" y="450" as="sourcePoint" />
-            <mxPoint x="460" y="410" as="targetPoint" />
+            <mxPoint x="500" y="440" as="sourcePoint" />
+            <mxPoint x="650" y="400" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="480BdLRj5phEdMmWsPwc-0" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;Interface&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;IManager&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ addEmployeeToManager(Scanner scanner, List&amp;lt;Employee&amp;gt; employees): void&lt;br&gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="-190" y="440" width="440" height="70" as="geometry" />
+        <mxCell id="480BdLRj5phEdMmWsPwc-0" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;Interface&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;IManager&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ addEmployeeForManager(Scanner scanner, List&amp;lt;Employee&amp;gt; employees): void&lt;br&gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="480BdLRj5phEdMmWsPwc-5" vertex="1">
+          <mxGeometry y="430" width="440" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="480BdLRj5phEdMmWsPwc-1" value="" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="baJLvfBL1tSS69TwoIDW-24" target="480BdLRj5phEdMmWsPwc-0">
+        <mxCell id="480BdLRj5phEdMmWsPwc-1" value="" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="480BdLRj5phEdMmWsPwc-5" source="baJLvfBL1tSS69TwoIDW-24" target="480BdLRj5phEdMmWsPwc-0" edge="1">
           <mxGeometry width="160" relative="1" as="geometry">
-            <mxPoint x="110" y="600" as="sourcePoint" />
-            <mxPoint x="350" y="132" as="targetPoint" />
+            <mxPoint x="300" y="590" as="sourcePoint" />
+            <mxPoint x="540" y="122" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="480BdLRj5phEdMmWsPwc-2" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;Interface&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;IDirector&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ calcTotalIncome(Director director, double totalSalary): Director&lt;br&gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="430" y="440" width="350" height="70" as="geometry" />
+        <mxCell id="480BdLRj5phEdMmWsPwc-2" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;Interface&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;IDirector&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ calcTotalIncome(double revenue, double totalSalary): Director&lt;br&gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="480BdLRj5phEdMmWsPwc-5" vertex="1">
+          <mxGeometry x="620" y="430" width="350" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="480BdLRj5phEdMmWsPwc-3" value="" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="baJLvfBL1tSS69TwoIDW-43" target="480BdLRj5phEdMmWsPwc-2">
+        <mxCell id="480BdLRj5phEdMmWsPwc-3" value="" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="480BdLRj5phEdMmWsPwc-5" source="baJLvfBL1tSS69TwoIDW-43" target="480BdLRj5phEdMmWsPwc-2" edge="1">
           <mxGeometry width="160" relative="1" as="geometry">
-            <mxPoint x="175" y="730" as="sourcePoint" />
-            <mxPoint x="60" y="520" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="480BdLRj5phEdMmWsPwc-4" value="" style="group" vertex="1" connectable="0" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="-620" y="100" width="350" height="604" as="geometry" />
-        </mxCell>
-        <mxCell id="baJLvfBL1tSS69TwoIDW-49" value="Company" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="480BdLRj5phEdMmWsPwc-4" vertex="1">
-          <mxGeometry x="85" y="440" width="180" height="164" as="geometry" />
-        </mxCell>
-        <mxCell id="baJLvfBL1tSS69TwoIDW-50" value="- name: string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="baJLvfBL1tSS69TwoIDW-49" vertex="1">
-          <mxGeometry y="26" width="180" height="26" as="geometry" />
-        </mxCell>
-        <mxCell id="baJLvfBL1tSS69TwoIDW-51" value="- taxId: string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="baJLvfBL1tSS69TwoIDW-49" vertex="1">
-          <mxGeometry y="52" width="180" height="26" as="geometry" />
-        </mxCell>
-        <mxCell id="baJLvfBL1tSS69TwoIDW-52" value="- revenue: double" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="baJLvfBL1tSS69TwoIDW-49" vertex="1">
-          <mxGeometry y="78" width="180" height="26" as="geometry" />
-        </mxCell>
-        <mxCell id="baJLvfBL1tSS69TwoIDW-53" value="- employees: List&amp;lt;Employee&amp;gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="baJLvfBL1tSS69TwoIDW-49" vertex="1">
-          <mxGeometry y="104" width="180" height="26" as="geometry" />
-        </mxCell>
-        <mxCell id="baJLvfBL1tSS69TwoIDW-56" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="baJLvfBL1tSS69TwoIDW-49" vertex="1">
-          <mxGeometry y="130" width="180" height="8" as="geometry" />
-        </mxCell>
-        <mxCell id="baJLvfBL1tSS69TwoIDW-57" value="+ ...getter/setter" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="baJLvfBL1tSS69TwoIDW-49" vertex="1">
-          <mxGeometry y="138" width="180" height="26" as="geometry" />
-        </mxCell>
-        <mxCell id="baJLvfBL1tSS69TwoIDW-59" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;Interface&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;ICompany&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; line-height: 170%;&quot;&gt;+ nhapThongTinCongTy(Scanner scanner): void&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; line-height: 170%;&quot;&gt;+ xuatThongTinCongTy(): void&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; line-height: 170%;&quot;&gt;+ nhapThongTinNhanVien(Scanner scanner, int id): void&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; line-height: 170%;&quot;&gt;+ nhapThongTinQuanLy(Scanner scanner, int id): void&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; line-height: 170%;&quot;&gt;+ nhapThongTinGiamDoc(Scanner scanner, int id): void&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; line-height: 170%;&quot;&gt;+ printAllEmployee(List&amp;lt;Employee&amp;gt; employees): void&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; line-height: 170%;&quot;&gt;+ printAllDirectorTotalIncome(List&amp;lt;Director&amp;gt; directors): void&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; line-height: 170%;&quot;&gt;+ calcAllEmployeeSalary(): void&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; line-height: 170%;&quot;&gt;+ promoteEmployeeToManager(Integer employeeId): void&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; line-height: 170%;&quot;&gt;+ deleteEmployee(Integer employeeId): void&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; line-height: 170%;&quot;&gt;+ sortEmployeeByNameASC(): List&amp;lt;Employee&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; line-height: 170%;&quot;&gt;+ sortEmployeeBySalayDESC(): List&amp;lt;Employee&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; line-height: 170%;&quot;&gt;+ findEmployeeHighestSalary(): Employee&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; line-height: 170%;&quot;&gt;+ findManagerHaveMostEmployee(): Employee&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; line-height: 170%;&quot;&gt;+ findHighestShareCapacityDirector(): Director&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px; line-height: 170%;&quot;&gt;+ calcDirectorIncome(): Director&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="480BdLRj5phEdMmWsPwc-4" vertex="1">
-          <mxGeometry width="350" height="372" as="geometry" />
-        </mxCell>
-        <mxCell id="baJLvfBL1tSS69TwoIDW-60" value="" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="480BdLRj5phEdMmWsPwc-4" source="baJLvfBL1tSS69TwoIDW-49" target="baJLvfBL1tSS69TwoIDW-59" edge="1">
-          <mxGeometry width="160" relative="1" as="geometry">
-            <mxPoint x="235" y="510" as="sourcePoint" />
-            <mxPoint x="174.5" y="510" as="targetPoint" />
+            <mxPoint x="365" y="720" as="sourcePoint" />
+            <mxPoint x="250" y="510" as="targetPoint" />
           </mxGeometry>
         </mxCell>
       </root>
