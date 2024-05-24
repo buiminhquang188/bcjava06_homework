@@ -124,9 +124,9 @@ WHERE ep.employee_id IS NULL;
 # Câu 15
 SELECT e.employee_id,
        e.name,
-       e.salary,
-       test.department_id,
-       test.department_name
+       e.salary AS highest_and_lowest_salary,
+       e1.department_id,
+       e1.department_name
 FROM employees e
          JOIN (SELECT d11.department_id,
                       d11.department_name,
@@ -134,10 +134,10 @@ FROM employees e
                       MIN(e11.salary) AS employee_lowest_salary
                FROM employees e11
                         JOIN departments d11 ON e11.department_id = d11.department_id
-               GROUP BY d11.department_id) AS test
-              ON test.department_id = e.department_id AND (test.employee_highest_salary = e.salary OR
-                                                           test.employee_lowest_salary = e.salary)
-ORDER BY test.department_id;
+               GROUP BY d11.department_id) AS e1
+              ON e1.department_id = e.department_id AND (e1.employee_highest_salary = e.salary OR
+                                                         e1.employee_lowest_salary = e.salary)
+ORDER BY e.department_id, e.salary DESC;
 
 # Câu 16
 SELECT d.department_name,
@@ -155,7 +155,7 @@ FROM departments d
                         JOIN departments d11 ON d11.department_id = e11.department_id
                         JOIN employee_projects ep11 ON ep11.employee_id = e11.employee_id
                         JOIN projects p11 ON p11.project_id = ep11.project_id
-               GROUP BY p11.project_id) AS test ON test.department_id = d.department_id;
+               GROUP BY p11.project_id) AS e1 ON e1.department_id = d.department_id;
 
 # Câu 17
 SELECT e.name
@@ -182,9 +182,9 @@ FROM employees e
          JOIN (SELECT d.*, MAX(e.salary) AS highest_salary
                FROM employees e
                         JOIN departments d ON d.department_id = e.department_id
-               GROUP BY d.department_id) AS test
-              ON test.department_id = d.department_id AND test.department_id = e.department_id AND
-                 test.highest_salary = e.salary;
+               GROUP BY d.department_id) AS e1
+              ON e1.department_id = d.department_id AND e1.department_id = e.department_id AND
+                 e1.highest_salary = e.salary;
 
 # Câu 20
 SELECT d.department_id, d.department_name, SUM(e.salary) AS total_salary_employee_not_join_project
