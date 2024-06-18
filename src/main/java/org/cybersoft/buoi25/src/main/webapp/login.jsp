@@ -31,11 +31,11 @@
                         <input type="password" class="form-control" name="password">
                     </div>
                     <c:if test="${isValid.equals('false')}">
-                        <small class="form-text text-danger my-2">
+                        <small class="form-text text-danger mt-2">
                             Username or password not correct, please check again.
                         </small>
                     </c:if>
-                    <button type="submit" class="btn btn-primary">Đăng nhập</button>
+                    <button type="submit" class="btn btn-primary mt-2">Đăng nhập</button>
                 </form>
             </div>
         </div>
