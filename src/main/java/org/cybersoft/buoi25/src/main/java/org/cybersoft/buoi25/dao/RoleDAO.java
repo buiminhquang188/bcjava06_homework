@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RoleDAO {
-    public final Connection connection;
+    public Connection connection;
 
     public RoleDAO() {
         this.connection = MySQLConfig.getConnection();
@@ -22,6 +22,7 @@ public class RoleDAO {
         List<RoleEntity> roles = new ArrayList<>();
 
         try {
+            if (this.connection.isClosed()) this.connection = MySQLConfig.getConnection();
             String query = """
                     SELECT *
                     FROM roles;
@@ -38,6 +39,8 @@ public class RoleDAO {
 
                 roles.add(role);
             }
+
+            connection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -48,6 +51,7 @@ public class RoleDAO {
     public Integer saveRole(RoleDTO roleDTO) {
         Integer resultIndex = null;
         try {
+            if (this.connection.isClosed()) this.connection = MySQLConfig.getConnection();
             String query = """
                     INSERT INTO roles(name, description) VALUE (?, ?)
                     """;
@@ -58,6 +62,7 @@ public class RoleDAO {
 
             resultIndex = preparedStatement.executeUpdate();
 
+            connection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

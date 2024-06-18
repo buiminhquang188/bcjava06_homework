@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAO {
-    private final Connection connection;
+    private Connection connection;
 
     public UserDAO() {
         this.connection = MySQLConfig.getConnection();
@@ -20,6 +20,8 @@ public class UserDAO {
     public List<UserEntity> getUserByUsernameAndPassword(String username, String password) {
         List<UserEntity> users = new ArrayList<>();
         try {
+            if (this.connection.isClosed()) this.connection = MySQLConfig.getConnection();
+
             String query = """
                     SELECT *
                     FROM users u
@@ -38,6 +40,7 @@ public class UserDAO {
 
                 users.add(user);
             }
+            connection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
