@@ -15,14 +15,6 @@ pom.xml
 *.iml
 *.ipr
 
-/src/main/java/org/cybersoft/capstone/src/main/java/*
-
-!/src/main/java/org/cybersoft/capstone/src/main/webapp/bootstrap
-!/src/main/java/org/cybersoft/capstone/src/main/webapp/css
-!/src/main/java/org/cybersoft/capstone/src/main/webapp/js
-!/src/main/java/org/cybersoft/capstone/src/main/webapp/less
-
-
 ### Eclipse ###
 .apt_generated
 .classpath
