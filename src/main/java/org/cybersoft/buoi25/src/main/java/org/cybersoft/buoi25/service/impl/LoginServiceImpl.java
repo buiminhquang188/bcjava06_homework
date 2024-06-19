@@ -1,6 +1,6 @@
 package org.cybersoft.buoi25.service.impl;
 
-import org.cybersoft.buoi25.dao.UserDAO;
+import org.cybersoft.buoi25.repository.UserRepository;
 import org.cybersoft.buoi25.entity.UserEntity;
 import org.cybersoft.buoi25.service.LoginService;
 
@@ -12,8 +12,8 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public Boolean loginUser(String username, String password) {
-        UserDAO userDAO = new UserDAO();
-        List<UserEntity> users = userDAO.getUserByUsernameAndPassword(username, password);
+        UserRepository userRepository = new UserRepository();
+        List<UserEntity> users = userRepository.getUserByUsernameAndPassword(username, password);
 
         if (users.isEmpty()) {
             return Boolean.FALSE;

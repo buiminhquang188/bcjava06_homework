@@ -1,4 +1,4 @@
-package org.cybersoft.buoi25.dao;
+package org.cybersoft.buoi25.repository;
 
 import org.cybersoft.buoi25.config.MySQLConfig;
 import org.cybersoft.buoi25.entity.UserEntity;
@@ -10,10 +10,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAO {
+public class UserRepository {
     private Connection connection;
 
-    public UserDAO() {
+    public UserRepository() {
         this.connection = MySQLConfig.getConnection();
     }
 

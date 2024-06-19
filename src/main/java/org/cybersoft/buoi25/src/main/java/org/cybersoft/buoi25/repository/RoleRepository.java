@@ -1,4 +1,4 @@
-package org.cybersoft.buoi25.dao;
+package org.cybersoft.buoi25.repository;
 
 import org.cybersoft.buoi25.config.MySQLConfig;
 import org.cybersoft.buoi25.dto.RoleDTO;
@@ -11,10 +11,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoleDAO {
+public class RoleRepository {
     public Connection connection;
 
-    public RoleDAO() {
+    public RoleRepository() {
         this.connection = MySQLConfig.getConnection();
     }
 
