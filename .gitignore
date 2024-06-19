@@ -16,7 +16,6 @@ pom.xml
 *.ipr
 
 /src/main/java/org/cybersoft/capstone/src/main/java/*
-/src/main/java/org/cybersoft/capstone/src/main/webapp/*.jsp
 
 !/src/main/java/org/cybersoft/capstone/src/main/webapp/bootstrap
 !/src/main/java/org/cybersoft/capstone/src/main/webapp/css
