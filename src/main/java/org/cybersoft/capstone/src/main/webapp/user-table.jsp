@@ -90,8 +90,9 @@
         <div class="sidebar-nav navbar-collapse slimscrollsidebar">
             <ul class="nav" id="side-menu">
                 <li style="padding: 10px 0 0;">
-                    <a href="${pageContext.servletContext.contextPath}" class="waves-effect"><i class="fa fa-clock-o fa-fw"
-                                                               aria-hidden="true"></i><span
+                    <a href="${pageContext.servletContext.contextPath}" class="waves-effect"><i
+                            class="fa fa-clock-o fa-fw"
+                            aria-hidden="true"></i><span
                             class="hide-menu">Dashboard</span></a>
                 </li>
                 <li>
