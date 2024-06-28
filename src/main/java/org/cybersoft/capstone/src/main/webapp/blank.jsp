@@ -49,7 +49,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="navbar-header"> <a class="navbar-toggle hidden-sm hidden-md hidden-lg "
                     href="javascript:void(0)" data-toggle="collapse" data-target=".navbar-collapse"><i
                         class="fa fa-bars"></i></a>
-                <div class="top-left-part"><a class="logo" href="index.jsp"><b><img
+                <div class="top-left-part"><a class="logo" href=""><b><img
                                 src="plugins/images/pixeladmin-logo.png" alt="home" /></b><span
                             class="hidden-xs"><img src="plugins/images/pixeladmin-text.png" alt="home" /></span></a>
                 </div>
@@ -77,27 +77,27 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="sidebar-nav navbar-collapse slimscrollsidebar">
                 <ul class="nav" id="side-menu">
                     <li style="padding: 10px 0 0;">
-                        <a href="index.jsp" class="waves-effect"><i class="fa fa-clock-o fa-fw"
+                        <a href="${pageContext.servletContext.contextPath}" class="waves-effect"><i class="fa fa-clock-o fa-fw"
                                 aria-hidden="true"></i><span class="hide-menu">Dashboard</span></a>
                     </li>
                     <li>
-                        <a href="user-table.jsp" class="waves-effect"><i class="fa fa-user fa-fw"
+                        <a href="user-table" class="waves-effect"><i class="fa fa-user fa-fw"
                                 aria-hidden="true"></i><span class="hide-menu">Thành viên</span></a>
                     </li>
                     <li>
-                        <a href="role-table.jsp" class="waves-effect"><i class="fa fa-modx fa-fw"
+                        <a href="role-table" class="waves-effect"><i class="fa fa-modx fa-fw"
                                 aria-hidden="true"></i><span class="hide-menu">Quyền</span></a>
                     </li>
                     <li>
-                        <a href="groupwork.jsp" class="waves-effect"><i class="fa fa-table fa-fw"
+                        <a href="groupwork" class="waves-effect"><i class="fa fa-table fa-fw"
                                 aria-hidden="true"></i><span class="hide-menu">Công việc</span></a>
                     </li>
                     <li>
-                        <a href="blank.jsp" class="waves-effect"><i class="fa fa-columns fa-fw"
+                        <a href="blank" class="waves-effect"><i class="fa fa-columns fa-fw"
                                 aria-hidden="true"></i><span class="hide-menu">Blank Page</span></a>
                     </li>
                     <li>
-                        <a href="404.jsp" class="waves-effect"><i class="fa fa-info-circle fa-fw"
+                        <a href="404" class="waves-effect"><i class="fa fa-info-circle fa-fw"
                                                                   aria-hidden="true"></i><span class="hide-menu">Error 404</span></a>
                     </li>
                 </ul>
@@ -148,6 +148,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="js/waves.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="js/custom.min.js"></script>
+    <script src="js/sidebar.js"></script>
 </body>
 
 </html>
