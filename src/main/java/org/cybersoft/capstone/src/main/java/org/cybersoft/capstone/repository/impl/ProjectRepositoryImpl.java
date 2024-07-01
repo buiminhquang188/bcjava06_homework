@@ -1,4 +1,4 @@
 package org.cybersoft.capstone.repository.impl;
 
-public class ProfileServiceImpl {
+public class ProjectRepositoryImpl {
 }
