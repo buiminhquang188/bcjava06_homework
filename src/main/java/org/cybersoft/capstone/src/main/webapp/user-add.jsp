@@ -139,41 +139,47 @@
                 <div class="col-md-2 col-12"></div>
                 <div class="col-md-8 col-xs-12">
                     <div class="white-box">
-                        <form class="form-horizontal form-material">
+                        <form class="form-horizontal form-material" method="POST">
                             <div class="form-group">
-                                <label class="col-md-12">Full Name</label>
+                                <label class="col-md-12">First Name</label>
                                 <div class="col-md-12">
-                                    <input type="text" placeholder="Johnathan Doe"
+                                    <input type="text" name="firstName" placeholder="Enter you first name"
+                                           class="form-control form-control-line"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-12">Last Name</label>
+                                <div class="col-md-12">
+                                    <input type="text" name="lastName" placeholder="Enter you last name"
                                            class="form-control form-control-line"></div>
                             </div>
                             <div class="form-group">
                                 <label for="example-email" class="col-md-12">Email</label>
                                 <div class="col-md-12">
-                                    <input type="email" placeholder="johnathan@admin.com"
-                                           class="form-control form-control-line" name="example-email"
+                                    <input type="email" placeholder="Enter user email"
+                                           class="form-control form-control-line" name="email"
                                            id="example-email"></div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-12">Password</label>
                                 <div class="col-md-12">
-                                    <input type="password" value="password" class="form-control form-control-line">
+                                    <input type="password" name="password" placeholder="Enter user password"
+                                           class="form-control form-control-line">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-12">Phone No</label>
                                 <div class="col-md-12">
-                                    <input type="text" placeholder="123 456 7890"
+                                    <input type="text" name="phoneNumber" placeholder="Enter user phone number"
                                            class="form-control form-control-line"></div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-12">Select Country</label>
+                                <label class="col-sm-12">Select Role</label>
                                 <div class="col-sm-12">
-                                    <select class="form-control form-control-line">
-                                        <option>London</option>
-                                        <option>India</option>
-                                        <option>Usa</option>
-                                        <option>Canada</option>
-                                        <option>Thailand</option>
+                                    <select name="role" class="form-control form-control-line">
+                                        <option disabled selected>Select user role</option>
+                                        <c:forEach items="${roles}" var="role">
+                                            <option value="${role.id}">${role.name}</option>
+                                        </c:forEach>
                                     </select>
                                 </div>
                             </div>
