@@ -154,24 +154,21 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>ROLE_ADMIN</td>
-                                    <td>Quản trị hệ thống</td>
-                                    <td>
-                                        <a href="#" class="btn btn-sm btn-primary">Sửa</a>
-                                        <a href="#" class="btn btn-sm btn-danger">Xóa</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>ROLE_USER</td>
-                                    <td>Nhân viên</td>
-                                    <td>
-                                        <a href="#" class="btn btn-sm btn-primary">Sửa</a>
-                                        <a href="#" class="btn btn-sm btn-danger">Xóa</a>
-                                    </td>
-                                </tr>
+                                <c:forEach var="role" items="${roles}">
+                                    <tr>
+                                        <td>${role.id}</td>
+                                        <td>${role.name}</td>
+                                        <td>${role.description}</td>
+                                        <td>
+                                            <a href="#" class="btn btn-sm btn-primary">Sửa</a>
+                                            <a href="#"
+                                               data-id="${role.id}"
+                                               class="btn btn-xoa btn-sm btn-danger">
+                                                Xóa
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
                                 </tbody>
                             </table>
                         </div>
@@ -205,6 +202,7 @@
     });
 </script>
 <script src="js/sidebar.js"></script>
+<script src="js/role-table.js"></script>
 </body>
 
 </html>

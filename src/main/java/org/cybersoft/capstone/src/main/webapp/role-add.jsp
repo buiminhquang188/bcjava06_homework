@@ -139,18 +139,27 @@
                 <div class="col-md-2 col-12"></div>
                 <div class="col-md-8 col-xs-12">
                     <div class="white-box">
-                        <form class="form-horizontal form-material">
+                        <form class="form-horizontal form-material" method="POST" action="role-add">
                             <div class="form-group">
                                 <label class="col-md-12">Tên quyền</label>
                                 <div class="col-md-12">
-                                    <input type="text" placeholder="Tên quyền"
-                                           class="form-control form-control-line"/>
+                                    <input
+                                            type="text"
+                                            name="name"
+                                            placeholder="Tên quyền"
+                                            class="form-control form-control-line"
+                                    />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-12">Mô tả</label>
                                 <div class="col-md-12">
-                                    <input type="text" placeholder="Mô tả" class="form-control form-control-line"/>
+                                    <input
+                                            type="text"
+                                            name="description"
+                                            placeholder="Mô tả"
+                                            class="form-control form-control-line"
+                                    />
                                 </div>
                             </div>
                             <div class="form-group">

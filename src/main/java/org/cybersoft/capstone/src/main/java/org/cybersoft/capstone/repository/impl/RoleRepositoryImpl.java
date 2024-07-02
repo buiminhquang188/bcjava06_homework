@@ -1,6 +1,7 @@
 package org.cybersoft.capstone.repository.impl;
 
 import org.cybersoft.capstone.config.MySQLConfig;
+import org.cybersoft.capstone.dto.RoleDTO;
 import org.cybersoft.capstone.entity.RoleEntity;
 import org.cybersoft.capstone.repository.RoleRepository;
 
@@ -33,10 +34,56 @@ public class RoleRepositoryImpl implements RoleRepository {
 
                 roles.add(role);
             }
+
+            connection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
         return roles;
+    }
+
+    @Override
+    public Integer createRole(RoleDTO roleDTO) {
+        Integer resultIndex = null;
+        String sql = """
+                INSERT INTO roles(name, description)
+                VALUE (?, ?)
+                """;
+        Connection connection = MySQLConfig.getConnection();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, roleDTO.getName());
+            preparedStatement.setString(2, roleDTO.getDescription());
+            resultIndex = preparedStatement.executeUpdate();
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return resultIndex;
+    }
+
+    @Override
+    public Integer deleteRole(Integer id) {
+        Integer resultIndex = null;
+        String sql = """
+                DELETE
+                FROM roles r
+                WHERE r.id = ?
+                """;
+        Connection connection = MySQLConfig.getConnection();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            resultIndex = preparedStatement.executeUpdate();
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return resultIndex;
     }
 }
