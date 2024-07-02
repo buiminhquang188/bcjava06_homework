@@ -52,6 +52,12 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public UserEntity getUser(Integer id) {
+        UserEntity user = new UserEntity();
+        return user;
+    }
+
+    @Override
     public Integer createUser(UserDTO userDTO) {
         Integer resultIndex = null;
 

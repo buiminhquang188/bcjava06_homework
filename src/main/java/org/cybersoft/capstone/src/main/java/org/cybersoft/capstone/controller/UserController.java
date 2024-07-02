@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "userController", urlPatterns = {"/user-table", "/user-add", "/user-details"})
+@WebServlet(name = "userController", urlPatterns = {"/user-table", "/user-add", "/user-details/*"})
 public class UserController extends HttpServlet {
     private final UserService userService = new UserServiceImpl();
     private final RoleService roleService = new RoleServiceImpl();
@@ -27,10 +27,13 @@ public class UserController extends HttpServlet {
         String path = req.getServletPath();
         switch (path) {
             case "/user-table":
-                this.getUsers(req, resp);
+                this.getUsers(req);
                 break;
             case "/user-add":
-                this.createUser(req, resp);
+                this.createUser(req);
+                break;
+            case "/user-details":
+                this.getUser(req);
                 break;
             default:
                 break;
@@ -41,6 +44,11 @@ public class UserController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String path = req.getServletPath();
+        if (!path.equals("user-add")) {
+            resp.sendRedirect(req.getContextPath() + "/404");
+        }
+
         String firstName = req.getParameter("firstName");
         String lastName = req.getParameter("lastName");
         String email = req.getParameter("email");
@@ -56,17 +64,18 @@ public class UserController extends HttpServlet {
         }
     }
 
-    @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-    }
-
-    private void getUsers(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private void getUsers(HttpServletRequest req) {
         List<UserEntity> users = this.userService.getUsers();
         req.setAttribute("users", users);
     }
 
-    private void createUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private void getUser(HttpServletRequest req) {
+        Integer id = Utils.getPathParameter(req);
+        UserEntity user = this.userService.getUser(id);
+        req.setAttribute("user", user);
+    }
+
+    private void createUser(HttpServletRequest req) {
         List<RoleEntity> roles = this.roleService.getRoles();
         req.setAttribute("roles", roles);
     }

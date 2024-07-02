@@ -17,6 +17,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserEntity getUser(Integer id) {
+        return this.userRepository.getUser(id);
+    }
+
+    @Override
     public Integer createUser(UserDTO userDTO) {
         return this.userRepository.createUser(userDTO);
     }

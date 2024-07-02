@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -155,28 +156,33 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Phân tích dự án</td>
-                                    <td>22/05/2019</td>
-                                    <td>30/05/2019</td>
-                                    <td>
-                                        <a href="#" class="btn btn-sm btn-primary">Sửa</a>
-                                        <a href="#" class="btn btn-sm btn-danger">Xóa</a>
-                                        <a href="groupwork-details" class="btn btn-sm btn-info">Xem</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Thiết kế hệ thống</td>
-                                    <td>22/05/2019</td>
-                                    <td>30/05/2019</td>
-                                    <td>
-                                        <a href="#" class="btn btn-sm btn-primary">Sửa</a>
-                                        <a href="#" class="btn btn-sm btn-danger">Xóa</a>
-                                        <a href="groupwork-details" class="btn btn-sm btn-info">Xem</a>
-                                    </td>
-                                </tr>
+                                <c:forEach items="${projects}" var="project">
+                                    <tr>
+                                        <td>${project.id}</td>
+                                        <td>${project.name}</td>
+                                        <td>
+                                            <fmt:formatDate pattern="yyyy-MM-dd"
+                                                            value="${project.startDate}"/>
+                                        </td>
+                                        <td>
+                                            <fmt:formatDate pattern="yyyy-MM-dd"
+                                                            value="${project.endDate}"/>
+                                        </td>
+                                        <td>
+                                            <a href="groupwork/${project.id}"
+                                               class="btn btn-sm btn-primary">
+                                                Sửa
+                                            </a>
+                                            <a href="#"
+                                               data-id="${project.id}"
+                                               class="btn btn-xoa btn-sm btn-danger">
+                                                Xóa
+                                            </a>
+                                            <a href="groupwork-details/${project.id}"
+                                               class="btn btn-sm btn-info">Xem</a>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
                                 </tbody>
                             </table>
                         </div>
@@ -210,6 +216,7 @@
     });
 </script>
 <script src="js/sidebar.js"></script>
+<script src="js/groupwork-table.js"></script>
 </body>
 
 </html>

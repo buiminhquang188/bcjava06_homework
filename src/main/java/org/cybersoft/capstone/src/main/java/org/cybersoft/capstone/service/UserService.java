@@ -8,6 +8,8 @@ import java.util.List;
 public interface UserService {
     List<UserEntity> getUsers();
 
+    UserEntity getUser(Integer id);
+
     Integer createUser(UserDTO userDTO);
 
     Boolean deleteUser(Integer id);

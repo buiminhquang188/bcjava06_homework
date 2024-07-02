@@ -1,26 +1,16 @@
-package org.cybersoft.capstone.entity;
+package org.cybersoft.capstone.dto;
 
 import java.sql.Timestamp;
 
-public class ProjectEntity {
-    private Integer id;
+public class ProjectDTO {
     private String name;
     private Timestamp startDate;
     private Timestamp endDate;
 
-    public ProjectEntity(Integer id, String name, Timestamp startDate, Timestamp endDate) {
-        this.id = id;
+    public ProjectDTO(String name, Timestamp startDate, Timestamp endDate) {
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getName() {
