@@ -13,4 +13,6 @@ public interface UserRepository {
     Integer createUser(UserDTO userDTO);
 
     Integer deleteUser(Integer id);
+
+    List<UserEntity> getUserOptions();
 }

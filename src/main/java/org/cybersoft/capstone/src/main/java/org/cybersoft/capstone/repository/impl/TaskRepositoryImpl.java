@@ -1,6 +1,7 @@
 package org.cybersoft.capstone.repository.impl;
 
 import org.cybersoft.capstone.config.MySQLConfig;
+import org.cybersoft.capstone.dto.TaskDTO;
 import org.cybersoft.capstone.entity.ProjectEntity;
 import org.cybersoft.capstone.entity.StatusEntity;
 import org.cybersoft.capstone.entity.TaskEntity;
@@ -30,7 +31,7 @@ public class TaskRepositoryImpl implements TaskRepository {
                 FROM task t
                          JOIN users u ON u.id = t.id_user
                          JOIN project p ON p.id = t.id_project
-                         JOIN status s ON s.id = t.id_status;
+                         LEFT JOIN status s ON s.id = t.id_status
                 """;
         Connection connection = MySQLConfig.getConnection();
 
@@ -66,5 +67,31 @@ public class TaskRepositoryImpl implements TaskRepository {
         }
 
         return tasks;
+    }
+
+    @Override
+    public Integer createTask(TaskDTO taskDTO) {
+        Integer resultIndex = null;
+        String sql = """
+                INSERT INTO task(name, start_date, end_date, id_user, id_project, id_status)
+                    VALUE (?, ?, ?, ?, ?, ?)
+                """;
+        Connection connection = MySQLConfig.getConnection();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, taskDTO.getName());
+            preparedStatement.setTimestamp(2, taskDTO.getStartDate());
+            preparedStatement.setTimestamp(3, taskDTO.getEndDate());
+            preparedStatement.setInt(4, taskDTO.getUserId());
+            preparedStatement.setInt(5, taskDTO.getProjectId());
+            preparedStatement.setInt(6, taskDTO.getStatusId());
+
+            resultIndex = preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return resultIndex;
     }
 }

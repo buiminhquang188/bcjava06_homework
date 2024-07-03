@@ -145,4 +145,31 @@ public class ProjectRepositoryImpl implements ProjectRepository {
         }
         return resultIndex;
     }
+
+    @Override
+    public List<ProjectEntity> getProjectOptions() {
+        List<ProjectEntity> projects = new ArrayList<>();
+        String sql = """
+                SELECT p.id, p.name from project p;
+                """;
+        Connection connection = MySQLConfig.getConnection();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                ProjectEntity project = new ProjectEntity(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name")
+                );
+
+                projects.add(project);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return projects;
+    }
 }

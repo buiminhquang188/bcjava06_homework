@@ -105,4 +105,32 @@ public class UserRepositoryImpl implements UserRepository {
 
         return resultIndex;
     }
+
+    @Override
+    public List<UserEntity> getUserOptions() {
+        List<UserEntity> users = new ArrayList<>();
+        String sql = """
+                SELECT u.id, u.first_name, u.last_name from users u
+                """;
+        Connection connection = MySQLConfig.getConnection();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                UserEntity user = new UserEntity(
+                        resultSet.getInt("id"),
+                        resultSet.getString("first_name"),
+                        resultSet.getString("last_name")
+                );
+
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return users;
+    }
 }

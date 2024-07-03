@@ -31,4 +31,9 @@ public class UserServiceImpl implements UserService {
         Integer resultIndex = this.userRepository.deleteUser(id);
         return resultIndex > 0;
     }
+
+    @Override
+    public List<UserEntity> getUserOptions() {
+        return this.userRepository.getUserOptions();
+    }
 }

@@ -15,4 +15,6 @@ public interface ProjectRepository {
     Integer updateProject(Integer id, ProjectDTO projectDTO);
 
     Integer deleteProject(Integer id);
+
+    List<ProjectEntity> getProjectOptions();
 }

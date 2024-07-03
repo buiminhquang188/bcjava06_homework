@@ -38,4 +38,9 @@ public class ProjectServiceImpl implements ProjectService {
         Integer resultIndex = this.projectRepository.deleteProject(id);
         return resultIndex > 0;
     }
+
+    @Override
+    public List<ProjectEntity> getProjectOptions() {
+        return this.projectRepository.getProjectOptions();
+    }
 }

@@ -13,4 +13,6 @@ public interface UserService {
     Integer createUser(UserDTO userDTO);
 
     Boolean deleteUser(Integer id);
+
+    List<UserEntity> getUserOptions();
 }

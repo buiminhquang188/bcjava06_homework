@@ -12,6 +12,12 @@ public class UserEntity {
     public UserEntity() {
     }
 
+    public UserEntity(Integer id, String firstName, String lastName) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     public UserEntity(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;

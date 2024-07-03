@@ -15,4 +15,6 @@ public interface ProjectService {
     Boolean updateProject(Integer id, ProjectDTO projectDTO);
 
     Boolean deleteProject(Integer id);
+
+    List<ProjectEntity> getProjectOptions();
 }
