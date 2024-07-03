@@ -24,7 +24,11 @@ public class ProjectController extends CustomServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        this.getProjects(req);
+        String path = req.getServletPath();
+
+        if ("/groupwork".equals(path)) {
+            this.getProjects(req);
+        }
         Utils.navigate(req, resp);
     }
 
