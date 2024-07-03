@@ -9,6 +9,14 @@ public class UserEntity {
     private String phone;
     private RoleEntity role;
 
+    public UserEntity() {
+    }
+
+    public UserEntity(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     public Integer getId() {
         return id;
     }

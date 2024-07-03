@@ -8,6 +8,10 @@ public class ProjectEntity {
     private Timestamp startDate;
     private Timestamp endDate;
 
+    public ProjectEntity(String name) {
+        this.name = name;
+    }
+
     public ProjectEntity(Integer id, String name, Timestamp startDate, Timestamp endDate) {
         this.id = id;
         this.name = name;

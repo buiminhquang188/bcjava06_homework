@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -54,34 +55,32 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Phân tích dự án</td>
-                                    <td>Dự án CRM</td>
-                                    <td>Nguyễn Văn Tèo</td>
-                                    <td>22/05/2019</td>
-                                    <td>30/05/2019</td>
-                                    <td>Đã hoàn thành</td>
-                                    <td>
-                                        <a href="#" class="btn btn-sm btn-primary">Sửa</a>
-                                        <a href="#" class="btn btn-sm btn-danger">Xóa</a>
-                                        <a href="#" class="btn btn-sm btn-info">Xem</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Thiết kế database</td>
-                                    <td>Dự án CRM</td>
-                                    <td>Trần Thị Lan</td>
-                                    <td>22/05/2019</td>
-                                    <td>30/05/2019</td>
-                                    <td>Đang thực hiện</td>
-                                    <td>
-                                        <a href="#" class="btn btn-sm btn-primary">Sửa</a>
-                                        <a href="#" class="btn btn-sm btn-danger">Xóa</a>
-                                        <a href="#" class="btn btn-sm btn-info">Xem</a>
-                                    </td>
-                                </tr>
+                                <c:forEach items="${tasks}" var="task">
+                                    <tr>
+                                        <td>${task.id}</td>
+                                        <td>${task.name}</td>
+                                        <td>${task.project.name}</td>
+                                        <td>${task.user.firstName} ${task.user.lastName}</td>
+                                        <td>
+                                            <fmt:formatDate
+                                                    pattern="yyyy-MM-dd"
+                                                    value="${task.startDate}"
+                                            />
+                                        </td>
+                                        <td>
+                                            <fmt:formatDate
+                                                    pattern="yyyy-MM-dd"
+                                                    value="${task.endDate}"
+                                            />
+                                        </td>
+                                        <td>${task.status.name}</td>
+                                        <td>
+                                            <a href="#" class="btn btn-sm btn-primary">Sửa</a>
+                                            <a href="#" class="btn btn-sm btn-danger">Xóa</a>
+                                            <a href="#" class="btn btn-sm btn-info">Xem</a>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
                                 </tbody>
                             </table>
                         </div>
