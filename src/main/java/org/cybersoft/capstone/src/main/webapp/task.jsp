@@ -76,7 +76,8 @@
                                         <td>${task.status.name}</td>
                                         <td>
                                             <a href="#" class="btn btn-sm btn-primary">Sửa</a>
-                                            <a href="#" class="btn btn-sm btn-danger">Xóa</a>
+                                            <a href="#" data-id="${task.id}"
+                                               class="btn btn-xoa btn-sm btn-danger">Xóa</a>
                                             <a href="#" class="btn btn-sm btn-info">Xem</a>
                                         </td>
                                     </tr>
@@ -96,6 +97,7 @@
 </div>
 <!-- /#wrapper -->
 <jsp:include page="fragments/script.jsp"/>
+<script src="js/task-table.js"></script>
 </body>
 
 </html>

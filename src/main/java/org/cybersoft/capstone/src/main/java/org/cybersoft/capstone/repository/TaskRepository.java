@@ -9,4 +9,6 @@ public interface TaskRepository {
     List<TaskEntity> getTasks();
 
     Integer createTask(TaskDTO taskDTO);
+
+    Integer deleteTask(Integer id);
 }

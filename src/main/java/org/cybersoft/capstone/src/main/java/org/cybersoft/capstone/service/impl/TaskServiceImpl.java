@@ -21,4 +21,10 @@ public class TaskServiceImpl implements TaskService {
         Integer resultIndex = this.taskRepository.createTask(taskDTO);
         return resultIndex > 0;
     }
+
+    @Override
+    public Boolean deleteTask(Integer id) {
+        Integer resultIndex = this.taskRepository.deleteTask(id);
+        return resultIndex > 0;
+    }
 }

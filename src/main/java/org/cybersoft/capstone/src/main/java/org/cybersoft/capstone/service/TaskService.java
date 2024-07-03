@@ -9,4 +9,6 @@ public interface TaskService {
     List<TaskEntity> getTasks();
 
     Boolean createTask(TaskDTO taskDTO);
+
+    Boolean deleteTask(Integer id);
 }

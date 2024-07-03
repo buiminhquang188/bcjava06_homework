@@ -94,4 +94,27 @@ public class TaskRepositoryImpl implements TaskRepository {
 
         return resultIndex;
     }
+
+    @Override
+    public Integer deleteTask(Integer id) {
+        Integer resultIndex = null;
+        String sql = """
+                DELETE
+                FROM task t
+                WHERE t.id = ?
+                """;
+        Connection connection = MySQLConfig.getConnection();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            resultIndex = preparedStatement.executeUpdate();
+
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return resultIndex;
+    }
 }
