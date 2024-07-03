@@ -11,6 +11,10 @@ public class ProjectEntity {
     public ProjectEntity() {
     }
 
+    public ProjectEntity(Integer id) {
+        this.id = id;
+    }
+
     public ProjectEntity(Integer id, String name) {
         this.id = id;
         this.name = name;

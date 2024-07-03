@@ -17,6 +17,11 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public TaskEntity getTask(Integer id) {
+        return this.taskRepository.getTask(id);
+    }
+
+    @Override
     public Boolean createTask(TaskDTO taskDTO) {
         Integer resultIndex = this.taskRepository.createTask(taskDTO);
         return resultIndex > 0;
@@ -25,6 +30,12 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public Boolean deleteTask(Integer id) {
         Integer resultIndex = this.taskRepository.deleteTask(id);
+        return resultIndex > 0;
+    }
+
+    @Override
+    public Boolean updateTask(Integer id, TaskDTO taskDTO) {
+        Integer resultIndex = this.taskRepository.updateTask(id, taskDTO);
         return resultIndex > 0;
     }
 }

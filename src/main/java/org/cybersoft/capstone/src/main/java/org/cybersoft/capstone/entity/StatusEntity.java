@@ -8,6 +8,10 @@ public class StatusEntity {
         this.name = name;
     }
 
+    public StatusEntity(Integer id) {
+        this.id = id;
+    }
+
     public StatusEntity(Integer id, String name) {
         this.id = id;
         this.name = name;

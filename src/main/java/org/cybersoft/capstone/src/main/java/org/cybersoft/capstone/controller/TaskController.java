@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "taskController", urlPatterns = {"/task", "/task-add"})
+@WebServlet(name = "taskController", urlPatterns = {"/task", "/task/*", "/task-add"})
 public class TaskController extends CustomServlet {
     private final TaskMapper taskMapper = new TaskMapper();
     private final TaskService taskService = new TaskServiceImpl();
@@ -42,13 +42,25 @@ public class TaskController extends CustomServlet {
                 this.getTasks(req);
                 break;
             case "/task-add":
-                this.createTask(req);
+                this.getOptions(req);
                 break;
             default:
                 break;
         }
 
         Utils.navigate(req, resp);
+    }
+
+    @Override
+    protected void doGetDetail(HttpServletRequest req, HttpServletResponse resp, Integer pathParameter) throws ServletException, IOException {
+        String path = req.getServletPath();
+
+        if ("/task".equals(path)) {
+            this.getTask(req, pathParameter);
+            this.getOptions(req);
+            req.getRequestDispatcher("/task-edit.jsp")
+                    .forward(req, resp);
+        }
     }
 
     @Override
@@ -61,12 +73,27 @@ public class TaskController extends CustomServlet {
         }
     }
 
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp, Integer pathParameter) throws ServletException, IOException {
+        TaskDTO taskDTO = taskMapper.taskParameterToDTO(req);
+        Boolean isUpdated = this.taskService.updateTask(pathParameter, taskDTO);
+
+        if (isUpdated) {
+            resp.sendRedirect(req.getContextPath() + "/task");
+        }
+    }
+
     private void getTasks(HttpServletRequest req) {
         List<TaskEntity> tasks = this.taskService.getTasks();
         req.setAttribute("tasks", tasks);
     }
 
-    private void createTask(HttpServletRequest req) {
+    private void getTask(HttpServletRequest req, Integer id) {
+        TaskEntity task = this.taskService.getTask(id);
+        req.setAttribute("task", task);
+    }
+
+    private void getOptions(HttpServletRequest req) {
         List<ProjectEntity> projects = this.projectService.getProjectOptions();
         List<UserEntity> users = this.userService.getUserOptions();
         List<StatusEntity> statuses = this.statusService.getStatuses();

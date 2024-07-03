@@ -8,7 +8,11 @@ import java.util.List;
 public interface TaskService {
     List<TaskEntity> getTasks();
 
+    TaskEntity getTask(Integer id);
+
     Boolean createTask(TaskDTO taskDTO);
 
     Boolean deleteTask(Integer id);
+
+    Boolean updateTask(Integer id, TaskDTO taskDTO);
 }

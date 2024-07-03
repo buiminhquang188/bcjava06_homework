@@ -8,7 +8,11 @@ import java.util.List;
 public interface TaskRepository {
     List<TaskEntity> getTasks();
 
+    TaskEntity getTask(Integer id);
+
     Integer createTask(TaskDTO taskDTO);
 
     Integer deleteTask(Integer id);
+
+    Integer updateTask(Integer id, TaskDTO taskDTO);
 }

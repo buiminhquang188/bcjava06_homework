@@ -72,6 +72,59 @@ public class TaskRepositoryImpl implements TaskRepository {
     }
 
     @Override
+    public TaskEntity getTask(Integer id) {
+        TaskEntity task = null;
+        String sql = """
+                SELECT t.id,
+                       t.name,
+                       t.start_date,
+                       t.end_date,
+                       u.id,
+                       p.id,
+                       s.id
+                FROM task t
+                         LEFT JOIN users u ON u.id = t.id_user
+                         LEFT JOIN project p ON p.id = t.id_project
+                         LEFT JOIN status s ON s.id = t.id_status
+                WHERE t.id = ?
+                """;
+        Connection connection = MySQLConfig.getConnection();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                task = new TaskEntity(
+                        resultSet.getInt("id"),
+                        resultSet.getString("t.name"),
+                        resultSet.getTimestamp("start_date"),
+                        resultSet.getTimestamp("end_date")
+                );
+                ProjectEntity project = new ProjectEntity(
+                        resultSet.getInt("p.id")
+                );
+                UserEntity user = new UserEntity(
+                        resultSet.getInt("u.id")
+                );
+                StatusEntity status = new StatusEntity(
+                        resultSet.getInt("s.id")
+                );
+
+                task.setProject(project);
+                task.setUser(user);
+                task.setStatus(status);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return task;
+    }
+
+    @Override
     public Integer createTask(TaskDTO taskDTO) {
         Integer resultIndex = null;
         String sql = """
@@ -114,6 +167,39 @@ public class TaskRepositoryImpl implements TaskRepository {
             resultIndex = preparedStatement.executeUpdate();
 
             connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return resultIndex;
+    }
+
+    @Override
+    public Integer updateTask(Integer id, TaskDTO taskDTO) {
+        Integer resultIndex = null;
+        String sql = """
+                UPDATE task t
+                SET t.name = ?,
+                    t.start_date = ?,
+                    t.end_date = ?,
+                    t.id_project = ?,
+                    t.id_user = ?,
+                    t.id_status = ?
+                WHERE t.id = ?;
+                """;
+        Connection connection = MySQLConfig.getConnection();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, taskDTO.getName());
+            preparedStatement.setTimestamp(2, taskDTO.getStartDate());
+            preparedStatement.setTimestamp(3, taskDTO.getEndDate());
+            preparedStatement.setInt(4, taskDTO.getProjectId());
+            preparedStatement.setInt(5, taskDTO.getUserId());
+            preparedStatement.setInt(6, taskDTO.getStatusId());
+            preparedStatement.setInt(7, id);
+
+            resultIndex = preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
