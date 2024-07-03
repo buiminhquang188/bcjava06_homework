@@ -33,6 +33,8 @@ public class StatusRepositoryImpl implements StatusRepository {
 
                 statuses.add(status);
             }
+
+            connection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

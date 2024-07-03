@@ -37,7 +37,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
 
                 projects.add(projectEntity);
             }
-
+            connection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -69,6 +69,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
                         resultSet.getTimestamp("end_date")
                 );
             }
+            connection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -92,6 +93,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
             preparedStatement.setObject(3, projectDTO.getEndDate());
 
             resultIndex = preparedStatement.executeUpdate();
+            connection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -119,6 +121,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
             preparedStatement.setInt(4, id);
 
             resultIndex = preparedStatement.executeUpdate();
+            connection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -140,6 +143,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, id);
             resultIndex = preparedStatement.executeUpdate();
+            connection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -166,6 +170,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
 
                 projects.add(project);
             }
+            connection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

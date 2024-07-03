@@ -62,6 +62,8 @@ public class TaskRepositoryImpl implements TaskRepository {
                 task.setStatus(status);
                 tasks.add(task);
             }
+
+            connection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -88,6 +90,7 @@ public class TaskRepositoryImpl implements TaskRepository {
             preparedStatement.setInt(6, taskDTO.getStatusId());
 
             resultIndex = preparedStatement.executeUpdate();
+            connection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

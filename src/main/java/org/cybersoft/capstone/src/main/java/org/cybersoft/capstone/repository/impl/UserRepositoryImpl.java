@@ -77,6 +77,8 @@ public class UserRepositoryImpl implements UserRepository {
             preparedStatement.setInt(6, userDTO.getRole());
 
             resultIndex = preparedStatement.executeUpdate();
+
+            connection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -127,6 +129,8 @@ public class UserRepositoryImpl implements UserRepository {
 
                 users.add(user);
             }
+
+            connection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
