@@ -1,5 +1,6 @@
 package org.cybersoft.capstone.repository;
 
+import org.cybersoft.capstone.dto.LoginDTO;
 import org.cybersoft.capstone.dto.UserDTO;
 import org.cybersoft.capstone.entity.UserEntity;
 
@@ -15,4 +16,6 @@ public interface UserRepository {
     Integer deleteUser(Integer id);
 
     List<UserEntity> getUserOptions();
+
+    UserEntity getUserByUsernameAndPassword(LoginDTO loginDTO);
 }

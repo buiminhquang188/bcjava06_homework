@@ -1,8 +1,12 @@
 package org.cybersoft.capstone.filter;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@WebFilter("/*")
 public class AuthenticationFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -11,7 +15,25 @@ public class AuthenticationFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        Object isValid = servletRequest
+                .getServletContext()
+                .getAttribute("isValid");
 
+        if (isValid != null) {
+            isValid = isValid.toString();
+        }
+
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
+        String loginURI = request.getContextPath() + "/login";
+        boolean loginRequest = request.getRequestURI()
+                .equals(loginURI);
+
+        if ("true".equals(isValid) | loginRequest) {
+            filterChain.doFilter(request, response);
+        } else {
+            response.sendRedirect(request.getContextPath() + "/login");
+        }
     }
 
     @Override

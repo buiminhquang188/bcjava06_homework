@@ -1,5 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%--Redirect to index page if logged--%>
+<c:set var="isValid" scope="session" value="${initParam['isValid']}"/>
+<c:if test="${isValid.equals('true')}">
+    <% response.sendRedirect(request.getContextPath() + "/"); %>
+</c:if>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,10 +20,10 @@
         <div class="col-md-5 m-auto mt-5">
             <h3 class="text-center">ĐĂNG NHẬP HỆ THỐNG</h3>
             <div class="p-4 border mt-4">
-                <form action="/action_page.php">
+                <form method="POST" action="login">
                     <div class="form-group">
-                        <label>Email</label>
-                        <input type="email" class="form-control" name="email">
+                        <label>Username</label>
+                        <input type="email" class="form-control" name="username">
                     </div>
                     <div class="form-group">
                         <label>Mật khẩu</label>
