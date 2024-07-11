@@ -22,14 +22,19 @@
             <div class="p-4 border mt-4">
                 <form method="POST" action="login">
                     <div class="form-group">
-                        <label>Username</label>
+                        <label>Email</label>
                         <input type="email" class="form-control" name="username">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group mb-0">
                         <label>Mật khẩu</label>
                         <input type="password" class="form-control" name="password">
                     </div>
-                    <button type="submit" class="btn btn-primary">Đăng nhập</button>
+                    <c:if test="${isValid.equals('false')}">
+                        <small class="form-text text-danger mt-2">
+                            Username or password not correct, please check again.
+                        </small>
+                    </c:if>
+                    <button type="submit" class="btn btn-primary mt-2">Đăng nhập</button>
                 </form>
             </div>
         </div>

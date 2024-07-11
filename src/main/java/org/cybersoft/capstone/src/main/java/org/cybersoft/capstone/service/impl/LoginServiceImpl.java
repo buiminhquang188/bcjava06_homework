@@ -12,7 +12,6 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public Boolean loginUser(LoginDTO loginDTO) {
         UserEntity user = this.userRepository.getUserByUsernameAndPassword(loginDTO);
-        return user != null && !user.getUsername()
-                .isEmpty();
+        return user != null && user.getUsername() != null;
     }
 }
