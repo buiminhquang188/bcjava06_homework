@@ -15,6 +15,12 @@ public class TaskEntity {
 
     }
 
+    public TaskEntity(String name, Timestamp startDate, Timestamp endDate) {
+        this.name = name;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
     public TaskEntity(Integer id, String name, Timestamp startDate, Timestamp endDate) {
         this.id = id;
         this.name = name;

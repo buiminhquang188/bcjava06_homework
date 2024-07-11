@@ -8,6 +8,10 @@ public class ProjectEntity {
     private Timestamp startDate;
     private Timestamp endDate;
 
+    private TaskEntity task;
+
+    private UserEntity user;
+
     public ProjectEntity() {
     }
 
@@ -62,4 +66,21 @@ public class ProjectEntity {
     public void setEndDate(Timestamp endDate) {
         this.endDate = endDate;
     }
+
+    public TaskEntity getTask() {
+        return task;
+    }
+
+    public void setTask(TaskEntity task) {
+        this.task = task;
+    }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
+
 }

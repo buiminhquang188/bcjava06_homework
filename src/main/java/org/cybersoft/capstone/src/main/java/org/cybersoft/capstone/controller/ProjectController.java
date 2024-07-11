@@ -3,6 +3,10 @@ package org.cybersoft.capstone.controller;
 import org.cybersoft.capstone.config.CustomServlet;
 import org.cybersoft.capstone.dto.ProjectDTO;
 import org.cybersoft.capstone.entity.ProjectEntity;
+import org.cybersoft.capstone.entity.StatusEntity;
+import org.cybersoft.capstone.mapper.ProjectMapper;
+import org.cybersoft.capstone.payload.response.ProjectDetailResponse;
+import org.cybersoft.capstone.payload.response.ProjectStatResponse;
 import org.cybersoft.capstone.service.ProjectService;
 import org.cybersoft.capstone.service.impl.ProjectServiceImpl;
 import org.cybersoft.capstone.util.Utils;
@@ -20,6 +24,7 @@ import java.util.List;
         urlPatterns = {"/groupwork", "/groupwork/*", "/groupwork-add", "/groupwork-details/*"}
 )
 public class ProjectController extends CustomServlet {
+    private final ProjectMapper projectMapper = new ProjectMapper();
     private final ProjectService projectService = new ProjectServiceImpl();
 
     @Override
@@ -35,14 +40,16 @@ public class ProjectController extends CustomServlet {
     @Override
     protected void doGetDetail(HttpServletRequest req, HttpServletResponse resp, Integer pathParameter) throws ServletException, IOException {
         String path = req.getServletPath();
-        this.getProject(req, pathParameter);
 
         switch (path) {
             case "/groupwork":
+                this.getProject(req, pathParameter);
                 req.getRequestDispatcher("/groupwork-edit.jsp")
                         .forward(req, resp);
                 break;
             case "/groupwork-details":
+                this.getProjectStatistic(req, pathParameter);
+                this.getProjectDetail(req, pathParameter);
                 req.getRequestDispatcher("/groupwork-details.jsp")
                         .forward(req, resp);
                 break;
@@ -78,6 +85,18 @@ public class ProjectController extends CustomServlet {
     private void getProject(HttpServletRequest req, Integer id) {
         ProjectEntity project = this.projectService.getProject(id);
         req.setAttribute("project", project);
+    }
+
+    private void getProjectStatistic(HttpServletRequest req, Integer id) {
+        List<StatusEntity> statuses = this.projectService.getProjectStatistic(id);
+        ProjectStatResponse projectStat = this.projectMapper.statusEntityToResponse(statuses);
+        req.setAttribute("projectStat", projectStat);
+    }
+
+    private void getProjectDetail(HttpServletRequest req, Integer id) {
+        List<ProjectEntity> project = this.projectService.getProjectDetail(id);
+        List<ProjectDetailResponse> projectDetailResponse = this.projectMapper.projectEntitiesToResponse(project);
+        req.setAttribute("project", projectDetailResponse);
     }
 
     private ProjectDTO getParametersToDTO(HttpServletRequest req) {

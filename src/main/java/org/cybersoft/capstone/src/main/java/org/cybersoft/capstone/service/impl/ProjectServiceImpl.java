@@ -2,6 +2,7 @@ package org.cybersoft.capstone.service.impl;
 
 import org.cybersoft.capstone.dto.ProjectDTO;
 import org.cybersoft.capstone.entity.ProjectEntity;
+import org.cybersoft.capstone.entity.StatusEntity;
 import org.cybersoft.capstone.repository.ProjectRepository;
 import org.cybersoft.capstone.repository.impl.ProjectRepositoryImpl;
 import org.cybersoft.capstone.service.ProjectService;
@@ -42,5 +43,15 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public List<ProjectEntity> getProjectOptions() {
         return this.projectRepository.getProjectOptions();
+    }
+
+    @Override
+    public List<ProjectEntity> getProjectDetail(Integer id) {
+        return this.projectRepository.getProjectDetail(id);
+    }
+
+    @Override
+    public List<StatusEntity> getProjectStatistic(Integer id) {
+        return this.projectRepository.getProjectStat(id);
     }
 }
