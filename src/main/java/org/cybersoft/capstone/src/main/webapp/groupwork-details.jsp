@@ -58,7 +58,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </div>
                             <div class="col-md-6 col-sm-6 col-xs-6">
                                 <h3 class="counter text-right m-t-15 text-danger">
-                                    ${(projectStat.notStarted / projectStat.total) * 100}%
+                                    <fmt:formatNumber type="number"
+                                                      maxFractionDigits="2"
+                                                      value="${(projectStat.notStarted / projectStat.total) * 100}"/>%
                                 </h3>
                             </div>
                             <div class="col-md-12 col-sm-12 col-xs-12">
@@ -84,7 +86,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </div>
                             <div class="col-md-6 col-sm-6 col-xs-6">
                                 <h3 class="counter text-right m-t-15 text-megna">
-                                    ${(projectStat.inProgress / projectStat.total) * 100}%
+                                    <fmt:formatNumber type="number"
+                                                      maxFractionDigits="2"
+                                                      value="${(projectStat.inProgress / projectStat.total) * 100}"/>%
                                 </h3>
                             </div>
                             <div class="col-md-12 col-sm-12 col-xs-12">
@@ -110,7 +114,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </div>
                             <div class="col-md-6 col-sm-6 col-xs-6">
                                 <h3 class="counter text-right m-t-15 text-primary">
-                                    ${(projectStat.completed / projectStat.total) * 100}%</h3>
+                                    <fmt:formatNumber type="number"
+                                                      maxFractionDigits="2"
+                                                      value="${(projectStat.completed / projectStat.total) * 100}"/>%
+                                </h3>
                             </div>
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="progress">
@@ -157,9 +164,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                 </div>
                                             </a>
                                         </c:when>
-                                        <c:otherwise>
-                                            Không có dữ liệu
-                                        </c:otherwise>
                                     </c:choose>
                                 </c:forEach>
                             </div>
@@ -185,9 +189,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                 </div>
                                             </a>
                                         </c:when>
-                                        <c:otherwise>
-                                            Không có dữ liệu
-                                        </c:otherwise>
                                     </c:choose>
                                 </c:forEach>
                             </div>
@@ -213,9 +214,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                 </div>
                                             </a>
                                         </c:when>
-                                        <c:otherwise>
-                                            Không có dữ liệu
-                                        </c:otherwise>
                                     </c:choose>
                                 </c:forEach>
                             </div>
