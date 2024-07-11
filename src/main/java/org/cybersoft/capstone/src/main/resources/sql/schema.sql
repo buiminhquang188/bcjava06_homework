@@ -1,66 +1,86 @@
-CREATE DATABASE IF NOT EXISTS crmapp;
+CREATE DATABASE crmapp;
 USE crmapp;
 
-CREATE TABLE IF NOT EXISTS role
+CREATE TABLE roles
 (
-    id          INT NOT NULL AUTO_INCREMENT,
+    id          INT AUTO_INCREMENT,
     name        VARCHAR(50),
-    description VARCHAR(255),
+    description VARCHAR(50),
 
     PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS user
+CREATE TABLE users
 (
-    id         INT NOT NULL AUTO_INCREMENT,
-    email      VARCHAR(50),
+    id         INT AUTO_INCREMENT,
     password   VARCHAR(255),
     first_name VARCHAR(50),
     last_name  VARCHAR(50),
     username   VARCHAR(255),
-    phone      VARCHAR(25),
+    phone      VARCHAR(12),
     id_role    INT,
 
     PRIMARY KEY (id)
 );
 
-
-CREATE TABLE IF NOT EXISTS project
+CREATE TABLE task
 (
-    id         INT NOT NULL AUTO_INCREMENT,
-    name       VARCHAR(255),
-    start_date TIMESTAMP,
-    end_date   TIMESTAMP,
-
-    PRIMARY KEY (id)
-);
-
-CREATE TABLE IF NOT EXISTS task
-(
-    id         INT NOT NULL AUTO_INCREMENT,
-    name       VARCHAR(255),
-    start_date TIMESTAMP,
-    end_date   TIMESTAMP,
-
+    id         INT AUTO_INCREMENT,
     id_user    INT,
     id_project INT,
     id_status  INT,
+    name       VARCHAR(255),
+    start_date TIMESTAMP DEFAULT NOW(),
+    end_date   TIMESTAMP NOT NULL,
 
     PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS status
+CREATE TABLE project
 (
-    id   INT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(20),
+    id         INT AUTO_INCREMENT,
+    name       VARCHAR(255),
+    start_date TIMESTAMP DEFAULT NOW(),
+    end_date   TIMESTAMP NOT NULL,
 
     PRIMARY KEY (id)
 );
 
-ALTER TABLE user
-    ADD CONSTRAINT FK_id_role_users FOREIGN KEY (id_role) REFERENCES role (id);
+CREATE TABLE status
+(
+    id   INT AUTO_INCREMENT,
+    name VARCHAR(50),
 
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE users_project
+(
+    id         INT AUTO_INCREMENT,
+    id_project INT,
+    id_user    INT,
+
+    PRIMARY KEY (id)
+);
+
+ALTER TABLE users_project
+    ADD CONSTRAINT FK_id_project_users FOREIGN KEY (id_project) REFERENCES project (id),
+    ADD CONSTRAINT FK_id_users_project FOREIGN KEY (id_user) REFERENCES users (id);
+
+ALTER TABLE users
+    ADD CONSTRAINT FK_id_role_users FOREIGN KEY (id_role) REFERENCES roles (id);
 ALTER TABLE task
-    ADD CONSTRAINT FK_id_user_tasks FOREIGN KEY (id_user) REFERENCES user (id),
-    ADD CONSTRAINT FK_id_status_tasks FOREIGN KEY (id_status) REFERENCES status (id),
-    ADD CONSTRAINT FK_id_project_tasks FOREIGN KEY (id_project) REFERENCES project (id);
+    ADD CONSTRAINT FK_id_user_task FOREIGN KEY (id_user) REFERENCES users (id);
+ALTER TABLE task
+    ADD CONSTRAINT FK_id_project_task FOREIGN KEY (id_project) REFERENCES project (id);
+ALTER TABLE task
+    ADD CONSTRAINT FK_id_status_task FOREIGN KEY (id_status) REFERENCES status (id);
+
+INSERT INTO roles(name, description)
+VALUES ('ADMIN', 'Administrator'),
+       ('EMPLOYEE', 'Employee');
+
+INSERT INTO status(name)
+VALUES ('Đã hoàn thành'),
+       ('Đang thực hiện'),
+       ('Chưa thực hiện');
