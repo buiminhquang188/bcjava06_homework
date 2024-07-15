@@ -1,7 +1,8 @@
 package org.cybersoft.capstone.service;
 
 import org.cybersoft.capstone.dto.LoginDTO;
+import org.cybersoft.capstone.payload.response.LoginResponse;
 
 public interface LoginService {
-    Boolean loginUser(LoginDTO loginDTO);
+    LoginResponse loginUser(LoginDTO loginDTO);
 }

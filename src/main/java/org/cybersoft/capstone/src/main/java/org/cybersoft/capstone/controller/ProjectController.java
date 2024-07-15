@@ -5,6 +5,7 @@ import org.cybersoft.capstone.dto.ProjectDTO;
 import org.cybersoft.capstone.entity.ProjectEntity;
 import org.cybersoft.capstone.entity.StatusEntity;
 import org.cybersoft.capstone.mapper.ProjectMapper;
+import org.cybersoft.capstone.mapper.StatisticMapper;
 import org.cybersoft.capstone.payload.response.ProjectDetailResponse;
 import org.cybersoft.capstone.payload.response.ProjectStatResponse;
 import org.cybersoft.capstone.service.ProjectService;
@@ -24,6 +25,7 @@ import java.util.List;
         urlPatterns = {"/groupwork", "/groupwork/*", "/groupwork-add", "/groupwork-details/*"}
 )
 public class ProjectController extends CustomServlet {
+    private final StatisticMapper statisticMapper = new StatisticMapper();
     private final ProjectMapper projectMapper = new ProjectMapper();
     private final ProjectService projectService = new ProjectServiceImpl();
 
@@ -89,7 +91,7 @@ public class ProjectController extends CustomServlet {
 
     private void getProjectStatistic(HttpServletRequest req, Integer id) {
         List<StatusEntity> statuses = this.projectService.getProjectStatistic(id);
-        ProjectStatResponse projectStat = this.projectMapper.statusEntityToResponse(statuses);
+        ProjectStatResponse projectStat = this.statisticMapper.statusEntityToResponse(statuses);
         req.setAttribute("projectStat", projectStat);
     }
 

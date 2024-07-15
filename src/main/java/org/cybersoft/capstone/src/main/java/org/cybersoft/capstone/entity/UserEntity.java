@@ -27,6 +27,12 @@ public class UserEntity {
         this.lastName = lastName;
     }
 
+    public UserEntity(String firstName, String lastName, String username) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+    }
+
     public Integer getId() {
         return id;
     }

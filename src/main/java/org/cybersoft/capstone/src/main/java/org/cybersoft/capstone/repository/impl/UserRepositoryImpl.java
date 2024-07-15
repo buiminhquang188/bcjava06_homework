@@ -143,7 +143,7 @@ public class UserRepositoryImpl implements UserRepository {
     public UserEntity getUserByUsernameAndPassword(LoginDTO loginDTO) {
         UserEntity user = new UserEntity();
         String sql = """
-                SELECT u.username FROM users u
+                SELECT u.id, u.username FROM users u
                 WHERE u.username = ? AND u.password = ?
                 """;
         Connection connection = MySQLConfig.getConnection();
@@ -155,6 +155,7 @@ public class UserRepositoryImpl implements UserRepository {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
+                user.setId(resultSet.getInt("id"));
                 user.setUsername(resultSet.getString("username"));
             }
         } catch (SQLException e) {
