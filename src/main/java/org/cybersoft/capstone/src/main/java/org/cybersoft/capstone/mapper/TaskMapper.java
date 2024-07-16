@@ -19,9 +19,9 @@ public class TaskMapper {
                 name,
                 Utils.parseStringToTimeStamp(startDate, LocalTime.MIN),
                 Utils.parseStringToTimeStamp(endDate, LocalTime.MAX),
-                Integer.parseInt(projectId),
-                Integer.parseInt(userId),
-                statusId != null ? Integer.parseInt(statusId) : null
+                Utils.parseStringToInt(projectId),
+                Utils.parseStringToInt(userId),
+                Utils.parseStringToInt(statusId)
         );
     }
 }

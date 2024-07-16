@@ -200,9 +200,9 @@ public class TaskRepositoryImpl implements TaskRepository {
             preparedStatement.setString(1, taskDTO.getName());
             preparedStatement.setTimestamp(2, taskDTO.getStartDate());
             preparedStatement.setTimestamp(3, taskDTO.getEndDate());
-            preparedStatement.setInt(4, taskDTO.getProjectId());
-            preparedStatement.setInt(5, taskDTO.getUserId());
-            preparedStatement.setInt(6, taskDTO.getStatusId());
+            preparedStatement.setObject(4, taskDTO.getProjectId());
+            preparedStatement.setObject(5, taskDTO.getUserId());
+            preparedStatement.setObject(6, taskDTO.getStatusId());
             preparedStatement.setInt(7, id);
 
             resultIndex = preparedStatement.executeUpdate();

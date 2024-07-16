@@ -64,8 +64,8 @@ public class TaskController extends CustomServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        TaskDTO taskDTO = taskMapper.taskParameterToDTO(req);
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        TaskDTO taskDTO = this.taskMapper.taskParameterToDTO(req);
         Boolean isCreated = this.taskService.createTask(taskDTO);
 
         if (isCreated) {
@@ -74,8 +74,8 @@ public class TaskController extends CustomServlet {
     }
 
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp, Integer pathParameter) throws ServletException, IOException {
-        TaskDTO taskDTO = taskMapper.taskParameterToDTO(req);
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp, Integer pathParameter) throws IOException {
+        TaskDTO taskDTO = this.taskMapper.taskParameterToDTO(req);
         Boolean isUpdated = this.taskService.updateTask(pathParameter, taskDTO);
 
         if (isUpdated) {

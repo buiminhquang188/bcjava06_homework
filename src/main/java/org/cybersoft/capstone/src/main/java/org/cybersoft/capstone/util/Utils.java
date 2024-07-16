@@ -53,4 +53,8 @@ public class Utils {
                 .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         return Timestamp.valueOf(date);
     }
+
+    public static Integer parseStringToInt(String input) {
+        return input != null ? Integer.parseInt(input) : null;
+    }
 }
