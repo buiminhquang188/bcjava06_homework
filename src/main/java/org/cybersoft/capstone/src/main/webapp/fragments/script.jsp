@@ -22,3 +22,4 @@
 <!-- Custom Theme JavaScript -->
 <script src="${contextPath}/js/custom.min.js"></script>
 <script src="${contextPath}/js/sidebar.js"></script>
+<script src="${contextPath}/js/logout.js"></script>
