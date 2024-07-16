@@ -59,7 +59,7 @@
                                     <tr>
                                         <td>${task.id}</td>
                                         <td>${task.name}</td>
-                                        <td>${task.project.name ? task.project.name : "N/A"}</td>
+                                        <td>${task.project.name != null ? task.project.name : "N/A"}</td>
                                         <td>${task.user.firstName} ${task.user.lastName}</td>
                                         <td>
                                             <fmt:formatDate
@@ -73,7 +73,7 @@
                                                     value="${task.endDate}"
                                             />
                                         </td>
-                                        <td>${task.status.name ? task.status.name : "N/A"}</td>
+                                        <td>${task.status.name != null ? task.status.name : "N/A"}</td>
                                         <td>
                                             <a href="task/${task.id}" class="btn btn-sm btn-primary">Sửa</a>
                                             <a href="#" data-id="${task.id}"

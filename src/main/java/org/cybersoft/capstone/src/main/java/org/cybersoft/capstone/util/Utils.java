@@ -57,4 +57,8 @@ public class Utils {
     public static Integer parseStringToInt(String input) {
         return input != null ? Integer.parseInt(input) : null;
     }
+
+    public static Integer parseIntFromResultSet(Integer input) {
+        return input == 0 ? null : input;
+    }
 }

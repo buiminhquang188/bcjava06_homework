@@ -3,6 +3,7 @@ package org.cybersoft.capstone.repository.impl;
 import org.cybersoft.capstone.config.MySQLConfig;
 import org.cybersoft.capstone.entity.*;
 import org.cybersoft.capstone.repository.ProfileRepository;
+import org.cybersoft.capstone.util.Utils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -28,9 +29,9 @@ public class ProfileRepositoryImpl implements ProfileRepository {
                        s.id,
                        s.name
                 FROM users u
-                         JOIN task t ON t.id_user = u.id
-                         JOIN project p ON p.id = t.id_project
-                         JOIN status s ON s.id = t.id_status
+                         INNER JOIN task t ON t.id_user = u.id
+                         INNER JOIN project p ON p.id = t.id_project
+                         INNER JOIN status s ON s.id = t.id_status
                 WHERE u.id = ?
                 """;
         try {
@@ -50,12 +51,12 @@ public class ProfileRepositoryImpl implements ProfileRepository {
                 );
 
                 StatusEntity status = new StatusEntity(
-                        resultSet.getInt("s.id"),
+                        Utils.parseIntFromResultSet(resultSet.getInt("s.id")),
                         resultSet.getString("s.name")
                 );
 
                 TaskEntity task = new TaskEntity(
-                        resultSet.getInt("t.id"),
+                        Utils.parseIntFromResultSet(resultSet.getInt("t.id")),
                         resultSet.getString("t.name"),
                         resultSet.getTimestamp("t.start_date"),
                         resultSet.getTimestamp("t.end_date"),
