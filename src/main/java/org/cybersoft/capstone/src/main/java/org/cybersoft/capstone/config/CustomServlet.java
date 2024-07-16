@@ -14,6 +14,7 @@ public abstract class CustomServlet extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
         Integer pathParameter = Utils.getPathParameter(req);
         String customMethod = req.getParameter("_method");
 
