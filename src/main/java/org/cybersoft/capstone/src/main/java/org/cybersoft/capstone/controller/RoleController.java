@@ -23,7 +23,7 @@ public class RoleController extends HttpServlet {
         String path = req.getServletPath();
         switch (path) {
             case "/role-table":
-                this.getRoles(req, resp);
+                this.getRoles(req);
                 break;
             default:
                 break;
@@ -45,7 +45,7 @@ public class RoleController extends HttpServlet {
         }
     }
 
-    private void getRoles(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private void getRoles(HttpServletRequest req) {
         List<RoleEntity> roles = this.roleService.getRoles();
         req.setAttribute("roles", roles);
     }
