@@ -29,8 +29,8 @@ public class TaskRepositoryImpl implements TaskRepository {
                        p.name,
                        s.name
                 FROM task t
-                         JOIN users u ON u.id = t.id_user
-                         JOIN project p ON p.id = t.id_project
+                         LEFT JOIN users u ON u.id = t.id_user
+                         LEFT JOIN project p ON p.id = t.id_project
                          LEFT JOIN status s ON s.id = t.id_status
                 """;
         Connection connection = MySQLConfig.getConnection();
@@ -103,14 +103,20 @@ public class TaskRepositoryImpl implements TaskRepository {
                         resultSet.getTimestamp("start_date"),
                         resultSet.getTimestamp("end_date")
                 );
+
+                int projectId = resultSet.getInt("p.id");
                 ProjectEntity project = new ProjectEntity(
-                        resultSet.getInt("p.id")
+                        projectId > 0 ? projectId : null
                 );
+
+                int userId = resultSet.getInt("u.id");
                 UserEntity user = new UserEntity(
-                        resultSet.getInt("u.id")
+                        userId > 0 ? userId : null
                 );
+
+                int statusId = resultSet.getInt("s.id");
                 StatusEntity status = new StatusEntity(
-                        resultSet.getInt("s.id")
+                        statusId > 0 ? statusId : null
                 );
 
                 task.setProject(project);
@@ -205,5 +211,27 @@ public class TaskRepositoryImpl implements TaskRepository {
         }
 
         return resultIndex;
+    }
+
+    @Override
+    public Integer updateTaskByProjectId(Integer id) {
+        Integer result = null;
+        Connection connection = MySQLConfig.getConnection();
+        String sql = """
+                UPDATE task t
+                SET t.id_project = NULL
+                WHERE t.id_project = ?
+                """;
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            result = preparedStatement.executeUpdate();
+
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return result;
     }
 }

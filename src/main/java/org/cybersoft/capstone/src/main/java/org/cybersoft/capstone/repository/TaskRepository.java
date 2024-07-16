@@ -15,4 +15,6 @@ public interface TaskRepository {
     Integer deleteTask(Integer id);
 
     Integer updateTask(Integer id, TaskDTO taskDTO);
+
+    Integer updateTaskByProjectId(Integer id);
 }

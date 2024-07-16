@@ -45,11 +45,12 @@
                                 <label class="col-md-12">Dự án</label>
                                 <div class="col-md-12">
                                     <select name="projectId" class="form-control form-control-line">
-                                        <option disabled selected="${task.project.id == null}">Chọn dự án
+                                        <option disabled ${task.project.id == null ? "selected" : null}>Chọn dự án
                                         </option>
                                         <c:forEach items="${projects}" var="project">
-                                            <option value="${project.id}"
-                                                    selected="${task.project.id == project.id}">${project.name}</option>
+                                            <option value="${project.id}" ${task.project.id == project.id ? "selected" : null}>
+                                                    ${project.name}
+                                            </option>
                                         </c:forEach>
                                     </select>
                                 </div>
@@ -68,11 +69,11 @@
                                 <label class="col-md-12">Người thực hiện</label>
                                 <div class="col-md-12">
                                     <select name="userId" class="form-control form-control-line">
-                                        <option disabled selected="${task.user.id == null}">Chọn người thực hiện
+                                        <option disabled ${task.user.id == null ? "selected" : null}>Chọn người thực
+                                            hiện
                                         </option>
                                         <c:forEach items="${users}" var="user">
-                                            <option value="${user.id}"
-                                                    selected="${task.user.id == user.id}">
+                                            <option value="${user.id}" ${task.user.id == user.id ? "selected" : null}>
                                                     ${user.firstName} ${user.lastName}
                                             </option>
                                         </c:forEach>
@@ -105,10 +106,10 @@
                                 <label class="col-md-12">Trạng thái</label>
                                 <div class="col-md-12">
                                     <select name="statusId" class="form-control form-control-line">
-                                        <option disabled selected="${task.status.id == null}">Chọn trạng thái</option>
+                                        <option disabled ${task.status.id == null ? "selected" : null}>Chọn trạng thái
+                                        </option>
                                         <c:forEach items="${statuses}" var="status">
-                                            <option value="${status.id}"
-                                                    selected="${task.status.id == status.id}">
+                                            <option value="${status.id}" ${task.status.id == status.id ? "selected" : null}>
                                                     ${status.name}
                                             </option>
                                         </c:forEach>
@@ -118,7 +119,7 @@
                             <div class="form-group">
                                 <div class="col-sm-12">
                                     <button type="submit" class="btn btn-success">Lưu lại</button>
-                                    <a href="task" class="btn btn-primary">Quay lại</a>
+                                    <a href="${pageContext.servletContext.contextPath}/task" class="btn btn-primary">Quay lại</a>
                                     <input type="hidden" name="_method" value="PUT">
                                 </div>
                             </div>

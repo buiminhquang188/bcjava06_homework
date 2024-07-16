@@ -7,6 +7,7 @@ import org.cybersoft.capstone.entity.StatusEntity;
 import org.cybersoft.capstone.entity.TaskEntity;
 import org.cybersoft.capstone.entity.UserEntity;
 import org.cybersoft.capstone.repository.ProjectRepository;
+import org.cybersoft.capstone.repository.TaskRepository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProjectRepositoryImpl implements ProjectRepository {
+    private final TaskRepository taskRepository = new TaskRepositoryImpl();
+
     @Override
     public List<ProjectEntity> getProjects() {
         List<ProjectEntity> projects = new ArrayList<>();
@@ -134,6 +137,9 @@ public class ProjectRepositoryImpl implements ProjectRepository {
 
     @Override
     public Integer deleteProject(Integer id) {
+        Integer taskIndex = this.taskRepository.updateTaskByProjectId(id);
+        if (taskIndex <= 0) return null;
+
         Integer resultIndex = null;
         String sql = """
                 DELETE
@@ -144,6 +150,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
             preparedStatement.setInt(1, id);
             resultIndex = preparedStatement.executeUpdate();
             connection.close();
@@ -228,9 +235,10 @@ public class ProjectRepositoryImpl implements ProjectRepository {
                 project.setUser(user);
                 projects.add(project);
             }
-            connection.close();
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
         }
 
         return projects;
