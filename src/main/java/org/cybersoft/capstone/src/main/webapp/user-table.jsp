@@ -10,25 +10,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" type="image/png" sizes="16x16" href="plugins/images/favicon.png">
-    <title>Pixel Admin</title>
-    <!-- Bootstrap Core CSS -->
-    <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Menu CSS -->
-    <link href="plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css" rel="stylesheet">
+    <jsp:include page="fragments/plugin.jsp"/>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-    <!-- animation CSS -->
-    <link href="css/animate.css" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link href="css/style.css" rel="stylesheet">
-    <!-- color CSS -->
-    <link href="css/colors/blue-dark.css" id="theme" rel="stylesheet">
-    <link rel="stylesheet" href="./css/custom.css">
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
 </head>
 
 <body>
@@ -38,95 +21,9 @@
 </div>
 <div id="wrapper">
     <!-- Navigation -->
-    <nav class="navbar navbar-default navbar-static-top m-b-0">
-        <div class="navbar-header">
-            <a class="navbar-toggle hidden-sm hidden-md hidden-lg " href="javascript:void(0)" data-toggle="collapse"
-               data-target=".navbar-collapse">
-                <i class="fa fa-bars"></i>
-            </a>
-            <div class="top-left-part">
-                <a class="logo" href="">
-                    <b>
-                        <img src="plugins/images/pixeladmin-logo.png" alt="home"/>
-                    </b>
-                    <span class="hidden-xs">
-                                <img src="plugins/images/pixeladmin-text.png" alt="home"/>
-                            </span>
-                </a>
-            </div>
-            <ul class="nav navbar-top-links navbar-left m-l-20 hidden-xs">
-                <li>
-                    <form role="search" class="app-search hidden-xs">
-                        <input type="text" placeholder="Search..." class="form-control">
-                        <a href="">
-                            <i class="fa fa-search"></i>
-                        </a>
-                    </form>
-                </li>
-            </ul>
-            <ul class="nav navbar-top-links navbar-right pull-right">
-                <li>
-                    <div class="dropdown">
-                        <a class="profile-pic dropdown-toggle" data-toggle="dropdown" href="#">
-                            <img src="plugins/images/users/varun.jpg" alt="user-img" width="36" class="img-circle"/>
-                            <b class="hidden-xs">Cybersoft</b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="profile">Thông tin cá nhân</a></li>
-                            <li><a href="#">Thống kê công việc</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">Đăng xuất</a></li>
-                        </ul>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <!-- /.navbar-header -->
-        <!-- /.navbar-top-links -->
-        <!-- /.navbar-static-side -->
-    </nav>
+    <jsp:include page="fragments/navbar.jsp"/>
     <!-- Left navbar-header -->
-    <div class="navbar-default sidebar" role="navigation">
-        <div class="sidebar-nav navbar-collapse slimscrollsidebar">
-            <ul class="nav" id="side-menu">
-                <li style="padding: 10px 0 0;">
-                    <a href="${pageContext.servletContext.contextPath}" class="waves-effect"><i
-                            class="fa fa-clock-o fa-fw"
-                            aria-hidden="true"></i><span
-                            class="hide-menu">Dashboard</span></a>
-                </li>
-                <li>
-                    <a href="user-table" class="waves-effect"><i class="fa fa-user fa-fw"
-                                                                 aria-hidden="true"></i><span class="hide-menu">Thành viên</span></a>
-                </li>
-                <li>
-                    <a href="role-table" class="waves-effect"><i class="fa fa-modx fa-fw"
-                                                                 aria-hidden="true"></i><span
-                            class="hide-menu">Quyền</span></a>
-                </li>
-                <li>
-                    <a href="groupwork" class="waves-effect"><i class="fa fa-table fa-fw"
-                                                                aria-hidden="true"></i><span
-                            class="hide-menu">Dự án</span></a>
-                </li>
-                <li>
-                    <a href="task" class="waves-effect"><i class="fa fa-table fa-fw"
-                                                           aria-hidden="true"></i><span
-                            class="hide-menu">Công việc</span></a>
-                </li>
-                <li>
-                    <a href="blank" class="waves-effect"><i class="fa fa-columns fa-fw"
-                                                            aria-hidden="true"></i><span
-                            class="hide-menu">Blank Page</span></a>
-                </li>
-                <li>
-                    <a href="404" class="waves-effect"><i class="fa fa-info-circle fa-fw"
-                                                          aria-hidden="true"></i><span
-                            class="hide-menu">Error 404</span></a>
-                </li>
-            </ul>
-        </div>
-    </div>
+    <jsp:include page="fragments/sidebar.jsp"/>
     <!-- Left navbar-header end -->
     <!-- Page Content -->
     <div id="page-wrapper">
@@ -186,25 +83,13 @@
     <!-- /#page-wrapper -->
 </div>
 <!-- /#wrapper -->
-<!-- jQuery -->
-<script src="plugins/bower_components/jquery/dist/jquery.min.js"></script>
-<!-- Bootstrap Core JavaScript -->
-<script src="bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- Menu Plugin JavaScript -->
-<script src="plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js"></script>
-<!--slimscroll JavaScript -->
-<script src="js/jquery.slimscroll.js"></script>
+<jsp:include page="fragments/script.jsp"/>
 <script src="js/jquery.dataTables.js"></script>
-<!--Wave Effects -->
-<script src="js/waves.js"></script>
-<!-- Custom Theme JavaScript -->
-<script src="js/custom.min.js"></script>
 <script>
     $(document).ready(function () {
         $('#example').DataTable();
     });
 </script>
-<script src="js/sidebar.js"></script>
 <script src="js/user-table.js"></script>
 </body>
 

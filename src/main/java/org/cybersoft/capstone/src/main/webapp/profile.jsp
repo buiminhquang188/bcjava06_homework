@@ -12,6 +12,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <jsp:include page="fragments/plugin.jsp"/>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 </head>
 
 <body>
@@ -200,5 +201,6 @@
 </div>
 <!-- /#wrapper -->
 <jsp:include page="fragments/script.jsp"/>
+<script src="js/jquery.dataTables.js"></script>
 </body>
 </html>
