@@ -1,0 +1,97 @@
+{
+	"info": {
+		"_postman_id": "0520679f-a94d-491f-900f-5d345a63c7d7",
+		"name": "Buoi 32",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "17172393"
+	},
+	"item": [
+		{
+			"name": "Create Student With Request Param",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/student/request-param?name=Bùi Minh Quang&age=23",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"student",
+						"request-param"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Bùi Minh Quang"
+						},
+						{
+							"key": "age",
+							"value": "23"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Student With Path Variable",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/student/path-variable/:name/:age",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"student",
+						"path-variable",
+						":name",
+						":age"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					],
+					"variable": [
+						{
+							"key": "name",
+							"value": "Hoàng Anh Dũng"
+						},
+						{
+							"key": "age",
+							"value": "23"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Student With Request Body",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Huỳnh Khánh Trân\",\n    \"age\": 24\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/student/request-body"
+			},
+			"response": []
+		}
+	]
+}
