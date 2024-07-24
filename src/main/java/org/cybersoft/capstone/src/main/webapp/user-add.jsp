@@ -144,33 +144,62 @@
                                 <label class="col-md-12">First Name</label>
                                 <div class="col-md-12">
                                     <input type="text" name="firstName" placeholder="Enter you first name"
-                                           class="form-control form-control-line"></div>
+                                           class="form-control form-control-line">
+                                    <c:if test="${errors.firstName != null}">
+                                        <small class="form-text text-danger mt-2">
+                                                ${errors.firstName}
+                                        </small>
+                                    </c:if>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-12">Last Name</label>
                                 <div class="col-md-12">
                                     <input type="text" name="lastName" placeholder="Enter you last name"
-                                           class="form-control form-control-line"></div>
+                                           class="form-control form-control-line">
+                                    <c:if test="${errors.lastName != null}">
+                                        <small class="form-text text-danger mt-2">
+                                                ${errors.lastName}
+                                        </small>
+                                    </c:if>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="example-email" class="col-md-12">Email</label>
                                 <div class="col-md-12">
                                     <input type="email" placeholder="Enter user email"
                                            class="form-control form-control-line" name="email"
-                                           id="example-email"></div>
+                                           id="example-email">
+                                    <c:if test="${errors.email != null}">
+                                        <small class="form-text text-danger mt-2">
+                                                ${errors.email}
+                                        </small>
+                                    </c:if>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-12">Password</label>
                                 <div class="col-md-12">
                                     <input type="password" name="password" placeholder="Enter user password"
                                            class="form-control form-control-line">
+                                    <c:if test="${errors.password != null}">
+                                        <small class="form-text text-danger mt-2">
+                                                ${errors.password}
+                                        </small>
+                                    </c:if>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-12">Phone No</label>
                                 <div class="col-md-12">
                                     <input type="text" name="phoneNumber" placeholder="Enter user phone number"
-                                           class="form-control form-control-line"></div>
+                                           class="form-control form-control-line">
+                                    <c:if test="${errors.phoneNumber != null}">
+                                        <small class="form-text text-danger mt-2">
+                                                ${errors.phoneNumber}
+                                        </small>
+                                    </c:if>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-12">Select Role</label>
@@ -181,6 +210,11 @@
                                             <option value="${role.id}">${role.name}</option>
                                         </c:forEach>
                                     </select>
+                                    <c:if test="${errors.role != null}">
+                                        <small class="form-text text-danger mt-2">
+                                                ${errors.role}
+                                        </small>
+                                    </c:if>
                                 </div>
                             </div>
                             <div class="form-group">

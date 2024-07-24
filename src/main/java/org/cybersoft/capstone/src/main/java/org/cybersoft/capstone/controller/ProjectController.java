@@ -11,13 +11,13 @@ import org.cybersoft.capstone.payload.response.ProjectStatResponse;
 import org.cybersoft.capstone.service.ProjectService;
 import org.cybersoft.capstone.service.impl.ProjectServiceImpl;
 import org.cybersoft.capstone.util.Utils;
+import org.cybersoft.capstone.validation.ProjectRequest;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.time.LocalTime;
 import java.util.List;
 
 @WebServlet(
@@ -25,6 +25,7 @@ import java.util.List;
         urlPatterns = {"/groupwork", "/groupwork/*", "/groupwork-add", "/groupwork-details/*"}
 )
 public class ProjectController extends CustomServlet {
+    private final ProjectRequest projectRequest = new ProjectRequest();
     private final StatisticMapper statisticMapper = new StatisticMapper();
     private final ProjectMapper projectMapper = new ProjectMapper();
     private final ProjectService projectService = new ProjectServiceImpl();
@@ -60,8 +61,14 @@ public class ProjectController extends CustomServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        ProjectDTO projectDTO = this.getParametersToDTO(req);
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        ProjectDTO projectDTO = this.projectRequest.getParameter(req);
+
+        if (projectDTO == null) {
+            Utils.navigate(req, resp);
+            return;
+        }
+
         Boolean isCreated = this.projectService.createProject(projectDTO);
 
         if (isCreated) {
@@ -70,8 +77,14 @@ public class ProjectController extends CustomServlet {
     }
 
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp, Integer pathParameter) throws IOException {
-        ProjectDTO projectDTO = this.getParametersToDTO(req);
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp, Integer pathParameter) throws IOException, ServletException {
+        ProjectDTO projectDTO = this.projectRequest.getParameter(req);
+
+        if (projectDTO == null) {
+            this.doGetDetail(req, resp, pathParameter);
+            return;
+        }
+
         Boolean isUpdated = this.projectService.updateProject(pathParameter, projectDTO);
 
         if (isUpdated) {
@@ -99,17 +112,5 @@ public class ProjectController extends CustomServlet {
         List<ProjectEntity> project = this.projectService.getProjectDetail(id);
         List<ProjectDetailResponse> projectDetailResponse = this.projectMapper.projectEntitiesToResponse(project);
         req.setAttribute("project", projectDetailResponse);
-    }
-
-    private ProjectDTO getParametersToDTO(HttpServletRequest req) {
-        String name = req.getParameter("name");
-        String startDate = req.getParameter("startDate");
-        String endDate = req.getParameter("endDate");
-
-        return new ProjectDTO(
-                name,
-                Utils.parseStringToTimeStamp(startDate, LocalTime.MIN),
-                Utils.parseStringToTimeStamp(endDate, LocalTime.MAX)
-        );
     }
 }

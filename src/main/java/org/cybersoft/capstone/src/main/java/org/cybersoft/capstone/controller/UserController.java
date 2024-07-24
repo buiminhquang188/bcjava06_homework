@@ -8,6 +8,7 @@ import org.cybersoft.capstone.service.UserService;
 import org.cybersoft.capstone.service.impl.RoleServiceImpl;
 import org.cybersoft.capstone.service.impl.UserServiceImpl;
 import org.cybersoft.capstone.util.Utils;
+import org.cybersoft.capstone.validation.UserRequest;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,6 +22,8 @@ import java.util.List;
 public class UserController extends HttpServlet {
     private final UserService userService = new UserServiceImpl();
     private final RoleService roleService = new RoleServiceImpl();
+
+    private final UserRequest userRequest = new UserRequest();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -45,18 +48,17 @@ public class UserController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String path = req.getServletPath();
-        if (!path.equals("user-add")) {
+        if (!path.equals("/user-add")) {
             resp.sendRedirect(req.getContextPath() + "/404");
         }
 
-        String firstName = req.getParameter("firstName");
-        String lastName = req.getParameter("lastName");
-        String email = req.getParameter("email");
-        String password = req.getParameter("password");
-        String phoneNumber = req.getParameter("phoneNumber");
-        String role = req.getParameter("role");
+        UserDTO userDTO = this.userRequest.getParameter(req, resp);
 
-        UserDTO userDTO = new UserDTO(firstName, lastName, email, password, phoneNumber, Integer.parseInt(role));
+        if (userDTO == null) {
+            Utils.navigate(req, resp);
+            return;
+        }
+
         Integer resultIndex = this.userService.createUser(userDTO);
 
         if (resultIndex > 0) {

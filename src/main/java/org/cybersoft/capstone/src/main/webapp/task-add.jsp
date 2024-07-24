@@ -47,6 +47,11 @@
                                             <option value="${project.id}">${project.name}</option>
                                         </c:forEach>
                                     </select>
+                                    <c:if test="${errors.projectId != null}">
+                                        <small class="form-text text-danger mt-2">
+                                                ${errors.projectId}
+                                        </small>
+                                    </c:if>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -56,6 +61,11 @@
                                            name="name"
                                            placeholder="Tên công việc"
                                            class="form-control form-control-line">
+                                    <c:if test="${errors.name != null}">
+                                        <small class="form-text text-danger mt-2">
+                                                ${errors.name}
+                                        </small>
+                                    </c:if>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -67,6 +77,11 @@
                                             <option value="${user.id}">${user.firstName} ${user.lastName}</option>
                                         </c:forEach>
                                     </select>
+                                    <c:if test="${errors.userId != null}">
+                                        <small class="form-text text-danger mt-2">
+                                                ${errors.userId}
+                                        </small>
+                                    </c:if>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -76,6 +91,11 @@
                                            name="startDate"
                                            placeholder="dd/MM/yyyy"
                                            class="form-control form-control-line">
+                                    <c:if test="${errors.startDate != null}">
+                                        <small class="form-text text-danger mt-2">
+                                                ${errors.startDate}
+                                        </small>
+                                    </c:if>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -85,6 +105,11 @@
                                            name="endDate"
                                            placeholder="dd/MM/yyyy"
                                            class="form-control form-control-line">
+                                    <c:if test="${errors.endDate != null}">
+                                        <small class="form-text text-danger mt-2">
+                                                ${errors.endDate}
+                                        </small>
+                                    </c:if>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -96,6 +121,11 @@
                                             <option value="${status.id}">${status.name}</option>
                                         </c:forEach>
                                     </select>
+                                    <c:if test="${errors.statusId != null}">
+                                        <small class="form-text text-danger mt-2">
+                                                ${errors.statusId}
+                                        </small>
+                                    </c:if>
                                 </div>
                             </div>
                             <div class="form-group">

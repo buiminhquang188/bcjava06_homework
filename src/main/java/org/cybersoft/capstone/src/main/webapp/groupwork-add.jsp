@@ -47,6 +47,11 @@
                                             name="name"
                                             placeholder="Tên công việc"
                                             class="form-control form-control-line">
+                                    <c:if test="${errors.name != null}">
+                                        <small class="form-text text-danger mt-2">
+                                                ${errors.name}
+                                        </small>
+                                    </c:if>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -57,6 +62,11 @@
                                             name="startDate"
                                             placeholder="dd/MM/yyyy"
                                             class="form-control form-control-line">
+                                    <c:if test="${errors.startDate != null}">
+                                        <small class="form-text text-danger mt-2">
+                                                ${errors.startDate}
+                                        </small>
+                                    </c:if>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -67,6 +77,11 @@
                                             name="endDate"
                                             placeholder="dd/MM/yyyy"
                                             class="form-control form-control-line">
+                                    <c:if test="${errors.endDate != null}">
+                                        <small class="form-text text-danger mt-2">
+                                                ${errors.endDate}
+                                        </small>
+                                    </c:if>
                                 </div>
                             </div>
                             <div class="form-group">

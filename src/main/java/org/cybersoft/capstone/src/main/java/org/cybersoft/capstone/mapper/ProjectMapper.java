@@ -1,15 +1,26 @@
 package org.cybersoft.capstone.mapper;
 
+import org.cybersoft.capstone.dto.ProjectDTO;
 import org.cybersoft.capstone.entity.ProjectEntity;
 import org.cybersoft.capstone.entity.TaskEntity;
 import org.cybersoft.capstone.payload.response.ProjectDetailResponse;
+import org.cybersoft.capstone.util.Utils;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ProjectMapper {
+    public ProjectDTO parameterToDTO(String name, String startDate, String endDate) {
+        return new ProjectDTO(
+                name,
+                Utils.parseStringToTimeStamp(startDate, LocalTime.MIN),
+                Utils.parseStringToTimeStamp(endDate, LocalTime.MAX)
+        );
+    }
+
     public List<ProjectDetailResponse> projectEntitiesToResponse(List<ProjectEntity> projects) {
         List<ProjectDetailResponse> projectDetailResponses = new ArrayList<>();
 

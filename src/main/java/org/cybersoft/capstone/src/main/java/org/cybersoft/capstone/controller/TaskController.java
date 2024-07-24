@@ -16,6 +16,7 @@ import org.cybersoft.capstone.service.impl.StatusServiceImpl;
 import org.cybersoft.capstone.service.impl.TaskServiceImpl;
 import org.cybersoft.capstone.service.impl.UserServiceImpl;
 import org.cybersoft.capstone.util.Utils;
+import org.cybersoft.capstone.validation.TaskRequest;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,11 +27,11 @@ import java.util.List;
 
 @WebServlet(name = "taskController", urlPatterns = {"/task", "/task/*", "/task-add"})
 public class TaskController extends CustomServlet {
+    private final TaskRequest taskRequest = new TaskRequest();
     private final TaskMapper taskMapper = new TaskMapper();
     private final TaskService taskService = new TaskServiceImpl();
     private final ProjectService projectService = new ProjectServiceImpl();
     private final UserService userService = new UserServiceImpl();
-
     private final StatusService statusService = new StatusServiceImpl();
 
     @Override
@@ -64,8 +65,14 @@ public class TaskController extends CustomServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        TaskDTO taskDTO = this.taskMapper.taskParameterToDTO(req);
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        TaskDTO taskDTO = this.taskRequest.getParameter(req);
+
+        if (taskDTO == null) {
+            Utils.navigate(req, resp);
+            return;
+        }
+
         Boolean isCreated = this.taskService.createTask(taskDTO);
 
         if (isCreated) {
@@ -74,8 +81,14 @@ public class TaskController extends CustomServlet {
     }
 
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp, Integer pathParameter) throws IOException {
-        TaskDTO taskDTO = this.taskMapper.taskParameterToDTO(req);
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp, Integer pathParameter) throws IOException, ServletException {
+        TaskDTO taskDTO = this.taskRequest.getParameter(req);
+
+        if (taskDTO == null) {
+            this.doGetDetail(req, resp, pathParameter);
+            return;
+        }
+
         Boolean isUpdated = this.taskService.updateTask(pathParameter, taskDTO);
 
         if (isUpdated) {

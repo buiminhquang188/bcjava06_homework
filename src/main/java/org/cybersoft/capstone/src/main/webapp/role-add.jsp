@@ -49,6 +49,11 @@
                                             placeholder="Tên quyền"
                                             class="form-control form-control-line"
                                     />
+                                    <c:if test="${errors.name != null}">
+                                        <small class="form-text text-danger mt-2">
+                                                ${errors.name}
+                                        </small>
+                                    </c:if>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -60,6 +65,11 @@
                                             placeholder="Mô tả"
                                             class="form-control form-control-line"
                                     />
+                                    <c:if test="${errors.description != null}">
+                                        <small class="form-text text-danger mt-2">
+                                                ${errors.description}
+                                        </small>
+                                    </c:if>
                                 </div>
                             </div>
                             <div class="form-group">
