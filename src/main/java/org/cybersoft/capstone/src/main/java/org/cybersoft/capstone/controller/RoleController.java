@@ -36,7 +36,7 @@ public class RoleController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         req.setCharacterEncoding("UTF-8");
-        RoleDTO roleDTO = this.roleRequest.getParameter(req, resp);
+        RoleDTO roleDTO = this.roleRequest.getParameter(req);
 
         if (roleDTO == null) {
             Utils.navigate(req, resp);

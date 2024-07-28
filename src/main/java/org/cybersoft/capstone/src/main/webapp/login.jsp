@@ -1,10 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--Redirect to index page if logged--%>
-<c:set var="isValid" scope="session" value="${initParam['isValid']}"/>
-<c:if test="${isValid.equals('true')}">
-    <% response.sendRedirect(request.getContextPath() + "/"); %>
-</c:if>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,15 +17,53 @@
             <h3 class="text-center">ĐĂNG NHẬP HỆ THỐNG</h3>
             <div class="p-4 border mt-4">
                 <form method="POST" action="login">
-                    <div class="form-group">
+                    <div class="form-group mb-2">
                         <label>Email</label>
-                        <input type="email" class="form-control" name="username">
+                        <c:choose>
+                            <c:when test="${errors.username == null}">
+                                <input type="email"
+                                       class="form-control"
+                                       name="username"
+                                       value="${username}"
+                                >
+                            </c:when>
+                            <c:when test="${errors.username != null}">
+                                <input type="email"
+                                       class="form-control"
+                                       name="username"
+                                >
+                            </c:when>
+                        </c:choose>
+                        <c:if test="${errors.username != null}">
+                            <small class="form-text text-danger mt-2">
+                                Email is required
+                            </small>
+                        </c:if>
                     </div>
                     <div class="form-group mb-0">
                         <label>Mật khẩu</label>
-                        <input type="password" class="form-control" name="password">
+                        <c:choose>
+                            <c:when test="${errors.password == null}">
+                                <input type="password"
+                                       class="form-control"
+                                       name="password"
+                                       value="${password}"
+                                >
+                            </c:when>
+                            <c:when test="${errors.password != null}">
+                                <input type="password"
+                                       class="form-control"
+                                       name="password"
+                                >
+                            </c:when>
+                        </c:choose>
+                        <c:if test="${errors.password != null}">
+                            <small class="form-text text-danger mt-2">
+                                Password is required
+                            </small>
+                        </c:if>
                     </div>
-                    <c:if test="${isValid.equals('false')}">
+                    <c:if test="${sessionScope.isValid == false}">
                         <small class="form-text text-danger mt-2">
                             Username or password not correct, please check again.
                         </small>

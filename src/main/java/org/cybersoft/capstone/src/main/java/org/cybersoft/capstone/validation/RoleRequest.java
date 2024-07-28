@@ -4,11 +4,10 @@ import org.cybersoft.capstone.constant.Validation;
 import org.cybersoft.capstone.dto.RoleDTO;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 
 public class RoleRequest {
-    public RoleDTO getParameter(HttpServletRequest req, HttpServletResponse resp) {
+    public RoleDTO getParameter(HttpServletRequest req) {
         HashMap<String, String> errors = new HashMap<>();
         String name = req.getParameter("name");
         String description = req.getParameter("description");
