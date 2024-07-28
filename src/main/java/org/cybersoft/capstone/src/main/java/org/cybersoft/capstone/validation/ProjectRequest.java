@@ -3,8 +3,10 @@ package org.cybersoft.capstone.validation;
 import org.cybersoft.capstone.constant.Validation;
 import org.cybersoft.capstone.dto.ProjectDTO;
 import org.cybersoft.capstone.mapper.ProjectMapper;
+import org.cybersoft.capstone.util.Utils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalTime;
 import java.util.HashMap;
 
 public class ProjectRequest {
@@ -19,14 +21,20 @@ public class ProjectRequest {
 
         if (name.isEmpty() || name.isBlank()) {
             errors.put("name", Validation.IS_REQUIRED.getText("Name"));
+        } else {
+            req.setAttribute("name", name);
         }
 
         if (startDate.isEmpty() || startDate.isBlank()) {
             errors.put("startDate", Validation.IS_REQUIRED.getText("Start Date"));
+        } else {
+            req.setAttribute("startDate", Utils.parseStringToTimeStamp(startDate, LocalTime.MIN));
         }
 
         if (endDate.isEmpty() || endDate.isBlank()) {
             errors.put("endDate", Validation.IS_REQUIRED.getText("End Date"));
+        } else {
+            req.setAttribute("endDate", Utils.parseStringToTimeStamp(endDate, LocalTime.MAX));
         }
 
         if (!errors.isEmpty()) {

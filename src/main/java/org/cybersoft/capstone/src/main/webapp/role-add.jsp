@@ -43,12 +43,25 @@
                             <div class="form-group">
                                 <label class="col-md-12">Tên quyền</label>
                                 <div class="col-md-12">
-                                    <input
-                                            type="text"
-                                            name="name"
-                                            placeholder="Tên quyền"
-                                            class="form-control form-control-line"
-                                    />
+                                    <c:choose>
+                                        <c:when test="${errors.name == null}">
+                                            <input
+                                                    type="text"
+                                                    name="name"
+                                                    value="${name}"
+                                                    placeholder="Tên quyền"
+                                                    class="form-control form-control-line"
+                                            />
+                                        </c:when>
+                                        <c:when test="${errors.name != null}">
+                                            <input
+                                                    type="text"
+                                                    name="name"
+                                                    placeholder="Tên quyền"
+                                                    class="form-control form-control-line"
+                                            />
+                                        </c:when>
+                                    </c:choose>
                                     <c:if test="${errors.name != null}">
                                         <small class="form-text text-danger mt-2">
                                                 ${errors.name}
@@ -59,12 +72,25 @@
                             <div class="form-group">
                                 <label class="col-md-12">Mô tả</label>
                                 <div class="col-md-12">
-                                    <input
-                                            type="text"
-                                            name="description"
-                                            placeholder="Mô tả"
-                                            class="form-control form-control-line"
-                                    />
+                                    <c:choose>
+                                        <c:when test="${errors.description == null}">
+                                            <input
+                                                    type="text"
+                                                    name="description"
+                                                    value="${description}"
+                                                    placeholder="Mô tả"
+                                                    class="form-control form-control-line"
+                                            />
+                                        </c:when>
+                                        <c:when test="${errors.description != null}">
+                                            <input
+                                                    type="text"
+                                                    name="description"
+                                                    placeholder="Mô tả"
+                                                    class="form-control form-control-line"
+                                            />
+                                        </c:when>
+                                    </c:choose>
                                     <c:if test="${errors.description != null}">
                                         <small class="form-text text-danger mt-2">
                                                 ${errors.description}

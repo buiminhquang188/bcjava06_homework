@@ -42,11 +42,21 @@
                             <div class="form-group">
                                 <label class="col-md-12">Tên dự án</label>
                                 <div class="col-md-12">
-                                    <input
-                                            type="text"
-                                            name="name"
-                                            placeholder="Tên công việc"
-                                            class="form-control form-control-line">
+                                    <c:choose>
+                                        <c:when test="${errors.name == null}">
+                                            <input type="text"
+                                                   name="name"
+                                                   value="${name}"
+                                                   placeholder="Tên công việc"
+                                                   class="form-control form-control-line">
+                                        </c:when>
+                                        <c:when test="${errors.name != null}">
+                                            <input type="text"
+                                                   name="name"
+                                                   placeholder="Tên công việc"
+                                                   class="form-control form-control-line">
+                                        </c:when>
+                                    </c:choose>
                                     <c:if test="${errors.name != null}">
                                         <small class="form-text text-danger mt-2">
                                                 ${errors.name}
@@ -57,11 +67,21 @@
                             <div class="form-group">
                                 <label class="col-md-12">Ngày bắt đầu</label>
                                 <div class="col-md-12">
-                                    <input
-                                            type="date"
-                                            name="startDate"
-                                            placeholder="dd/MM/yyyy"
-                                            class="form-control form-control-line">
+                                    <c:choose>
+                                        <c:when test="${errors.startDate == null}">
+                                            <input type="date"
+                                                   name="startDate"
+                                                   value="${startDate}"
+                                                   placeholder="dd/MM/yyyy"
+                                                   class="form-control form-control-line">
+                                        </c:when>
+                                        <c:when test="${errors.startDate != null}">
+                                            <input type="date"
+                                                   name="startDate"
+                                                   placeholder="dd/MM/yyyy"
+                                                   class="form-control form-control-line">
+                                        </c:when>
+                                    </c:choose>
                                     <c:if test="${errors.startDate != null}">
                                         <small class="form-text text-danger mt-2">
                                                 ${errors.startDate}
@@ -72,11 +92,21 @@
                             <div class="form-group">
                                 <label class="col-md-12">Ngày kết thúc</label>
                                 <div class="col-md-12">
-                                    <input
-                                            type="date"
-                                            name="endDate"
-                                            placeholder="dd/MM/yyyy"
-                                            class="form-control form-control-line">
+                                    <c:choose>
+                                        <c:when test="${errors.endDate == null}">
+                                            <input type="date"
+                                                   name="endDate"
+                                                   value="${endDate}"
+                                                   placeholder="dd/MM/yyyy"
+                                                   class="form-control form-control-line">
+                                        </c:when>
+                                        <c:when test="${errors.endDate != null}">
+                                            <input type="date"
+                                                   name="endDate"
+                                                   placeholder="dd/MM/yyyy"
+                                                   class="form-control form-control-line">
+                                        </c:when>
+                                    </c:choose>
                                     <c:if test="${errors.endDate != null}">
                                         <small class="form-text text-danger mt-2">
                                                 ${errors.endDate}
@@ -87,7 +117,8 @@
                             <div class="form-group">
                                 <div class="col-sm-12">
                                     <button type="submit" class="btn btn-success">Lưu lại</button>
-                                    <a href="groupwork" class="btn btn-primary">Quay lại</a>
+                                    <a href="${pageContext.servletContext.contextPath}/groupwork"
+                                       class="btn btn-primary">Quay lại</a>
                                 </div>
                             </div>
                         </form>

@@ -143,8 +143,21 @@
                             <div class="form-group">
                                 <label class="col-md-12">First Name</label>
                                 <div class="col-md-12">
-                                    <input type="text" name="firstName" placeholder="Enter you first name"
-                                           class="form-control form-control-line">
+                                    <c:choose>
+                                        <c:when test="${errors.firstName == null}">
+                                            <input type="text"
+                                                   name="firstName"
+                                                   value="${firstName}"
+                                                   placeholder="Enter you first name"
+                                                   class="form-control form-control-line">
+                                        </c:when>
+                                        <c:when test="${errors.firstName != null}">
+                                            <input type="text"
+                                                   name="firstName"
+                                                   placeholder="Enter you first name"
+                                                   class="form-control form-control-line">
+                                        </c:when>
+                                    </c:choose>
                                     <c:if test="${errors.firstName != null}">
                                         <small class="form-text text-danger mt-2">
                                                 ${errors.firstName}
@@ -155,8 +168,21 @@
                             <div class="form-group">
                                 <label class="col-md-12">Last Name</label>
                                 <div class="col-md-12">
-                                    <input type="text" name="lastName" placeholder="Enter you last name"
-                                           class="form-control form-control-line">
+                                    <c:choose>
+                                        <c:when test="${errors.lastName == null}">
+                                            <input type="text"
+                                                   name="lastName"
+                                                   value="${lastName}"
+                                                   placeholder="Enter you last name"
+                                                   class="form-control form-control-line">
+                                        </c:when>
+                                        <c:when test="${errors.lastName != null}">
+                                            <input type="text"
+                                                   name="lastName"
+                                                   placeholder="Enter you last name"
+                                                   class="form-control form-control-line">
+                                        </c:when>
+                                    </c:choose>
                                     <c:if test="${errors.lastName != null}">
                                         <small class="form-text text-danger mt-2">
                                                 ${errors.lastName}
@@ -167,9 +193,24 @@
                             <div class="form-group">
                                 <label for="example-email" class="col-md-12">Email</label>
                                 <div class="col-md-12">
-                                    <input type="email" placeholder="Enter user email"
-                                           class="form-control form-control-line" name="email"
-                                           id="example-email">
+                                    <c:choose>
+                                        <c:when test="${errors.email == null}">
+                                            <input type="email"
+                                                   name="email"
+                                                   value="${email}"
+                                                   placeholder="Enter user email"
+                                                   class="form-control form-control-line"
+                                                   id="example-email">
+                                        </c:when>
+                                        <c:when test="${errors.email != null}">
+                                            <input type="email"
+                                                   name="email"
+                                                   placeholder="Enter user email"
+                                                   class="form-control form-control-line"
+                                                   id="example-email">
+                                        </c:when>
+                                    </c:choose>
+
                                     <c:if test="${errors.email != null}">
                                         <small class="form-text text-danger mt-2">
                                                 ${errors.email}
@@ -180,8 +221,23 @@
                             <div class="form-group">
                                 <label class="col-md-12">Password</label>
                                 <div class="col-md-12">
-                                    <input type="password" name="password" placeholder="Enter user password"
-                                           class="form-control form-control-line">
+                                    <c:choose>
+                                        <c:when test="${errors.password == null}">
+                                            <input type="password"
+                                                   name="password"
+                                                   value="${password}"
+                                                   placeholder="Enter user password"
+                                                   class="form-control form-control-line"
+                                            >
+                                        </c:when>
+                                        <c:when test="${errors.password != null}">
+                                            <input type="password"
+                                                   name="password"
+                                                   placeholder="Enter user password"
+                                                   class="form-control form-control-line"
+                                            >
+                                        </c:when>
+                                    </c:choose>
                                     <c:if test="${errors.password != null}">
                                         <small class="form-text text-danger mt-2">
                                                 ${errors.password}
@@ -192,8 +248,23 @@
                             <div class="form-group">
                                 <label class="col-md-12">Phone No</label>
                                 <div class="col-md-12">
-                                    <input type="text" name="phoneNumber" placeholder="Enter user phone number"
-                                           class="form-control form-control-line">
+                                    <c:choose>
+                                        <c:when test="${errors.phoneNumber == null}">
+                                            <input type="text"
+                                                   name="phoneNumber"
+                                                   value="${phoneNumber}"
+                                                   placeholder="Enter user phone number"
+                                                   class="form-control form-control-line"
+                                            >
+                                        </c:when>
+                                        <c:when test="${errors.phoneNumber != null}">
+                                            <input type="text"
+                                                   name="phoneNumber"
+                                                   placeholder="Enter user phone number"
+                                                   class="form-control form-control-line"
+                                            >
+                                        </c:when>
+                                    </c:choose>
                                     <c:if test="${errors.phoneNumber != null}">
                                         <small class="form-text text-danger mt-2">
                                                 ${errors.phoneNumber}
@@ -204,12 +275,24 @@
                             <div class="form-group">
                                 <label class="col-sm-12">Select Role</label>
                                 <div class="col-sm-12">
-                                    <select name="role" class="form-control form-control-line">
-                                        <option disabled selected>Select user role</option>
-                                        <c:forEach items="${roles}" var="role">
-                                            <option value="${role.id}">${role.name}</option>
-                                        </c:forEach>
-                                    </select>
+                                    <c:choose>
+                                        <c:when test="${errors.role == null}">
+                                            <select name="role" class="form-control form-control-line">
+                                                <option disabled selected>Select user role</option>
+                                                <c:forEach items="${roles}" var="role">
+                                                    <option value="${role.id}" ${role.id == roleId ? "selected" : null}>${role.name}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </c:when>
+                                        <c:when test="${errors.role != null}">
+                                            <select name="role" class="form-control form-control-line">
+                                                <option disabled selected>Select user role</option>
+                                                <c:forEach items="${roles}" var="role">
+                                                    <option value="${role.id}">${role.name}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </c:when>
+                                    </c:choose>
                                     <c:if test="${errors.role != null}">
                                         <small class="form-text text-danger mt-2">
                                                 ${errors.role}

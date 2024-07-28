@@ -95,7 +95,8 @@
                                 <div class="col-sm-12">
                                     <button type="submit" class="btn btn-success">Chỉnh sửa
                                     </button>
-                                    <a href="groupwork" class="btn btn-primary">Quay lại</a>
+                                    <a href="${pageContext.servletContext.contextPath}/groupwork"
+                                       class="btn btn-primary">Quay lại</a>
                                     <input type="hidden" name="_method" value="PUT">
                                 </div>
                             </div>

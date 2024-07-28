@@ -69,6 +69,7 @@ public class TaskController extends CustomServlet {
         TaskDTO taskDTO = this.taskRequest.getParameter(req);
 
         if (taskDTO == null) {
+            this.getOptions(req);
             Utils.navigate(req, resp);
             return;
         }

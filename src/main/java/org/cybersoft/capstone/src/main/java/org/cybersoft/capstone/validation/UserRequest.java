@@ -20,26 +20,38 @@ public class UserRequest {
 
         if (firstName.isEmpty() || firstName.isBlank()) {
             errors.put("firstName", Validation.IS_REQUIRED.getText("First name"));
+        } else {
+            req.setAttribute("firstName", firstName);
         }
 
         if (lastName.isEmpty() || lastName.isBlank()) {
             errors.put("lastName", Validation.IS_REQUIRED.getText("Last name"));
+        } else {
+            req.setAttribute("lastName", lastName);
         }
 
         if (email.isEmpty() || email.isBlank()) {
             errors.put("email", Validation.IS_REQUIRED.getText("Email"));
+        } else {
+            req.setAttribute("email", email);
         }
 
         if (password.isEmpty() || password.isBlank()) {
             errors.put("password", Validation.IS_REQUIRED.getText("Password"));
+        } else {
+            req.setAttribute("password", password);
         }
 
         if (phoneNumber.isEmpty() || phoneNumber.isBlank()) {
             errors.put("phoneNumber", Validation.IS_REQUIRED.getText("Phone number"));
+        } else {
+            req.setAttribute("phoneNumber", phoneNumber);
         }
 
         if (role == null || role.isEmpty() || role.isBlank()) {
             errors.put("role", Validation.IS_REQUIRED.getText("Role"));
+        } else {
+            req.setAttribute("roleId", role);
         }
 
         if (!errors.isEmpty()) {

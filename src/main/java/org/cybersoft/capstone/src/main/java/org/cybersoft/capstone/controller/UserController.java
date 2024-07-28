@@ -55,6 +55,7 @@ public class UserController extends HttpServlet {
         UserDTO userDTO = this.userRequest.getParameter(req, resp);
 
         if (userDTO == null) {
+            this.createUser(req);
             Utils.navigate(req, resp);
             return;
         }

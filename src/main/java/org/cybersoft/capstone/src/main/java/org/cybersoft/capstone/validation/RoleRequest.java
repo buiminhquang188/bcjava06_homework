@@ -15,10 +15,14 @@ public class RoleRequest {
 
         if (name.isEmpty() || name.isBlank()) {
             errors.put("name", Validation.IS_REQUIRED.getText("Name"));
+        } else {
+            req.setAttribute("name", name);
         }
 
         if (description.isEmpty() || description.isBlank()) {
             errors.put("description", Validation.IS_REQUIRED.getText("Description"));
+        } else {
+            req.setAttribute("description", description);
         }
 
         if (!errors.isEmpty()) {
