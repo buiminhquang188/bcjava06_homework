@@ -15,4 +15,6 @@ public interface UserService {
     Boolean deleteUser(Integer id);
 
     List<UserEntity> getUserOptions();
+
+    List<UserEntity> getUserOptionsByRole(Integer id);
 }

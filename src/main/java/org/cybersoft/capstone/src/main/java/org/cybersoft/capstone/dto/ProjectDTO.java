@@ -6,11 +6,13 @@ public class ProjectDTO {
     private String name;
     private Timestamp startDate;
     private Timestamp endDate;
+    private Integer userIdProject;
 
-    public ProjectDTO(String name, Timestamp startDate, Timestamp endDate) {
+    public ProjectDTO(String name, Timestamp startDate, Timestamp endDate, Integer userIdProject) {
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.userIdProject = userIdProject;
     }
 
     public String getName() {
@@ -35,5 +37,13 @@ public class ProjectDTO {
 
     public void setEndDate(Timestamp endDate) {
         this.endDate = endDate;
+    }
+
+    public Integer getUserIdProject() {
+        return userIdProject;
+    }
+
+    public void setUserIdProject(Integer userIdProject) {
+        this.userIdProject = userIdProject;
     }
 }

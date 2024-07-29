@@ -17,5 +17,7 @@ public interface UserRepository {
 
     List<UserEntity> getUserOptions();
 
+    List<UserEntity> getUserOptionsByRole(Integer id);
+
     UserEntity getUserByUsernameAndPassword(LoginDTO loginDTO);
 }

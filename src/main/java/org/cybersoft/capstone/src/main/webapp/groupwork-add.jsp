@@ -115,6 +115,36 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="col-md-12">Người quản lý</label>
+                                <div class="col-md-12">
+                                    <c:choose>
+                                        <c:when test="${errors.userIdProject == null}">
+                                            <select name="userIdProject" class="form-control form-control-line">
+                                                <option disabled ${userIdProject == null ? "selected" : null}>Chọn người
+                                                    quản lý
+                                                </option>
+                                                <c:forEach items="${users}" var="user">
+                                                    <option value="${user.id}" ${user.id == userIdProject ? "selected" : null}>${user.firstName} ${user.lastName}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </c:when>
+                                        <c:when test="${errors.userIdProject != null}">
+                                            <select name="userIdProject" class="form-control form-control-line">
+                                                <option disabled selected>Chọn người thực hiện</option>
+                                                <c:forEach items="${users}" var="user">
+                                                    <option value="${user.id}">${user.firstName} ${user.lastName}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </c:when>
+                                    </c:choose>
+                                    <c:if test="${errors.userIdProject != null}">
+                                        <small class="form-text text-danger mt-2">
+                                                ${errors.userIdProject}
+                                        </small>
+                                    </c:if>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <div class="col-sm-12">
                                     <button type="submit" class="btn btn-success">Lưu lại</button>
                                     <a href="${pageContext.servletContext.contextPath}/groupwork"

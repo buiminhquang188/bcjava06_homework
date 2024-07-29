@@ -1,5 +1,7 @@
 package org.cybersoft.capstone.filter;
 
+import org.cybersoft.capstone.util.SessionUtil;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -15,16 +17,16 @@ public class AuthenticationFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        Object isValid = servletRequest
-                .getServletContext()
-                .getAttribute("isValid");
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
+        SessionUtil sessionUtil = SessionUtil.getInstance();
+
+        Object isValid = sessionUtil.getValue(request, "isValid");
 
         if (isValid != null) {
             isValid = isValid.toString();
         }
 
-        HttpServletRequest request = (HttpServletRequest) servletRequest;
-        HttpServletResponse response = (HttpServletResponse) servletResponse;
         String loginURI = request.getContextPath() + "/login";
         boolean loginRequest = request.getRequestURI()
                 .equals(loginURI);

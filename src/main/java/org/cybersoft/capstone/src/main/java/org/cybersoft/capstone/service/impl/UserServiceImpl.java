@@ -36,4 +36,9 @@ public class UserServiceImpl implements UserService {
     public List<UserEntity> getUserOptions() {
         return this.userRepository.getUserOptions();
     }
+
+    @Override
+    public List<UserEntity> getUserOptionsByRole(Integer id) {
+        return this.userRepository.getUserOptionsByRole(id);
+    }
 }

@@ -37,13 +37,14 @@ public class TaskController extends CustomServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String path = req.getServletPath();
+        Integer userId = Utils.getUserSessionId(req);
 
         switch (path) {
             case "/task":
-                this.getTasks(req);
+                this.getTasks(req, userId);
                 break;
             case "/task-add":
-                this.getOptions(req);
+                this.getOptions(req, userId);
                 break;
             default:
                 break;
@@ -55,10 +56,11 @@ public class TaskController extends CustomServlet {
     @Override
     protected void doGetDetail(HttpServletRequest req, HttpServletResponse resp, Integer pathParameter) throws ServletException, IOException {
         String path = req.getServletPath();
+        Integer userId = Utils.getUserSessionId(req);
 
         if ("/task".equals(path)) {
             this.getTask(req, pathParameter);
-            this.getOptions(req);
+            this.getOptions(req, userId);
             req.getRequestDispatcher("/task-edit.jsp")
                     .forward(req, resp);
         }
@@ -102,6 +104,11 @@ public class TaskController extends CustomServlet {
         req.setAttribute("tasks", tasks);
     }
 
+    private void getTasks(HttpServletRequest req, Integer id) {
+        List<TaskEntity> tasks = this.taskService.getTasks(id);
+        req.setAttribute("tasks", tasks);
+    }
+
     private void getTask(HttpServletRequest req, Integer id) {
         TaskEntity task = this.taskService.getTask(id);
         req.setAttribute("task", task);
@@ -109,6 +116,15 @@ public class TaskController extends CustomServlet {
 
     private void getOptions(HttpServletRequest req) {
         List<ProjectEntity> projects = this.projectService.getProjectOptions();
+        List<UserEntity> users = this.userService.getUserOptions();
+        List<StatusEntity> statuses = this.statusService.getStatuses();
+        req.setAttribute("projects", projects);
+        req.setAttribute("users", users);
+        req.setAttribute("statuses", statuses);
+    }
+
+    private void getOptions(HttpServletRequest req, Integer id) {
+        List<ProjectEntity> projects = this.projectService.getProjectOptions(id);
         List<UserEntity> users = this.userService.getUserOptions();
         List<StatusEntity> statuses = this.statusService.getStatuses();
         req.setAttribute("projects", projects);

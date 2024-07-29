@@ -61,4 +61,18 @@ public class Utils {
     public static Integer parseIntFromResultSet(Integer input) {
         return input == 0 ? null : input;
     }
+
+    public static Integer getUserSessionId(HttpServletRequest req) {
+        SessionUtil sessionUtil = SessionUtil.getInstance();
+        Object userId = sessionUtil.getValue(req, "userId");
+
+        if (userId == null) return null;
+
+        try {
+            return Integer.parseInt(userId.toString());
+        } catch (NumberFormatException e) {
+            System.out.println(e);
+            return null;
+        }
+    }
 }

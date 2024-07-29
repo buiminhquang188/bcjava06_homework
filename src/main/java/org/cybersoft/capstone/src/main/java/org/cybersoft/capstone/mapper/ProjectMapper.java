@@ -13,11 +13,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ProjectMapper {
-    public ProjectDTO parameterToDTO(String name, String startDate, String endDate) {
+    public ProjectDTO parameterToDTO(String name, String startDate, String endDate, String userIdProject) {
         return new ProjectDTO(
                 name,
                 Utils.parseStringToTimeStamp(startDate, LocalTime.MIN),
-                Utils.parseStringToTimeStamp(endDate, LocalTime.MAX)
+                Utils.parseStringToTimeStamp(endDate, LocalTime.MAX),
+                Integer.parseInt(userIdProject)
         );
     }
 

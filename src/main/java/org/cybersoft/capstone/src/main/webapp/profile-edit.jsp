@@ -22,7 +22,7 @@
     <!-- Navigation -->
     <jsp:include page="fragments/navbar.jsp"/>
     <!-- Left navbar-header -->
-    <jsp:include page="fragments/sidebar.jsp"
+    <jsp:include page="fragments/sidebar.jsp"/>
     <!-- Left navbar-header end -->
     <!-- Page Content -->
     <div id="page-wrapper">

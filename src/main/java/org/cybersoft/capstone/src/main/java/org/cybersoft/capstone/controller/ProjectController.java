@@ -1,15 +1,20 @@
 package org.cybersoft.capstone.controller;
 
 import org.cybersoft.capstone.config.CustomServlet;
+import org.cybersoft.capstone.constant.Role;
 import org.cybersoft.capstone.dto.ProjectDTO;
 import org.cybersoft.capstone.entity.ProjectEntity;
 import org.cybersoft.capstone.entity.StatusEntity;
+import org.cybersoft.capstone.entity.UserEntity;
 import org.cybersoft.capstone.mapper.ProjectMapper;
 import org.cybersoft.capstone.mapper.StatisticMapper;
 import org.cybersoft.capstone.payload.response.ProjectDetailResponse;
 import org.cybersoft.capstone.payload.response.ProjectStatResponse;
 import org.cybersoft.capstone.service.ProjectService;
+import org.cybersoft.capstone.service.UserService;
 import org.cybersoft.capstone.service.impl.ProjectServiceImpl;
+import org.cybersoft.capstone.service.impl.UserServiceImpl;
+import org.cybersoft.capstone.util.SessionUtil;
 import org.cybersoft.capstone.util.Utils;
 import org.cybersoft.capstone.validation.ProjectRequest;
 
@@ -25,18 +30,33 @@ import java.util.List;
         urlPatterns = {"/groupwork", "/groupwork/*", "/groupwork-add", "/groupwork-details/*"}
 )
 public class ProjectController extends CustomServlet {
+    private final SessionUtil sessionUtil = SessionUtil.getInstance();
     private final ProjectRequest projectRequest = new ProjectRequest();
     private final StatisticMapper statisticMapper = new StatisticMapper();
     private final ProjectMapper projectMapper = new ProjectMapper();
     private final ProjectService projectService = new ProjectServiceImpl();
+    private final UserService userService = new UserServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String path = req.getServletPath();
 
-        if ("/groupwork".equals(path)) {
-            this.getProjects(req);
+        switch (path) {
+            case "/groupwork":
+                Object userId = this.sessionUtil.getValue(req, "userId");
+                if (userId != null) {
+                    this.getProjects(req, Integer.parseInt(userId.toString()));
+                } else {
+                    this.getProjects(req);
+                }
+                break;
+            case "/groupwork-add":
+                this.getOptions(req);
+                break;
+            default:
+                break;
         }
+
         Utils.navigate(req, resp);
     }
 
@@ -46,6 +66,7 @@ public class ProjectController extends CustomServlet {
 
         switch (path) {
             case "/groupwork":
+                this.getOptions(req);
                 this.getProject(req, pathParameter);
                 req.getRequestDispatcher("/groupwork-edit.jsp")
                         .forward(req, resp);
@@ -65,6 +86,7 @@ public class ProjectController extends CustomServlet {
         ProjectDTO projectDTO = this.projectRequest.getParameter(req);
 
         if (projectDTO == null) {
+            this.getOptions(req);
             Utils.navigate(req, resp);
             return;
         }
@@ -97,6 +119,11 @@ public class ProjectController extends CustomServlet {
         req.setAttribute("projects", projects);
     }
 
+    private void getProjects(HttpServletRequest req, Integer id) {
+        List<ProjectEntity> projects = this.projectService.getProjects(id);
+        req.setAttribute("projects", projects);
+    }
+
     private void getProject(HttpServletRequest req, Integer id) {
         ProjectEntity project = this.projectService.getProject(id);
         req.setAttribute("project", project);
@@ -112,5 +139,10 @@ public class ProjectController extends CustomServlet {
         List<ProjectEntity> project = this.projectService.getProjectDetail(id);
         List<ProjectDetailResponse> projectDetailResponse = this.projectMapper.projectEntitiesToResponse(project);
         req.setAttribute("project", projectDetailResponse);
+    }
+
+    private void getOptions(HttpServletRequest req) {
+        List<UserEntity> users = this.userService.getUserOptionsByRole(Role.LEADER.getId());
+        req.setAttribute("users", users);
     }
 }

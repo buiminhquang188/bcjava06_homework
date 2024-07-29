@@ -18,6 +18,11 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    public List<ProjectEntity> getProjects(Integer id) {
+        return this.projectRepository.getProjects(id);
+    }
+
+    @Override
     public ProjectEntity getProject(Integer id) {
         return this.projectRepository.getProject(id);
     }
@@ -43,6 +48,11 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public List<ProjectEntity> getProjectOptions() {
         return this.projectRepository.getProjectOptions();
+    }
+
+    @Override
+    public List<ProjectEntity> getProjectOptions(Integer id) {
+        return this.projectRepository.getProjectOptions(id);
     }
 
     @Override

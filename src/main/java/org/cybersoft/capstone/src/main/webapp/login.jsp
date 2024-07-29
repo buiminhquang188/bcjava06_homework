@@ -1,6 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--Redirect to index page if logged--%>
+<c:if test="${sessionScope.isValid.equals('true')}">
+    <% response.sendRedirect(request.getContextPath() + "/"); %>
+</c:if>
 <!DOCTYPE html>
 <html lang="en">
 <head>

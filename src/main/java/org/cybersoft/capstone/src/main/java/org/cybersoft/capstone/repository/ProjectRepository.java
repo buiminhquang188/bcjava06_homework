@@ -9,6 +9,8 @@ import java.util.List;
 public interface ProjectRepository {
     List<ProjectEntity> getProjects();
 
+    List<ProjectEntity> getProjects(Integer id);
+
     ProjectEntity getProject(Integer id);
 
     Integer createProject(ProjectDTO projectDTO);
@@ -18,6 +20,8 @@ public interface ProjectRepository {
     Integer deleteProject(Integer id);
 
     List<ProjectEntity> getProjectOptions();
+
+    List<ProjectEntity> getProjectOptions(Integer id);
 
     List<ProjectEntity> getProjectDetail(Integer id);
 

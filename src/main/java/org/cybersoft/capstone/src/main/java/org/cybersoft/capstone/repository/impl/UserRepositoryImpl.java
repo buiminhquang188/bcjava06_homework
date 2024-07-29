@@ -29,6 +29,7 @@ public class UserRepositoryImpl implements UserRepository {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
+            System.out.println("execute query getUsers");
 
             while (resultSet.next()) {
                 UserEntity user = new UserEntity();
@@ -119,6 +120,39 @@ public class UserRepositoryImpl implements UserRepository {
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                UserEntity user = new UserEntity(
+                        resultSet.getInt("id"),
+                        resultSet.getString("first_name"),
+                        resultSet.getString("last_name")
+                );
+
+                users.add(user);
+            }
+
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return users;
+    }
+
+    @Override
+    public List<UserEntity> getUserOptionsByRole(Integer id) {
+        List<UserEntity> users = new ArrayList<>();
+        String sql = """
+                SELECT u.id, u.first_name, u.last_name
+                FROM users u
+                WHERE u.id_role = ?;
+                """;
+        Connection connection = MySQLConfig.getConnection();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {

@@ -52,11 +52,49 @@ public class ProjectRepositoryImpl implements ProjectRepository {
     }
 
     @Override
-    public ProjectEntity getProject(Integer id) {
-        ProjectEntity projectEntity = null;
+    public List<ProjectEntity> getProjects(Integer id) {
+        List<ProjectEntity> projects = new ArrayList<>();
         String sql = """
                 SELECT p.id, p.name, p.start_date, p.end_date
                 FROM project p
+                         LEFT JOIN users_project up ON up.id_project = p.id
+                WHERE up.id_user = ?
+                """;
+        Connection connection = MySQLConfig.getConnection();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            System.out.println("execute query getProjects");
+
+            while (resultSet.next()) {
+                ProjectEntity projectEntity = new ProjectEntity(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
+                        resultSet.getTimestamp("start_date"),
+                        resultSet.getTimestamp("end_date")
+                );
+
+                projects.add(projectEntity);
+            }
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return projects;
+    }
+
+    @Override
+    public ProjectEntity getProject(Integer id) {
+        ProjectEntity projectEntity = null;
+        String sql = """
+                SELECT p.id, p.name, p.start_date, p.end_date, u.id, u.first_name, u.last_name
+                FROM project p
+                         INNER JOIN users_project up ON up.id_project = p.id
+                         INNER JOIN users u ON u.id = up.id_user
                 WHERE p.id = ?
                 """;
         Connection connection = MySQLConfig.getConnection();
@@ -69,11 +107,18 @@ public class ProjectRepositoryImpl implements ProjectRepository {
 
             while (resultSet.next()) {
                 projectEntity = new ProjectEntity(
-                        resultSet.getInt("id"),
-                        resultSet.getString("name"),
-                        resultSet.getTimestamp("start_date"),
-                        resultSet.getTimestamp("end_date")
+                        resultSet.getInt("p.id"),
+                        resultSet.getString("p.name"),
+                        resultSet.getTimestamp("p.start_date"),
+                        resultSet.getTimestamp("p.end_date")
                 );
+
+                UserEntity user = new UserEntity();
+                user.setId(resultSet.getInt("u.id"));
+                user.setFirstName(resultSet.getString("u.first_name"));
+                user.setLastName(resultSet.getString("u.last_name"));
+
+                projectEntity.setUser(user);
             }
             connection.close();
         } catch (SQLException e) {
@@ -99,6 +144,23 @@ public class ProjectRepositoryImpl implements ProjectRepository {
             preparedStatement.setObject(3, projectDTO.getEndDate());
 
             resultIndex = preparedStatement.executeUpdate();
+            System.out.println("Insert Create Project");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        String sqlRelation = """
+                INSERT INTO users_project(id_project, id_user)
+                    VALUE (?, ?)
+                """;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlRelation);
+            preparedStatement.setInt(1, resultIndex);
+            preparedStatement.setInt(2, projectDTO.getUserIdProject());
+
+            resultIndex = preparedStatement.executeUpdate();
+            System.out.println("Insert Users Project");
             connection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -126,7 +188,25 @@ public class ProjectRepositoryImpl implements ProjectRepository {
             preparedStatement.setTimestamp(3, projectDTO.getEndDate());
             preparedStatement.setInt(4, id);
 
+            preparedStatement.executeUpdate();
+            System.out.println("Update Project");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        String sqlRelation = """
+                UPDATE users_project up
+                SET up.id_user    = ?
+                where up.id_project = ?
+                """;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlRelation);
+            preparedStatement.setInt(1, projectDTO.getUserIdProject());
+            preparedStatement.setInt(2, id);
+
             resultIndex = preparedStatement.executeUpdate();
+            System.out.println("Update Users Project");
             connection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -170,6 +250,39 @@ public class ProjectRepositoryImpl implements ProjectRepository {
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                ProjectEntity project = new ProjectEntity(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name")
+                );
+
+                projects.add(project);
+            }
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return projects;
+    }
+
+    @Override
+    public List<ProjectEntity> getProjectOptions(Integer id) {
+        List<ProjectEntity> projects = new ArrayList<>();
+        String sql = """
+                SELECT p.id, p.name
+                FROM project p
+                         LEFT JOIN users_project up ON up.id_project = p.id
+                WHERE up.id_user = ?
+                """;
+        Connection connection = MySQLConfig.getConnection();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {

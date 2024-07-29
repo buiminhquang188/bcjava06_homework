@@ -17,6 +17,11 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public List<TaskEntity> getTasks(Integer id) {
+        return this.taskRepository.getTasks(id);
+    }
+
+    @Override
     public TaskEntity getTask(Integer id) {
         return this.taskRepository.getTask(id);
     }

@@ -1,7 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<c:set var="userId" scope="session" value="${initParam['userId']}"/>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -43,8 +42,9 @@
                             <img width="100%" alt="user" src="plugins/images/large/img1.jpg">
                             <div class="overlay-box">
                                 <div class="user-content">
-                                    <a href="javascript:void(0)"><img src="https://joesch.moe/api/v1/${userId}"
-                                                                      class="thumb-lg img-circle" alt="img"></a>
+                                    <a href="javascript:void(0)"><img
+                                            src="https://joesch.moe/api/v1/${sessionScope.userId}"
+                                            class="thumb-lg img-circle" alt="img"></a>
                                     <h4 class="text-white">${profile.user.firstName} ${profile.user.lastName}</h4>
                                     <h5 class="text-white">${profile.user.username}</h5>
                                 </div>

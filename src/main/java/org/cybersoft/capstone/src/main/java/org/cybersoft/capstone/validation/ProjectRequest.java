@@ -18,6 +18,7 @@ public class ProjectRequest {
         String name = req.getParameter("name");
         String startDate = req.getParameter("startDate");
         String endDate = req.getParameter("endDate");
+        String userIdProject = req.getParameter("userIdProject");
 
         if (name.isEmpty() || name.isBlank()) {
             errors.put("name", Validation.IS_REQUIRED.getText("Name"));
@@ -37,11 +38,17 @@ public class ProjectRequest {
             req.setAttribute("endDate", Utils.parseStringToTimeStamp(endDate, LocalTime.MAX));
         }
 
+        if (userIdProject == null || userIdProject.isEmpty() || userIdProject.isEmpty()) {
+            errors.put("userIdProject", Validation.IS_REQUIRED.getText("Project Manager"));
+        } else {
+            req.setAttribute("userIdProject", userIdProject);
+        }
+
         if (!errors.isEmpty()) {
             req.setAttribute("errors", errors);
             return null;
         }
 
-        return this.projectMapper.parameterToDTO(name, startDate, endDate);
+        return this.projectMapper.parameterToDTO(name, startDate, endDate, userIdProject);
     }
 }

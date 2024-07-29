@@ -8,6 +8,8 @@ import java.util.List;
 public interface TaskRepository {
     List<TaskEntity> getTasks();
 
+    List<TaskEntity> getTasks(Integer id);
+
     TaskEntity getTask(Integer id);
 
     Integer createTask(TaskDTO taskDTO);

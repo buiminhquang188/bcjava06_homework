@@ -6,9 +6,9 @@ import org.cybersoft.capstone.mapper.StatisticMapper;
 import org.cybersoft.capstone.payload.response.ProjectStatResponse;
 import org.cybersoft.capstone.service.ProfileService;
 import org.cybersoft.capstone.service.impl.ProfileServiceImpl;
+import org.cybersoft.capstone.util.SessionUtil;
 import org.cybersoft.capstone.util.Utils;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -40,9 +40,9 @@ public class ProfileController extends HttpServlet {
     }
 
     private void getProfile(HttpServletRequest req) {
-        ServletContext servletContext = this.getServletConfig()
-                .getServletContext();
-        Object userId = servletContext.getAttribute("userId");
+        SessionUtil sessionUtil = SessionUtil.getInstance();
+        Object userId = sessionUtil.getValue(req, "userId");
+
         Integer id = Integer.parseInt(String.valueOf(userId));
 
         ProfileEntity profile = this.profileService.getProfile(id);
