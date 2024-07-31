@@ -3,6 +3,34 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <c:set var="contextPath" scope="session" value="${pageContext.request.contextPath}"/>
+
+<c:choose>
+    <c:when test="${projectStat.notStarted == 0 && projectStat.total == 0}">
+        <c:set var="notStarted" value="0" scope="session"/>
+    </c:when>
+    <c:when test="${projectStat.notStarted != 0 || projectStat.total != 0}">
+        <c:set var="notStarted" value="${(projectStat.notStarted / projectStat.total) * 100}" scope="session"/>
+    </c:when>
+</c:choose>
+
+<c:choose>
+    <c:when test="${projectStat.inProgress == 0 && projectStat.total == 0}">
+        <c:set var="inProgress" value="0" scope="session"/>
+    </c:when>
+    <c:when test="${projectStat.inProgress != 0 || projectStat.total != 0}">
+        <c:set var="inProgress" value="${(projectStat.inProgress / projectStat.total) * 100}" scope="session"/>
+    </c:when>
+</c:choose>
+
+<c:choose>
+    <c:when test="${projectStat.completed == 0 && projectStat.total == 0}">
+        <c:set var="completed" value="0" scope="session"/>
+    </c:when>
+    <c:when test="${projectStat.completed != 0 || projectStat.total != 0}">
+        <c:set var="completed" value="${(projectStat.completed / projectStat.total) * 100}" scope="session"/>
+    </c:when>
+</c:choose>
+
 <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
@@ -60,15 +88,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <h3 class="counter text-right m-t-15 text-danger">
                                     <fmt:formatNumber type="number"
                                                       maxFractionDigits="2"
-                                                      value="${(projectStat.notStarted / projectStat.total) * 100}"/>%
+                                                      value="${notStarted}"/>%
                                 </h3>
                             </div>
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="progress">
                                     <div class="progress-bar progress-bar-danger" role="progressbar"
-                                         aria-valuenow="${(projectStat.notStarted / projectStat.total) * 100}"
+                                         aria-valuenow="${notStarted}"
                                          aria-valuemin="0" aria-valuemax="100"
-                                         style="width: ${(projectStat.notStarted / projectStat.total) * 100}%">
+                                         style="width: ${notStarted}%">
                                     </div>
                                 </div>
                             </div>
@@ -88,15 +116,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <h3 class="counter text-right m-t-15 text-megna">
                                     <fmt:formatNumber type="number"
                                                       maxFractionDigits="2"
-                                                      value="${(projectStat.inProgress / projectStat.total) * 100}"/>%
+                                                      value="${inProgress}"/>%
                                 </h3>
                             </div>
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="progress">
                                     <div class="progress-bar progress-bar-megna" role="progressbar"
-                                         aria-valuenow="${(projectStat.inProgress / projectStat.total) * 100}"
+                                         aria-valuenow="${inProgress}"
                                          aria-valuemin="0" aria-valuemax="100"
-                                         style="width: ${(projectStat.inProgress / projectStat.total) * 100}%">
+                                         style="width: ${inProgress}%">
                                     </div>
                                 </div>
                             </div>
@@ -116,15 +144,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <h3 class="counter text-right m-t-15 text-primary">
                                     <fmt:formatNumber type="number"
                                                       maxFractionDigits="2"
-                                                      value="${(projectStat.completed / projectStat.total) * 100}"/>%
+                                                      value="${completed}"/>%
                                 </h3>
                             </div>
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="progress">
                                     <div class="progress-bar progress-bar-primary" role="progressbar"
-                                         aria-valuenow="${(projectStat.completed / projectStat.total) * 100}"
+                                         aria-valuenow="${completed}"
                                          aria-valuemin="0" aria-valuemax="100"
-                                         style="width: ${(projectStat.completed / projectStat.total) * 100}%">
+                                         style="width: ${completed}%">
                                     </div>
                                 </div>
                             </div>
