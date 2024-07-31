@@ -1,6 +1,7 @@
 package org.cybersoft.capstone.service;
 
 import org.cybersoft.capstone.dto.TaskDTO;
+import org.cybersoft.capstone.dto.TaskProgressDTO;
 import org.cybersoft.capstone.entity.TaskEntity;
 
 import java.util.List;
@@ -17,4 +18,6 @@ public interface TaskService {
     Boolean deleteTask(Integer id);
 
     Boolean updateTask(Integer id, TaskDTO taskDTO);
+
+    Boolean updateProgressTask(Integer id, TaskProgressDTO taskProgressDTO);
 }

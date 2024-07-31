@@ -1,5 +1,6 @@
 package org.cybersoft.capstone.controller;
 
+import org.cybersoft.capstone.dto.RoleDetailDTO;
 import org.cybersoft.capstone.dto.UserDTO;
 import org.cybersoft.capstone.entity.RoleEntity;
 import org.cybersoft.capstone.entity.UserEntity;
@@ -7,6 +8,7 @@ import org.cybersoft.capstone.service.RoleService;
 import org.cybersoft.capstone.service.UserService;
 import org.cybersoft.capstone.service.impl.RoleServiceImpl;
 import org.cybersoft.capstone.service.impl.UserServiceImpl;
+import org.cybersoft.capstone.util.SessionUtil;
 import org.cybersoft.capstone.util.Utils;
 import org.cybersoft.capstone.validation.UserRequest;
 
@@ -30,7 +32,7 @@ public class UserController extends HttpServlet {
         String path = req.getServletPath();
         switch (path) {
             case "/user-table":
-                this.getUsers(req);
+                this.getAuthorizationAction(req);
                 break;
             case "/user-add":
                 this.createUser(req);
@@ -67,8 +69,26 @@ public class UserController extends HttpServlet {
         }
     }
 
+    private void getAuthorizationAction(HttpServletRequest req) {
+        RoleDetailDTO roleDetailDTO = (RoleDetailDTO) SessionUtil.getInstance()
+                .getValue(req, "roleDetailDTO");
+        Integer userId = Utils.getUserSessionId(req);
+
+        if (roleDetailDTO.getActionCode()
+                .contains("VIEW_ALL_MEMBERS")) {
+            this.getUsers(req);
+            return;
+        }
+        this.getUsersInProject(req, userId);
+    }
+
     private void getUsers(HttpServletRequest req) {
         List<UserEntity> users = this.userService.getUsers();
+        req.setAttribute("users", users);
+    }
+
+    private void getUsersInProject(HttpServletRequest req, Integer userId) {
+        List<UserEntity> users = this.userService.getUsersInProject(userId);
         req.setAttribute("users", users);
     }
 

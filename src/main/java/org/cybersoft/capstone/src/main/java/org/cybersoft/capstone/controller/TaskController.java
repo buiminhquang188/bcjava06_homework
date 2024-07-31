@@ -1,6 +1,7 @@
 package org.cybersoft.capstone.controller;
 
 import org.cybersoft.capstone.config.CustomServlet;
+import org.cybersoft.capstone.dto.RoleDetailDTO;
 import org.cybersoft.capstone.dto.TaskDTO;
 import org.cybersoft.capstone.entity.ProjectEntity;
 import org.cybersoft.capstone.entity.StatusEntity;
@@ -15,6 +16,7 @@ import org.cybersoft.capstone.service.impl.ProjectServiceImpl;
 import org.cybersoft.capstone.service.impl.StatusServiceImpl;
 import org.cybersoft.capstone.service.impl.TaskServiceImpl;
 import org.cybersoft.capstone.service.impl.UserServiceImpl;
+import org.cybersoft.capstone.util.SessionUtil;
 import org.cybersoft.capstone.util.Utils;
 import org.cybersoft.capstone.validation.TaskRequest;
 
@@ -41,7 +43,7 @@ public class TaskController extends CustomServlet {
 
         switch (path) {
             case "/task":
-                this.getTasks(req, userId);
+                this.getAuthorizationAction(req);
                 break;
             case "/task-add":
                 this.getOptions(req, userId);
@@ -97,6 +99,19 @@ public class TaskController extends CustomServlet {
         if (isUpdated) {
             resp.sendRedirect(req.getContextPath() + "/task");
         }
+    }
+
+    private void getAuthorizationAction(HttpServletRequest req) {
+        RoleDetailDTO roleDetailDTO = (RoleDetailDTO) SessionUtil.getInstance()
+                .getValue(req, "roleDetailDTO");
+        Integer userId = Utils.getUserSessionId(req);
+
+        if (roleDetailDTO.getActionCode()
+                .contains("VIEW_ALL_TASKS")) {
+            this.getTasks(req);
+            return;
+        }
+        this.getTasks(req, userId);
     }
 
     private void getTasks(HttpServletRequest req) {

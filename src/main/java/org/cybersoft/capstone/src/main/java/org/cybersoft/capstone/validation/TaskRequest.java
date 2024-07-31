@@ -2,6 +2,7 @@ package org.cybersoft.capstone.validation;
 
 import org.cybersoft.capstone.constant.Validation;
 import org.cybersoft.capstone.dto.TaskDTO;
+import org.cybersoft.capstone.dto.TaskProgressDTO;
 import org.cybersoft.capstone.mapper.TaskMapper;
 import org.cybersoft.capstone.util.Utils;
 
@@ -64,5 +65,24 @@ public class TaskRequest {
         }
 
         return this.taskMapper.taskParameterToDTO(name, startDate, endDate, projectId, userIdTask, statusId);
+    }
+
+    public TaskProgressDTO getParameterProgress(HttpServletRequest req) {
+        HashMap<String, String> errors = new HashMap<>();
+
+        String statusId = req.getParameter("statusId");
+
+        if (statusId == null || statusId.isEmpty() || statusId.isBlank()) {
+            errors.put("statusId", Validation.IS_REQUIRED.getText("Status"));
+        } else {
+            req.setAttribute("statusId", statusId);
+        }
+
+        if (!errors.isEmpty()) {
+            req.setAttribute("errors", errors);
+            return null;
+        }
+
+        return this.taskMapper.taskProgressParameterToDTO(statusId);
     }
 }

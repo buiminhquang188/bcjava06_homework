@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserRepositoryImpl implements UserRepository {
     @Override
@@ -197,5 +198,49 @@ public class UserRepositoryImpl implements UserRepository {
         }
 
         return user;
+    }
+
+    @Override
+    public List<UserEntity> getUsersInProject(List<Integer> projectIds) {
+        List<UserEntity> users = new ArrayList<>();
+        Connection connection = MySQLConfig.getConnection();
+
+        String sql = String.format("""
+                        SELECT u.id, u.first_name, u.last_name, u.username, r.name
+                        FROM users u
+                                 LEFT JOIN users_project up ON up.id_user = u.id
+                                 JOIN roles r ON r.id = u.id_role
+                        WHERE up.id_project IN (%s)
+                        GROUP BY u.id;
+                        """,
+                projectIds.stream()
+                        .map(String::valueOf)
+                        .collect(Collectors.joining(", "))
+        );
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                UserEntity user = new UserEntity();
+                user.setId(resultSet.getInt("id"));
+                user.setFirstName(resultSet.getString("first_name"));
+                user.setLastName(resultSet.getString("last_name"));
+                user.setUsername(resultSet.getString("username"));
+
+                RoleEntity role = new RoleEntity();
+                role.setName(resultSet.getString("name"));
+                user.setRole(role);
+
+                users.add(user);
+            }
+
+            connection.close();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return users;
     }
 }

@@ -5,7 +5,9 @@ import org.cybersoft.capstone.entity.StatusEntity;
 import org.cybersoft.capstone.mapper.StatisticMapper;
 import org.cybersoft.capstone.payload.response.ProjectStatResponse;
 import org.cybersoft.capstone.service.ProfileService;
+import org.cybersoft.capstone.service.TaskService;
 import org.cybersoft.capstone.service.impl.ProfileServiceImpl;
+import org.cybersoft.capstone.service.impl.TaskServiceImpl;
 import org.cybersoft.capstone.util.SessionUtil;
 import org.cybersoft.capstone.util.Utils;
 
@@ -17,23 +19,19 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "profileController", urlPatterns = {"/profile", "/profile-edit"})
+@WebServlet(name = "profileController", urlPatterns = {"/profile"})
 public class ProfileController extends HttpServlet {
     private final StatisticMapper statisticMapper = new StatisticMapper();
     private final ProfileService profileService = new ProfileServiceImpl();
+
+    private final TaskService taskService = new TaskServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String path = req.getServletPath();
 
-        switch (path) {
-            case "/profile":
-                this.getProfile(req);
-                break;
-            case "/profile-edit":
-                break;
-            default:
-                break;
+        if (path.equals("/profile")) {
+            this.getProfile(req);
         }
 
         Utils.navigate(req, resp);

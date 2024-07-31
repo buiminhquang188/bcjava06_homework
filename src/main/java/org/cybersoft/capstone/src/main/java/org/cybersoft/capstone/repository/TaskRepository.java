@@ -1,6 +1,7 @@
 package org.cybersoft.capstone.repository;
 
 import org.cybersoft.capstone.dto.TaskDTO;
+import org.cybersoft.capstone.dto.TaskProgressDTO;
 import org.cybersoft.capstone.entity.TaskEntity;
 
 import java.util.List;
@@ -19,4 +20,6 @@ public interface TaskRepository {
     Integer updateTask(Integer id, TaskDTO taskDTO);
 
     Integer updateTaskByProjectId(Integer id);
+
+    Integer updateProgressTask(Integer id, TaskProgressDTO taskProgressDTO);
 }

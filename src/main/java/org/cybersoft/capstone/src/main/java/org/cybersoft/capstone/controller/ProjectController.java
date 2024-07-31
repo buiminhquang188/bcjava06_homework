@@ -3,6 +3,7 @@ package org.cybersoft.capstone.controller;
 import org.cybersoft.capstone.config.CustomServlet;
 import org.cybersoft.capstone.constant.Role;
 import org.cybersoft.capstone.dto.ProjectDTO;
+import org.cybersoft.capstone.dto.RoleDetailDTO;
 import org.cybersoft.capstone.entity.ProjectEntity;
 import org.cybersoft.capstone.entity.StatusEntity;
 import org.cybersoft.capstone.entity.UserEntity;
@@ -30,7 +31,6 @@ import java.util.List;
         urlPatterns = {"/groupwork", "/groupwork/*", "/groupwork-add", "/groupwork-details/*"}
 )
 public class ProjectController extends CustomServlet {
-    private final SessionUtil sessionUtil = SessionUtil.getInstance();
     private final ProjectRequest projectRequest = new ProjectRequest();
     private final StatisticMapper statisticMapper = new StatisticMapper();
     private final ProjectMapper projectMapper = new ProjectMapper();
@@ -40,14 +40,17 @@ public class ProjectController extends CustomServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String path = req.getServletPath();
+        RoleDetailDTO roleDetailDTO = (RoleDetailDTO) SessionUtil.getInstance()
+                .getValue(req, "roleDetailDTO");
 
         switch (path) {
             case "/groupwork":
-                Object userId = this.sessionUtil.getValue(req, "userId");
-                if (userId != null) {
-                    this.getProjects(req, Integer.parseInt(userId.toString()));
-                } else {
+                if (roleDetailDTO.getActionCode()
+                        .contains("VIEW_ALL_PROJECTS")) {
                     this.getProjects(req);
+                } else {
+                    Integer userId = Utils.getUserSessionId(req);
+                    this.getProjects(req, Integer.parseInt(userId.toString()));
                 }
                 break;
             case "/groupwork-add":

@@ -2,6 +2,7 @@ package org.cybersoft.capstone.repository.impl;
 
 import org.cybersoft.capstone.config.MySQLConfig;
 import org.cybersoft.capstone.dto.TaskDTO;
+import org.cybersoft.capstone.dto.TaskProgressDTO;
 import org.cybersoft.capstone.entity.ProjectEntity;
 import org.cybersoft.capstone.entity.StatusEntity;
 import org.cybersoft.capstone.entity.TaskEntity;
@@ -110,6 +111,7 @@ public class TaskRepositoryImpl implements TaskRepository {
                         resultSet.getTimestamp("end_date")
                 );
                 ProjectEntity project = new ProjectEntity(
+                        resultSet.getInt("up.id_project"),
                         resultSet.getString("p.name")
                 );
                 UserEntity user = new UserEntity(
@@ -288,6 +290,30 @@ public class TaskRepositoryImpl implements TaskRepository {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, id);
+            result = preparedStatement.executeUpdate();
+
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return result;
+    }
+
+    @Override
+    public Integer updateProgressTask(Integer id, TaskProgressDTO taskProgressDTO) {
+        Integer result = null;
+        Connection connection = MySQLConfig.getConnection();
+        String sql = """
+                UPDATE task t
+                SET t.id_status = ?
+                WHERE t.id = ?;
+                """;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, taskProgressDTO.getStatusId());
+            preparedStatement.setInt(2, id);
             result = preparedStatement.executeUpdate();
 
             connection.close();

@@ -1,6 +1,34 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<c:choose>
+    <c:when test="${profileStat.notStarted == 0 && profileStat.total == 0}">
+        <c:set var="notStarted" value="0" scope="session"/>
+    </c:when>
+    <c:when test="${profileStat.notStarted != 0 && profileStat.total != 0}">
+        <c:set var="notStarted" value="${(profileStat.notStarted / profileStat.total) * 100}" scope="session"/>
+    </c:when>
+</c:choose>
+
+<c:choose>
+    <c:when test="${profileStat.inProgress == 0 && profileStat.total == 0}">
+        <c:set var="inProgress" value="0" scope="session"/>
+    </c:when>
+    <c:when test="${profileStat.inProgress != 0 && profileStat.total != 0}">
+        <c:set var="inProgress" value="${(profileStat.inProgress / profileStat.total) * 100}" scope="session"/>
+    </c:when>
+</c:choose>
+
+<c:choose>
+    <c:when test="${profileStat.completed == 0 && profileStat.total == 0}">
+        <c:set var="completed" value="0" scope="session"/>
+    </c:when>
+    <c:when test="${profileStat.completed != 0 && profileStat.total != 0}">
+        <c:set var="completed" value="${(profileStat.completed / profileStat.total) * 100}" scope="session"/>
+    </c:when>
+</c:choose>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -64,7 +92,7 @@
                                         <h3 class="counter text-right m-t-15 text-danger">
                                             <fmt:formatNumber type="number"
                                                               maxFractionDigits="2"
-                                                              value="${(profileStat.notStarted / profileStat.total) * 100}"/>%
+                                                              value="${notStarted}"/>%
                                         </h3>
                                     </div>
                                     <div class="col-xs-12">
@@ -74,10 +102,10 @@
                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                         <div class="progress">
                                             <div class="progress-bar progress-bar-danger" role="progressbar"
-                                                 aria-valuenow="${(projectStat.notStarted / projectStat.total) * 100}"
+                                                 aria-valuenow="${notStarted}"
                                                  aria-valuemin="0"
                                                  aria-valuemax="100"
-                                                 style="width: ${(profileStat.notStarted / profileStat.total) * 100}%">
+                                                 style="width: ${notStarted}%">
                                             </div>
                                         </div>
                                     </div>
@@ -93,7 +121,7 @@
                                         <h3 class="counter text-right m-t-15 text-megna">
                                             <fmt:formatNumber type="number"
                                                               maxFractionDigits="2"
-                                                              value="${(profileStat.inProgress / profileStat.total) * 100}"/>%
+                                                              value="${inProgress}"/>%
                                         </h3>
                                     </div>
                                     <div class="col-xs-12">
@@ -103,9 +131,9 @@
                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                         <div class="progress">
                                             <div class="progress-bar progress-bar-megna" role="progressbar"
-                                                 aria-valuenow="${(projectStat.inProgress / projectStat.total) * 100}"
+                                                 aria-valuenow="${inProgress}"
                                                  aria-valuemin="0" aria-valuemax="100"
-                                                 style="width: ${(profileStat.inProgress / profileStat.total) * 100}%">
+                                                 style="width: ${inProgress}%">
                                             </div>
                                         </div>
                                     </div>
@@ -121,7 +149,7 @@
                                         <h3 class="counter text-right m-t-15 text-primary">
                                             <fmt:formatNumber type="number"
                                                               maxFractionDigits="2"
-                                                              value="${(profileStat.completed / profileStat.total) * 100}"/>%
+                                                              value="${completed}"/>%
                                         </h3>
                                     </div>
                                     <div class="col-xs-12">
@@ -131,9 +159,9 @@
                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                         <div class="progress">
                                             <div class="progress-bar progress-bar-primary" role="progressbar"
-                                                 aria-valuenow="${(projectStat.completed / projectStat.total) * 100}"
+                                                 aria-valuenow="${completed}"
                                                  aria-valuemin="0" aria-valuemax="100"
-                                                 style="width: ${(profileStat.completed / profileStat.total) * 100}%">
+                                                 style="width: ${completed}%">
                                             </div>
                                         </div>
                                     </div>
@@ -182,7 +210,8 @@
                                         </td>
                                         <td>${task.status.name}</td>
                                         <td>
-                                            <a href="profile-edit" class="btn btn-sm btn-primary">Cập nhật</a>
+                                            <a href="${pageContext.request.contextPath}/task/${task.id}"
+                                               class="btn btn-sm btn-primary">Cập nhật</a>
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -202,5 +231,10 @@
 <!-- /#wrapper -->
 <jsp:include page="fragments/script.jsp"/>
 <script src="js/jquery.dataTables.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable();
+    });
+</script>
 </body>
 </html>

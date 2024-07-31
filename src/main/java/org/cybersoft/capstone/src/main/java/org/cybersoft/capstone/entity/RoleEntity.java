@@ -1,9 +1,20 @@
 package org.cybersoft.capstone.entity;
 
+import java.util.List;
+
 public class RoleEntity {
     private Integer id;
     private String name;
     private String description;
+
+    private List<RoleDetailEntity> roleDetails;
+
+    public RoleEntity() {
+    }
+
+    public RoleEntity(String name) {
+        this.name = name;
+    }
 
     public Integer getId() {
         return id;
@@ -27,5 +38,13 @@ public class RoleEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<RoleDetailEntity> getRoleDetails() {
+        return roleDetails;
+    }
+
+    public void setRoleDetails(List<RoleDetailEntity> roleDetails) {
+        this.roleDetails = roleDetails;
     }
 }

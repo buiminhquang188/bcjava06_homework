@@ -1,5 +1,6 @@
 package org.cybersoft.capstone.api;
 
+import org.cybersoft.capstone.constant.Role;
 import org.cybersoft.capstone.mapper.ResponseMapper;
 import org.cybersoft.capstone.payload.response.BaseResponse;
 import org.cybersoft.capstone.service.RoleService;
@@ -20,14 +21,22 @@ public class RoleApiController extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Integer id = Utils.getPathParameter(req);
+        Boolean data = null;
+        String message = null;
 
-        Boolean data = this.roleService.deleteRole(id);
+        if (id != null && (id.intValue() == Role.ADMIN.getId() || id.intValue() == Role.LEADER.getId() || id.intValue() == Role.USER.getId())) {
+            data = false;
+            message = "NOT_ALLOWED";
+        } else {
+            data = this.roleService.deleteRole(id);
+        }
+
         BaseResponse<Object> baseResponse = null;
 
         if (Boolean.TRUE.equals(data)) {
             baseResponse = this.responseMapper.jsonToSuccessResponse(data);
         } else {
-            baseResponse = this.responseMapper.jsonToFailedResponse(data);
+            baseResponse = this.responseMapper.jsonToFailedResponse(data, message);
         }
         String jsonData = Utils.dataToJson(baseResponse);
         Utils.appendServletResponseWriter(resp, jsonData);

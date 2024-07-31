@@ -31,7 +31,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
-            System.out.println("execute query getProjects");
+            System.out.println("execute query GET ALL Projects");
 
             while (resultSet.next()) {
                 ProjectEntity projectEntity = new ProjectEntity(
@@ -391,5 +391,34 @@ public class ProjectRepositoryImpl implements ProjectRepository {
         }
 
         return statuses;
+    }
+
+    @Override
+    public List<Integer> getProjectIdsByUserId(Integer userId) {
+        List<Integer> projectIds = new ArrayList<>();
+
+        String sql = """
+                SELECT up.id_project
+                FROM users u
+                         LEFT JOIN users_project up ON up.id_user = u.id
+                WHERE u.id = ?
+                """;
+        Connection connection = MySQLConfig.getConnection();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, userId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                projectIds.add(resultSet.getInt("up.id_project"));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return projectIds;
     }
 }

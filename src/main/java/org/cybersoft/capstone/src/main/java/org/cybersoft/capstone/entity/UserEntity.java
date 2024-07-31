@@ -1,5 +1,7 @@
 package org.cybersoft.capstone.entity;
 
+import java.util.List;
+
 public class UserEntity {
     private Integer id;
     private String password;
@@ -8,6 +10,7 @@ public class UserEntity {
     private String username;
     private String phone;
     private RoleEntity role;
+    private List<ProjectEntity> projects;
 
     public UserEntity() {
     }
@@ -31,6 +34,10 @@ public class UserEntity {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
+    }
+
+    public UserEntity(List<ProjectEntity> projects) {
+        this.projects = projects;
     }
 
     public Integer getId() {
@@ -87,5 +94,13 @@ public class UserEntity {
 
     public void setRole(RoleEntity role) {
         this.role = role;
+    }
+
+    public List<ProjectEntity> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(List<ProjectEntity> projects) {
+        this.projects = projects;
     }
 }

@@ -8,6 +8,8 @@ import java.util.List;
 public interface UserService {
     List<UserEntity> getUsers();
 
+    List<UserEntity> getUsersInProject(Integer id);
+
     UserEntity getUser(Integer id);
 
     Integer createUser(UserDTO userDTO);

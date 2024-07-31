@@ -26,4 +26,6 @@ public interface ProjectRepository {
     List<ProjectEntity> getProjectDetail(Integer id);
 
     List<StatusEntity> getProjectStat(Integer id);
+
+    List<Integer> getProjectIdsByUserId(Integer userId);
 }

@@ -75,4 +75,13 @@ public class Utils {
             return null;
         }
     }
+
+    public static Integer parseInt(String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            System.out.println(e);
+            return null;
+        }
+    }
 }

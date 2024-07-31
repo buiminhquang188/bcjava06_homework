@@ -19,4 +19,13 @@ public class ResponseMapper {
                 data
         );
     }
+
+    public <T> BaseResponse<T> jsonToFailedResponse(T data, String message) {
+        if (message == null) return this.jsonToFailedResponse(data);
+        return new BaseResponse<>(
+                Status.FAILED.getStatusCode(),
+                message,
+                data
+        );
+    }
 }
