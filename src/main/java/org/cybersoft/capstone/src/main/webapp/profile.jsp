@@ -6,7 +6,7 @@
     <c:when test="${profileStat.notStarted == 0 && profileStat.total == 0}">
         <c:set var="notStarted" value="0" scope="session"/>
     </c:when>
-    <c:when test="${profileStat.notStarted != 0 && profileStat.total != 0}">
+    <c:when test="${profileStat.notStarted != 0 || profileStat.total != 0}">
         <c:set var="notStarted" value="${(profileStat.notStarted / profileStat.total) * 100}" scope="session"/>
     </c:when>
 </c:choose>
@@ -15,7 +15,7 @@
     <c:when test="${profileStat.inProgress == 0 && profileStat.total == 0}">
         <c:set var="inProgress" value="0" scope="session"/>
     </c:when>
-    <c:when test="${profileStat.inProgress != 0 && profileStat.total != 0}">
+    <c:when test="${profileStat.inProgress != 0 || profileStat.total != 0}">
         <c:set var="inProgress" value="${(profileStat.inProgress / profileStat.total) * 100}" scope="session"/>
     </c:when>
 </c:choose>
@@ -24,7 +24,7 @@
     <c:when test="${profileStat.completed == 0 && profileStat.total == 0}">
         <c:set var="completed" value="0" scope="session"/>
     </c:when>
-    <c:when test="${profileStat.completed != 0 && profileStat.total != 0}">
+    <c:when test="${profileStat.completed != 0 || profileStat.total != 0}">
         <c:set var="completed" value="${(profileStat.completed / profileStat.total) * 100}" scope="session"/>
     </c:when>
 </c:choose>
