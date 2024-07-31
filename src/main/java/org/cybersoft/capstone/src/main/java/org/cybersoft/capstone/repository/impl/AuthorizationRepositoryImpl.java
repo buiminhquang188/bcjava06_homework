@@ -19,7 +19,8 @@ public class AuthorizationRepositoryImpl implements AuthorizationRepository {
         List<RoleDetailEntity> rolesDetailEntity = new ArrayList<>();
 
         String sql = """
-                SELECT r.name,
+                SELECT u.id,
+                       r.name,
                        rd.action,
                        rd.url,
                        rd.method,
@@ -53,6 +54,7 @@ public class AuthorizationRepositoryImpl implements AuthorizationRepository {
                 );
 
                 RoleDetailEntity roleDetailEntity = new RoleDetailEntity(
+                        resultSet.getInt("u.id"),
                         resultSet.getString("rd.action"),
                         resultSet.getString("rd.action_name"),
                         resultSet.getString("rd.action_code"),

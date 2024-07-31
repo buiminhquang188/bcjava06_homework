@@ -31,10 +31,10 @@
             <div class="row bg-title">
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                     <c:choose>
-                        <c:when test="${fn:contains(roleDetail.actionCode, 'EDIT_PROGRESS_TASK')}">
+                        <c:when test="${fn:contains(roleDetail.actionCode, 'EDIT_PROGRESS_TASK') && !fn:contains(roleDetail.actionCode, 'EDIT_TASK')}">
                             <h4 class="page-title">Cập nhật tiến độ công việc - ${task.id}</h4>
                         </c:when>
-                        <c:when test="${fn:contains(roleDetail.actionCode, 'EDIT_TASK')}">
+                        <c:when test="${fn:contains(roleDetail.actionCode, 'EDIT_TASK') && fn:contains(roleDetail.actionCode, 'EDIT_PROGRESS_TASK')}">
                             <h4 class="page-title">Chỉnh sửa công việc - ${task.id}</h4>
                         </c:when>
                     </c:choose>
@@ -47,10 +47,10 @@
                 <div class="col-md-8 col-xs-12">
                     <div class="white-box">
                         <c:choose>
-                            <c:when test="${fn:contains(roleDetail.actionCode, 'EDIT_PROGRESS_TASK')}">
+                            <c:when test="${fn:contains(roleDetail.actionCode, 'EDIT_PROGRESS_TASK') && !fn:contains(roleDetail.actionCode, 'EDIT_TASK')}">
                                 <jsp:include page="fragments/update-progress-task-form.jsp"/>
                             </c:when>
-                            <c:when test="${fn:contains(roleDetail.actionCode, 'EDIT_TASK')}">
+                            <c:when test="${fn:contains(roleDetail.actionCode, 'EDIT_TASK') && fn:contains(roleDetail.actionCode, 'EDIT_PROGRESS_TASK')}">
                                 <jsp:include page="fragments/edit-task-form.jsp"/>
                             </c:when>
                         </c:choose>

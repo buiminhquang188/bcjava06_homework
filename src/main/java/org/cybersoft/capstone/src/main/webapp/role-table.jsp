@@ -38,7 +38,7 @@
                 <!-- /.col-lg-12 -->
             </div>
             <div class="alert alert-danger hidden" role="alert">
-                <strong>Ôi không!</strong> Bạn không thể xóa ID này.
+                <strong>Ôi không!</strong> Bạn không thể xóa quyền này.
             </div>
             <!-- /row -->
             <div class="row">

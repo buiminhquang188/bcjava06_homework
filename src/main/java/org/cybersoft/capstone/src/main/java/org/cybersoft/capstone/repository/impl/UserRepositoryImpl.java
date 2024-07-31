@@ -173,13 +173,49 @@ public class UserRepositoryImpl implements UserRepository {
         String sql = """
                 SELECT u.id, u.first_name, u.last_name
                 FROM users u
-                WHERE u.id_role = ?;
+                WHERE u.id_role = ?
                 """;
         Connection connection = MySQLConfig.getConnection();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                UserEntity user = new UserEntity(
+                        resultSet.getInt("id"),
+                        resultSet.getString("first_name"),
+                        resultSet.getString("last_name")
+                );
+
+                users.add(user);
+            }
+
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return users;
+    }
+
+    @Override
+    public List<UserEntity> getUserOptionsInRole(List<Integer> roleIds) {
+        List<UserEntity> users = new ArrayList<>();
+        String sql = String.format("""
+                        SELECT u.id, u.first_name, u.last_name
+                        FROM users u
+                        WHERE u.id_role IN (%s)
+                        """,
+                roleIds.stream()
+                        .map(String::valueOf)
+                        .collect(Collectors.joining(", "))
+        );
+        Connection connection = MySQLConfig.getConnection();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -268,5 +304,44 @@ public class UserRepositoryImpl implements UserRepository {
         }
 
         return users;
+    }
+
+    @Override
+    public UserEntity getUserWithRole(Integer id) {
+        UserEntity user = new UserEntity();
+
+        Connection connection = MySQLConfig.getConnection();
+        String sql = """
+                SELECT u.id, u.first_name, u.last_name, u.username, r.id, r.name
+                FROM users u
+                         LEFT JOIN roles r ON r.id = u.id_role
+                WHERE u.id = ?
+                """;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                user.setId(resultSet.getInt("u.id"));
+                user.setFirstName(resultSet.getString("u.first_name"));
+                user.setLastName(resultSet.getString("u.last_name"));
+                user.setUsername(resultSet.getString("u.username"));
+
+                RoleEntity role = new RoleEntity(
+                        resultSet.getString("r.name")
+                );
+
+                user.setRole(role);
+            }
+
+            connection.close();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return user;
     }
 }

@@ -3,6 +3,7 @@ package org.cybersoft.capstone.dto;
 import java.util.List;
 
 public class RoleDetailDTO {
+    private Integer id;
     private String name;
     private String action;
     private String url;
@@ -11,11 +12,20 @@ public class RoleDetailDTO {
     public RoleDetailDTO() {
     }
 
-    public RoleDetailDTO(String name, String action, String url, List<String> actionCode) {
+    public RoleDetailDTO(Integer id, String name, String action, String url, List<String> actionCode) {
+        this.id = id;
         this.name = name;
         this.action = action;
         this.url = url;
         this.actionCode = actionCode;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {

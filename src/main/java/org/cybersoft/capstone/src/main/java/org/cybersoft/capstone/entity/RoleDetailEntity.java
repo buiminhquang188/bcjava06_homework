@@ -14,7 +14,8 @@ public class RoleDetailEntity {
     public RoleDetailEntity() {
     }
 
-    public RoleDetailEntity(String action, String actionName, String actionCode, String url, String method, RoleEntity role) {
+    public RoleDetailEntity(Integer id, String action, String actionName, String actionCode, String url, String method, RoleEntity role) {
+        this.id = id;
         this.action = action;
         this.actionName = actionName;
         this.actionCode = actionCode;

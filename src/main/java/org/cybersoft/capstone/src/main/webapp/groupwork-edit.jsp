@@ -92,7 +92,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-12">Người thực hiện</label>
+                                <label class="col-md-12">Người quản lý dự án</label>
                                 <div class="col-md-12">
                                     <c:choose>
                                         <c:when test="${errors.userIdProject == null && userIdProject == null}">

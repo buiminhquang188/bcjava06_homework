@@ -32,6 +32,7 @@ public class AuthorizationMapper {
         rolesDetailEntity.forEach(roleEntity -> actionCode.add(roleEntity.getActionCode()));
 
         return new RoleDetailDTO(
+                roleDetailEntity.getId(),
                 roleDetailEntity
                         .getRole()
                         .getName(),

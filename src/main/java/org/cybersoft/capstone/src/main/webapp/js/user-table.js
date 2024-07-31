@@ -8,6 +8,19 @@ $(function () {
         }).done((result) => {
             if (result.data) {
                 this.closest("tr").remove();
+            }
+
+            if (result.message === 'NOT_ALLOWED') {
+                const alert = $(".alert.alert-danger");
+                alert.removeClass("hidden");
+
+                const timeOutId = setTimeout(() => {
+                    alert.addClass("hidden")
+                }, 3000)
+
+                window.onbeforeunload = () => {
+                    clearTimeout(timeOutId);
+                }
             } else {
                 alert("Xóa thất bại, vui lòng kiểm tra lại");
             }

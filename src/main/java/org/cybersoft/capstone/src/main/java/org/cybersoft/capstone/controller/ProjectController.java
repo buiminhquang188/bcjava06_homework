@@ -1,7 +1,6 @@
 package org.cybersoft.capstone.controller;
 
 import org.cybersoft.capstone.config.CustomServlet;
-import org.cybersoft.capstone.constant.Role;
 import org.cybersoft.capstone.dto.ProjectDTO;
 import org.cybersoft.capstone.dto.RoleDetailDTO;
 import org.cybersoft.capstone.entity.ProjectEntity;
@@ -145,7 +144,10 @@ public class ProjectController extends CustomServlet {
     }
 
     private void getOptions(HttpServletRequest req) {
-        List<UserEntity> users = this.userService.getUserOptionsByRole(Role.LEADER.getId());
+        RoleDetailDTO roleDetailDTO = (RoleDetailDTO) SessionUtil.getInstance()
+                .getValue(req, "roleDetailDTO");
+
+        List<UserEntity> users = this.userService.getUserOptionsByRole(roleDetailDTO);
         req.setAttribute("users", users);
     }
 }

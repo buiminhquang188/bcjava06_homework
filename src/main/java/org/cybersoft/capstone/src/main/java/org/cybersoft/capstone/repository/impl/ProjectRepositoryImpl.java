@@ -2,17 +2,11 @@ package org.cybersoft.capstone.repository.impl;
 
 import org.cybersoft.capstone.config.MySQLConfig;
 import org.cybersoft.capstone.dto.ProjectDTO;
-import org.cybersoft.capstone.entity.ProjectEntity;
-import org.cybersoft.capstone.entity.StatusEntity;
-import org.cybersoft.capstone.entity.TaskEntity;
-import org.cybersoft.capstone.entity.UserEntity;
+import org.cybersoft.capstone.entity.*;
 import org.cybersoft.capstone.repository.ProjectRepository;
 import org.cybersoft.capstone.repository.TaskRepository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -138,30 +132,19 @@ public class ProjectRepositoryImpl implements ProjectRepository {
         Connection connection = MySQLConfig.getConnection();
 
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, projectDTO.getName());
-            preparedStatement.setObject(2, projectDTO.getStartDate());
-            preparedStatement.setObject(3, projectDTO.getEndDate());
+            preparedStatement.setTimestamp(2, projectDTO.getStartDate());
+            preparedStatement.setTimestamp(3, projectDTO.getEndDate());
 
-            resultIndex = preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
+            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+
+            while (resultSet.next()) {
+                resultIndex = resultSet.getInt(1);
+            }
+
             System.out.println("Insert Create Project");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        String sqlRelation = """
-                INSERT INTO users_project(id_project, id_user)
-                    VALUE (?, ?)
-                """;
-
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sqlRelation);
-            preparedStatement.setInt(1, resultIndex);
-            preparedStatement.setInt(2, projectDTO.getUserIdProject());
-
-            resultIndex = preparedStatement.executeUpdate();
-            System.out.println("Insert Users Project");
-            connection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -183,30 +166,14 @@ public class ProjectRepositoryImpl implements ProjectRepository {
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
             preparedStatement.setString(1, projectDTO.getName());
             preparedStatement.setTimestamp(2, projectDTO.getStartDate());
             preparedStatement.setTimestamp(3, projectDTO.getEndDate());
             preparedStatement.setInt(4, id);
 
-            preparedStatement.executeUpdate();
-            System.out.println("Update Project");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        String sqlRelation = """
-                UPDATE users_project up
-                SET up.id_user    = ?
-                where up.id_project = ?
-                """;
-
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sqlRelation);
-            preparedStatement.setInt(1, projectDTO.getUserIdProject());
-            preparedStatement.setInt(2, id);
-
             resultIndex = preparedStatement.executeUpdate();
-            System.out.println("Update Users Project");
+            System.out.println("Update Project");
             connection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -217,8 +184,10 @@ public class ProjectRepositoryImpl implements ProjectRepository {
 
     @Override
     public Integer deleteProject(Integer id) {
-        Integer taskIndex = this.taskRepository.updateTaskByProjectId(id);
-        if (taskIndex <= 0) return null;
+        this.taskRepository.updateTaskByProjectId(id);
+        this.deleteUserProjectByProjectId(id);
+
+        Connection connection = MySQLConfig.getConnection();
 
         Integer resultIndex = null;
         String sql = """
@@ -226,13 +195,16 @@ public class ProjectRepositoryImpl implements ProjectRepository {
                 FROM project p
                 WHERE p.id = ?
                 """;
-        Connection connection = MySQLConfig.getConnection();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, id);
-            preparedStatement.setInt(1, id);
+
+            Statement statement = connection.createStatement();
+            statement.execute("SET FOREIGN_KEY_CHECKS = 0");
             resultIndex = preparedStatement.executeUpdate();
+            statement.execute("SET FOREIGN_KEY_CHECKS = 1");
+            statement.close();
             connection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -419,5 +391,146 @@ public class ProjectRepositoryImpl implements ProjectRepository {
         }
 
         return projectIds;
+    }
+
+    @Override
+    public UsersProjectEntity getUsersProjectByUserIdAndProjectId(Integer userId, Integer projectId) {
+        UsersProjectEntity usersProjectEntity = null;
+        Connection connection = MySQLConfig.getConnection();
+        String sql = """
+                SELECT up.id_user, up.id_project
+                FROM users_project up
+                WHERE up.id_user = ? AND up.id_project = ?
+                """;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setInt(2, projectId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                usersProjectEntity = new UsersProjectEntity();
+                usersProjectEntity.setIdUser(resultSet.getInt("up.id_user"));
+                usersProjectEntity.setIdProject(resultSet.getInt("up.id_project"));
+            }
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return usersProjectEntity;
+    }
+
+    @Override
+    public UsersProjectEntity getUsersProjectByUserIdAndProjectIdIsNull(Integer userId) {
+        UsersProjectEntity usersProjectEntity = null;
+        Connection connection = MySQLConfig.getConnection();
+        String sql = """
+                SELECT up.id_user
+                FROM users_project up
+                WHERE up.id_user = ? AND up.id_project IS NULL
+                """;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, userId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                usersProjectEntity = new UsersProjectEntity();
+                usersProjectEntity.setIdUser(resultSet.getInt("up.id_user"));
+                usersProjectEntity.setIdProject(null);
+            }
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return usersProjectEntity;
+    }
+
+    @Override
+    public Integer createUserProject(Integer userId, Integer projectId) {
+        Integer result = null;
+        Connection connection = MySQLConfig.getConnection();
+        String sql = """
+                INSERT INTO users_project(id_user, id_project)
+                VALUE (?, ?)
+                """;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setInt(2, projectId);
+
+            result = preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return result;
+    }
+
+    @Override
+    public void updateUserProject(Integer userId, Integer projectId) {
+        Connection connection = MySQLConfig.getConnection();
+        String sql = """
+                UPDATE users_project up
+                SET up.id_project = ?
+                WHERE up.id_user = ?;
+                """;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, projectId);
+            preparedStatement.setInt(2, userId);
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void deleteUserProjectByProjectId(Integer id) {
+        Connection connection = MySQLConfig.getConnection();
+        String sql = """
+                DELETE
+                FROM users_project up
+                WHERE up.id_project = ?;
+                """;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void updateUserProjectByUserIdAndProjectId(Integer userId, Integer projectId, Integer inputUserId, Integer inputProjectId) {
+        Connection connection = MySQLConfig.getConnection();
+        String sql = """
+                UPDATE users_project up
+                SET up.id_user = ?,
+                    up.id_project = ?
+                WHERE up.id_user = ? AND up.id_project = ?;
+                """;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, inputUserId);
+            preparedStatement.setInt(2, inputProjectId);
+            preparedStatement.setInt(3, userId);
+            preparedStatement.setInt(4, projectId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -1,6 +1,7 @@
 package org.cybersoft.capstone.service;
 
 import org.cybersoft.capstone.dto.ProjectDTO;
+import org.cybersoft.capstone.dto.RoleDetailDTO;
 import org.cybersoft.capstone.entity.ProjectEntity;
 import org.cybersoft.capstone.entity.StatusEntity;
 
@@ -19,7 +20,7 @@ public interface ProjectService {
 
     Boolean deleteProject(Integer id);
 
-    List<ProjectEntity> getProjectOptions();
+    List<ProjectEntity> getProjectOptions(RoleDetailDTO roleDetailDTO);
 
     List<ProjectEntity> getProjectOptions(Integer id);
 

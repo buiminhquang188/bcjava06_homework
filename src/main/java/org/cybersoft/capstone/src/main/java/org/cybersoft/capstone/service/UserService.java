@@ -1,5 +1,6 @@
 package org.cybersoft.capstone.service;
 
+import org.cybersoft.capstone.dto.RoleDetailDTO;
 import org.cybersoft.capstone.dto.UserDTO;
 import org.cybersoft.capstone.entity.UserEntity;
 
@@ -16,7 +17,9 @@ public interface UserService {
 
     Boolean deleteUser(Integer id);
 
-    List<UserEntity> getUserOptions();
+    List<UserEntity> getUserOptions(RoleDetailDTO roleDetailDTO);
 
-    List<UserEntity> getUserOptionsByRole(Integer id);
+    List<UserEntity> getUserOptionsByRole(RoleDetailDTO roleDetailDTO);
+
+    UserEntity getUserWithRole(Integer id);
 }

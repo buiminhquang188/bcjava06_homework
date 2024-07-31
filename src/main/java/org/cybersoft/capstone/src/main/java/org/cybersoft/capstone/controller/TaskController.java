@@ -130,8 +130,11 @@ public class TaskController extends CustomServlet {
     }
 
     private void getOptions(HttpServletRequest req) {
-        List<ProjectEntity> projects = this.projectService.getProjectOptions();
-        List<UserEntity> users = this.userService.getUserOptions();
+        RoleDetailDTO roleDetailDTO = (RoleDetailDTO) SessionUtil.getInstance()
+                .getValue(req, "roleDetailDTO");
+
+        List<ProjectEntity> projects = this.projectService.getProjectOptions(roleDetailDTO);
+        List<UserEntity> users = this.userService.getUserOptions(roleDetailDTO);
         List<StatusEntity> statuses = this.statusService.getStatuses();
         req.setAttribute("projects", projects);
         req.setAttribute("users", users);
@@ -139,8 +142,11 @@ public class TaskController extends CustomServlet {
     }
 
     private void getOptions(HttpServletRequest req, Integer id) {
-        List<ProjectEntity> projects = this.projectService.getProjectOptions(id);
-        List<UserEntity> users = this.userService.getUserOptions();
+        RoleDetailDTO roleDetailDTO = (RoleDetailDTO) SessionUtil.getInstance()
+                .getValue(req, "roleDetailDTO");
+
+        List<ProjectEntity> projects = this.projectService.getProjectOptions(roleDetailDTO);
+        List<UserEntity> users = this.userService.getUserOptions(roleDetailDTO);
         List<StatusEntity> statuses = this.statusService.getStatuses();
         req.setAttribute("projects", projects);
         req.setAttribute("users", users);

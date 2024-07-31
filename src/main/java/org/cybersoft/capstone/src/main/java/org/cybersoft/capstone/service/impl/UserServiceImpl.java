@@ -1,5 +1,7 @@
 package org.cybersoft.capstone.service.impl;
 
+import org.cybersoft.capstone.constant.Role;
+import org.cybersoft.capstone.dto.RoleDetailDTO;
 import org.cybersoft.capstone.dto.UserDTO;
 import org.cybersoft.capstone.entity.UserEntity;
 import org.cybersoft.capstone.repository.ProjectRepository;
@@ -42,12 +44,29 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserEntity> getUserOptions() {
-        return this.userRepository.getUserOptions();
+    public List<UserEntity> getUserOptions(RoleDetailDTO roleDetailDTO) {
+        if (roleDetailDTO.getName()
+                .equals("ADMIN")) {
+            return this.userRepository.getUserOptions();
+        }
+
+        return this.userRepository.getUserOptionsInRole(List.of(Role.LEADER.getId(), Role.USER.getId()));
     }
 
     @Override
-    public List<UserEntity> getUserOptionsByRole(Integer id) {
-        return this.userRepository.getUserOptionsByRole(id);
+    public List<UserEntity> getUserOptionsByRole(RoleDetailDTO roleDetailDTO) {
+        if (roleDetailDTO.getName()
+                .equals("ADMIN")) {
+            return this.userRepository.getUserOptionsInRole(List.of(
+                    Role.ADMIN.getId(), Role.LEADER.getId()
+            ));
+        }
+
+        return this.userRepository.getUserOptionsByRole(Role.LEADER.getId());
+    }
+
+    @Override
+    public UserEntity getUserWithRole(Integer id) {
+        return this.userRepository.getUserWithRole(id);
     }
 }

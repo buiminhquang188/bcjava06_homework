@@ -47,13 +47,13 @@
                                             <input type="text"
                                                    name="name"
                                                    value="${name}"
-                                                   placeholder="Tên công việc"
+                                                   placeholder="Tên dự án"
                                                    class="form-control form-control-line">
                                         </c:when>
                                         <c:when test="${errors.name != null}">
                                             <input type="text"
                                                    name="name"
-                                                   placeholder="Tên công việc"
+                                                   placeholder="Tên dự án"
                                                    class="form-control form-control-line">
                                         </c:when>
                                     </c:choose>
@@ -130,7 +130,7 @@
                                         </c:when>
                                         <c:when test="${errors.userIdProject != null}">
                                             <select name="userIdProject" class="form-control form-control-line">
-                                                <option disabled selected>Chọn người thực hiện</option>
+                                                <option disabled selected>Chọn người quản lý dự án</option>
                                                 <c:forEach items="${users}" var="user">
                                                     <option value="${user.id}">${user.firstName} ${user.lastName}</option>
                                                 </c:forEach>
