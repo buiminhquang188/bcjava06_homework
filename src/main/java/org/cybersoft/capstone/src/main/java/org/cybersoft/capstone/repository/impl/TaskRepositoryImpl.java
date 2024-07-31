@@ -323,4 +323,78 @@ public class TaskRepositoryImpl implements TaskRepository {
 
         return result;
     }
+
+    @Override
+    public List<StatusEntity> getTaskStatisticByUserId(Integer userId) {
+        List<StatusEntity> statuses = new ArrayList<>();
+        Connection connection = MySQLConfig.getConnection();
+        String sql = """
+                SELECT s.id, s.name, COUNT(s.id) AS total
+                FROM task t
+                         JOIN status s ON s.id = t.id_status
+                WHERE t.id_user = ?
+                GROUP BY s.id
+                """;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, userId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                StatusEntity status = new StatusEntity(
+                        resultSet.getInt("s.id"),
+                        resultSet.getString("s.name"),
+                        resultSet.getInt("total")
+                );
+
+                statuses.add(status);
+            }
+
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return statuses;
+    }
+
+    @Override
+    public List<TaskEntity> getTaskByUserId(Integer userId) {
+        List<TaskEntity> tasks = new ArrayList<>();
+        String sql = """
+                SELECT t.name, t.start_date, t.end_date, s.id, s.name
+                FROM task t
+                         JOIN status s ON s.id = t.id_status
+                WHERE t.id_user = ?
+                """;
+        Connection connection = MySQLConfig.getConnection();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, userId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                StatusEntity status = new StatusEntity(
+                        resultSet.getInt("s.id"),
+                        resultSet.getString("s.name")
+                );
+
+                TaskEntity task = new TaskEntity(
+                        resultSet.getString("t.name"),
+                        resultSet.getTimestamp("t.start_date"),
+                        resultSet.getTimestamp("t.end_date"),
+                        status
+                );
+
+                tasks.add(task);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return tasks;
+    }
 }

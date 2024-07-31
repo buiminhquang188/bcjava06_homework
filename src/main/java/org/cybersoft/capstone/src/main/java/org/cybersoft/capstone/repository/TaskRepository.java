@@ -2,6 +2,7 @@ package org.cybersoft.capstone.repository;
 
 import org.cybersoft.capstone.dto.TaskDTO;
 import org.cybersoft.capstone.dto.TaskProgressDTO;
+import org.cybersoft.capstone.entity.StatusEntity;
 import org.cybersoft.capstone.entity.TaskEntity;
 
 import java.util.List;
@@ -22,4 +23,8 @@ public interface TaskRepository {
     Integer updateTaskByProjectId(Integer id);
 
     Integer updateProgressTask(Integer id, TaskProgressDTO taskProgressDTO);
+
+    List<StatusEntity> getTaskStatisticByUserId(Integer userId);
+
+    List<TaskEntity> getTaskByUserId(Integer userId);
 }

@@ -70,9 +70,11 @@
                             <img width="100%" alt="user" src="plugins/images/large/img1.jpg">
                             <div class="overlay-box">
                                 <div class="user-content">
-                                    <a href="javascript:void(0)"><img
-                                            src="https://joesch.moe/api/v1/${sessionScope.userId}"
-                                            class="thumb-lg img-circle" alt="img"></a>
+                                    <a href="javascript:void(0)">
+                                        <img
+                                                src="https://joesch.moe/api/v1/${profile.user.id}"
+                                                class="thumb-lg img-circle" alt="img"/>
+                                    </a>
                                     <h4 class="text-white">${profile.user.firstName} ${profile.user.lastName}</h4>
                                     <h5 class="text-white">${profile.user.username}</h5>
                                 </div>

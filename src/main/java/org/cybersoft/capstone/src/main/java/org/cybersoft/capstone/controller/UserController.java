@@ -1,12 +1,20 @@
 package org.cybersoft.capstone.controller;
 
+import org.cybersoft.capstone.config.CustomServlet;
 import org.cybersoft.capstone.dto.RoleDetailDTO;
 import org.cybersoft.capstone.dto.UserDTO;
 import org.cybersoft.capstone.entity.RoleEntity;
+import org.cybersoft.capstone.entity.StatusEntity;
+import org.cybersoft.capstone.entity.TaskEntity;
 import org.cybersoft.capstone.entity.UserEntity;
+import org.cybersoft.capstone.mapper.StatisticMapper;
+import org.cybersoft.capstone.mapper.UserMapper;
+import org.cybersoft.capstone.payload.response.ProjectStatResponse;
 import org.cybersoft.capstone.service.RoleService;
+import org.cybersoft.capstone.service.TaskService;
 import org.cybersoft.capstone.service.UserService;
 import org.cybersoft.capstone.service.impl.RoleServiceImpl;
+import org.cybersoft.capstone.service.impl.TaskServiceImpl;
 import org.cybersoft.capstone.service.impl.UserServiceImpl;
 import org.cybersoft.capstone.util.SessionUtil;
 import org.cybersoft.capstone.util.Utils;
@@ -14,18 +22,20 @@ import org.cybersoft.capstone.validation.UserRequest;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @WebServlet(name = "userController", urlPatterns = {"/user-table", "/user-add", "/user-details/*"})
-public class UserController extends HttpServlet {
+public class UserController extends CustomServlet {
+    private final UserRequest userRequest = new UserRequest();
+    private final UserMapper userMapper = new UserMapper();
+    private final StatisticMapper statisticMapper = new StatisticMapper();
     private final UserService userService = new UserServiceImpl();
     private final RoleService roleService = new RoleServiceImpl();
-
-    private final UserRequest userRequest = new UserRequest();
+    private final TaskService taskService = new TaskServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -37,14 +47,23 @@ public class UserController extends HttpServlet {
             case "/user-add":
                 this.createUser(req);
                 break;
-            case "/user-details":
-                this.getUser(req);
-                break;
             default:
                 break;
         }
 
         Utils.navigate(req, resp);
+    }
+
+    @Override
+    protected void doGetDetail(HttpServletRequest req, HttpServletResponse resp, Integer pathParameter) throws ServletException, IOException {
+        String path = req.getServletPath();
+        if (path.equals("/user-details")) {
+            this.getUser(req, pathParameter);
+            this.getUserTask(req, pathParameter);
+            this.getUserStatistic(req, pathParameter);
+            req.getRequestDispatcher("/user-details.jsp")
+                    .forward(req, resp);
+        }
     }
 
     @Override
@@ -92,14 +111,25 @@ public class UserController extends HttpServlet {
         req.setAttribute("users", users);
     }
 
-    private void getUser(HttpServletRequest req) {
-        Integer id = Utils.getPathParameter(req);
-        UserEntity user = this.userService.getUser(id);
+    private void getUser(HttpServletRequest req, Integer userId) {
+        UserEntity user = this.userService.getUser(userId);
         req.setAttribute("user", user);
     }
 
     private void createUser(HttpServletRequest req) {
         List<RoleEntity> roles = this.roleService.getRoles();
         req.setAttribute("roles", roles);
+    }
+
+    private void getUserTask(HttpServletRequest req, Integer id) {
+        List<TaskEntity> tasks = this.taskService.getTasksByUserId(id);
+        Map<String, List<TaskEntity>> userTasks = this.userMapper.tasksEntitiesToResponse(tasks);
+        req.setAttribute("userTasks", userTasks);
+    }
+
+    private void getUserStatistic(HttpServletRequest req, Integer id) {
+        List<StatusEntity> statuses = this.taskService.getTaskStatisticByUserId(id);
+        ProjectStatResponse projectStat = this.statisticMapper.statusEntityToResponse(statuses);
+        req.setAttribute("projectStat", projectStat);
     }
 }

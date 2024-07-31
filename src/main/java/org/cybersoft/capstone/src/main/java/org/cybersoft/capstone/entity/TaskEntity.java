@@ -28,6 +28,13 @@ public class TaskEntity {
         this.endDate = endDate;
     }
 
+    public TaskEntity(String name, Timestamp startDate, Timestamp endDate, StatusEntity status) {
+        this.name = name;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.status = status;
+    }
+
     public TaskEntity(Integer id, String name, Timestamp startDate, Timestamp endDate, ProjectEntity project, StatusEntity status) {
         this.id = id;
         this.name = name;

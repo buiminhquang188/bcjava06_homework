@@ -36,6 +36,14 @@ public class UserEntity {
         this.username = username;
     }
 
+    public UserEntity(Integer id, String firstName, String lastName, String username) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+    }
+
+
     public UserEntity(List<ProjectEntity> projects) {
         this.projects = projects;
     }

@@ -2,6 +2,7 @@ package org.cybersoft.capstone.service.impl;
 
 import org.cybersoft.capstone.dto.TaskDTO;
 import org.cybersoft.capstone.dto.TaskProgressDTO;
+import org.cybersoft.capstone.entity.StatusEntity;
 import org.cybersoft.capstone.entity.TaskEntity;
 import org.cybersoft.capstone.repository.TaskRepository;
 import org.cybersoft.capstone.repository.impl.TaskRepositoryImpl;
@@ -49,5 +50,15 @@ public class TaskServiceImpl implements TaskService {
     public Boolean updateProgressTask(Integer id, TaskProgressDTO taskProgressDTO) {
         Integer resultIndex = this.taskRepository.updateProgressTask(id, taskProgressDTO);
         return resultIndex > 0;
+    }
+
+    @Override
+    public List<StatusEntity> getTaskStatisticByUserId(Integer userId) {
+        return this.taskRepository.getTaskStatisticByUserId(userId);
+    }
+
+    @Override
+    public List<TaskEntity> getTasksByUserId(Integer userId) {
+        return this.taskRepository.getTaskByUserId(userId);
     }
 }

@@ -18,7 +18,8 @@ public class ProfileRepositoryImpl implements ProfileRepository {
         ProfileEntity profile = new ProfileEntity();
         Connection connection = MySQLConfig.getConnection();
         String sql = """
-                SELECT u.first_name,
+                SELECT u.id,
+                       u.first_name,
                        u.last_name,
                        u.username,
                        t.id,
@@ -41,6 +42,7 @@ public class ProfileRepositoryImpl implements ProfileRepository {
 
             while (resultSet.next()) {
                 UserEntity user = new UserEntity(
+                        resultSet.getInt("u.id"),
                         resultSet.getString("u.first_name"),
                         resultSet.getString("u.last_name"),
                         resultSet.getString("u.username")

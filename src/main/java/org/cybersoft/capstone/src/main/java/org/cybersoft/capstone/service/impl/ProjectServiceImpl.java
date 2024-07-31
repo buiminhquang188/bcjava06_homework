@@ -64,4 +64,5 @@ public class ProjectServiceImpl implements ProjectService {
     public List<StatusEntity> getProjectStatistic(Integer id) {
         return this.projectRepository.getProjectStat(id);
     }
+
 }

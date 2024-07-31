@@ -351,7 +351,6 @@ public class ProjectRepositoryImpl implements ProjectRepository {
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally {
         }
 
         return projects;

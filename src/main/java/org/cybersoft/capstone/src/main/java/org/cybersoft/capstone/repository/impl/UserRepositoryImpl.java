@@ -57,6 +57,32 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public UserEntity getUser(Integer id) {
         UserEntity user = new UserEntity();
+
+        Connection connection = MySQLConfig.getConnection();
+        String sql = """
+                SELECT u.id, u.first_name, u.last_name, u.username
+                FROM users u
+                WHERE u.id = ?
+                """;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                user.setId(resultSet.getInt("id"));
+                user.setFirstName(resultSet.getString("first_name"));
+                user.setLastName(resultSet.getString("last_name"));
+                user.setUsername(resultSet.getString("username"));
+            }
+
+            connection.close();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
         return user;
     }
 
