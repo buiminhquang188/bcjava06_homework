@@ -201,7 +201,14 @@
                                     <tr>
                                         <td>${task.id}</td>
                                         <td>${task.name}</td>
-                                        <td>${task.project.name}</td>
+                                        <c:choose>
+                                            <c:when test="${task.project.id != null}">
+                                                <td>${task.project.name}</td>
+                                            </c:when>
+                                            <c:when test="${task.project.id == null}">
+                                                <td>N/A</td>
+                                            </c:when>
+                                        </c:choose>
                                         <td>
                                             <fmt:formatDate pattern="yyyy-MM-dd"
                                                             value="${task.startDate}"/>
