@@ -60,7 +60,7 @@ public class AuthorizationFilter implements Filter {
         System.out.println(new Gson().toJson(roleDetailDTO));
         Boolean isValid = this.authorizationService.isValidAction(authorizationDTO);
 
-        if (roleDetailDTO == null && !isValid) {
+        if (roleDetailDTO == null || !isValid) {
             response.sendRedirect(request.getContextPath() + "/404");
             return;
         }
