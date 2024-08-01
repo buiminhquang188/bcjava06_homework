@@ -24,4 +24,8 @@ public interface UserService {
     UserEntity getUserWithRole(Integer id);
 
     List<UserEntity> getUserInProjectByOwnerId(Integer ownerId);
+
+    Boolean createUserPermission(Integer roleId, Integer userId);
+
+    Boolean deleteUserPermission(Integer userId);
 }

@@ -28,4 +28,8 @@ public interface UserRepository {
     UserEntity getUserWithRole(Integer id);
 
     List<UserEntity> getUserInProjectByOwnerId(Integer ownerId);
+
+    Integer createUserPermission(Integer roleId, Integer userId);
+
+    Integer deleteUserPermission(Integer userId);
 }

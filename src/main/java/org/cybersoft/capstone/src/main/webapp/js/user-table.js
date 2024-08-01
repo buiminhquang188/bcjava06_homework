@@ -21,7 +21,7 @@ $(function () {
                 window.onbeforeunload = () => {
                     clearTimeout(timeOutId);
                 }
-            } else {
+            } else if (result.message !== 'NOT_ALLOWED' && result.message !== 'Success') {
                 alert("Xóa thất bại, vui lòng kiểm tra lại");
             }
         })

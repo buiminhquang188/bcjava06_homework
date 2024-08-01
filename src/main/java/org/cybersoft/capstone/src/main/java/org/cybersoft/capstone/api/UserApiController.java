@@ -51,7 +51,7 @@ public class UserApiController extends HttpServlet {
     private Boolean isValid(HttpServletRequest req, Integer pathParameter, Integer userId) {
 
         if (pathParameter == null || userId == null) return false;
-        if (pathParameter.intValue() != userId.intValue()) return false;
+        if (pathParameter.intValue() == userId.intValue()) return false;
 
         RoleDetailDTO roleDetailDTO = (RoleDetailDTO) SessionUtil.getInstance()
                 .getValue(req, "roleDetailDTO");
@@ -60,9 +60,5 @@ public class UserApiController extends HttpServlet {
         return !roleDetailDTO.getName()
                 .equals(user.getRole()
                         .getName());
-    }
-
-    private void getAuthorizationAction() {
-
     }
 }

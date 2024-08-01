@@ -7,10 +7,7 @@ import org.cybersoft.capstone.entity.RoleEntity;
 import org.cybersoft.capstone.entity.UserEntity;
 import org.cybersoft.capstone.repository.UserRepository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -97,7 +94,8 @@ public class UserRepositoryImpl implements UserRepository {
                 """;
 
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
             preparedStatement.setString(1, userDTO.getFirstName());
             preparedStatement.setString(2, userDTO.getLastName());
             preparedStatement.setString(3, userDTO.getUsername());
@@ -105,7 +103,12 @@ public class UserRepositoryImpl implements UserRepository {
             preparedStatement.setString(5, userDTO.getPassword());
             preparedStatement.setInt(6, userDTO.getRole());
 
-            resultIndex = preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
+            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+
+            while (resultSet.next()) {
+                resultIndex = resultSet.getInt(1);
+            }
 
             connection.close();
         } catch (SQLException e) {
@@ -128,7 +131,12 @@ public class UserRepositoryImpl implements UserRepository {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, id);
+
+            Statement statement = connection.createStatement();
+            statement.execute("SET FOREIGN_KEY_CHECKS = 0");
             resultIndex = preparedStatement.executeUpdate();
+            statement.execute("SET FOREIGN_KEY_CHECKS = 1");
+
             connection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -370,5 +378,47 @@ public class UserRepositoryImpl implements UserRepository {
         }
 
         return users;
+    }
+
+    @Override
+    public Integer createUserPermission(Integer roleId, Integer userId) {
+        Connection connection = MySQLConfig.getConnection();
+        Integer result = null;
+        String sql = """
+                INSERT INTO users_roles(id_permission, id_user, licensed)
+                VALUE (?, ?, 1)
+                """;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, roleId);
+            preparedStatement.setInt(2, userId);
+            result = preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return result;
+    }
+
+    @Override
+    public Integer deleteUserPermission(Integer userId) {
+        Connection connection = MySQLConfig.getConnection();
+        Integer result = null;
+        String sql = """
+                DELETE
+                FROM users_roles ur
+                WHERE ur.id_user = ?
+                """;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, userId);
+            result = preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return result;
     }
 }

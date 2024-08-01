@@ -34,13 +34,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Integer createUser(UserDTO userDTO) {
-        return this.userRepository.createUser(userDTO);
+        Integer resultIndex = this.userRepository.createUser(userDTO);
+        Boolean result = this.createUserPermission(userDTO.getRole(), resultIndex);
+
+        if (result) return resultIndex;
+        return 0;
     }
 
     @Override
     public Boolean deleteUser(Integer id) {
         Integer resultIndex = this.userRepository.deleteUser(id);
-        return resultIndex > 0;
+        return this.deleteUserPermission(id);
     }
 
     @Override
@@ -73,5 +77,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserEntity> getUserInProjectByOwnerId(Integer ownerId) {
         return this.userRepository.getUserInProjectByOwnerId(ownerId);
+    }
+
+    @Override
+    public Boolean createUserPermission(Integer roleId, Integer userId) {
+        Integer result = this.userRepository.createUserPermission(roleId, userId);
+        return result > 0;
+    }
+
+    @Override
+    public Boolean deleteUserPermission(Integer userId) {
+        Integer result = this.userRepository.deleteUserPermission(userId);
+        return result > 0;
     }
 }
