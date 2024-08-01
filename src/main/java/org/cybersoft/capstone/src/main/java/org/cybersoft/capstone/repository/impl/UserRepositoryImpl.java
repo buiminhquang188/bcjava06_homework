@@ -150,11 +150,7 @@ public class UserRepositoryImpl implements UserRepository {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                UserEntity user = new UserEntity(
-                        resultSet.getInt("id"),
-                        resultSet.getString("first_name"),
-                        resultSet.getString("last_name")
-                );
+                UserEntity user = new UserEntity(resultSet.getInt("id"), resultSet.getString("first_name"), resultSet.getString("last_name"));
 
                 users.add(user);
             }
@@ -184,11 +180,7 @@ public class UserRepositoryImpl implements UserRepository {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                UserEntity user = new UserEntity(
-                        resultSet.getInt("id"),
-                        resultSet.getString("first_name"),
-                        resultSet.getString("last_name")
-                );
+                UserEntity user = new UserEntity(resultSet.getInt("id"), resultSet.getString("first_name"), resultSet.getString("last_name"));
 
                 users.add(user);
             }
@@ -205,14 +197,12 @@ public class UserRepositoryImpl implements UserRepository {
     public List<UserEntity> getUserOptionsInRole(List<Integer> roleIds) {
         List<UserEntity> users = new ArrayList<>();
         String sql = String.format("""
-                        SELECT u.id, u.first_name, u.last_name
-                        FROM users u
-                        WHERE u.id_role IN (%s)
-                        """,
-                roleIds.stream()
-                        .map(String::valueOf)
-                        .collect(Collectors.joining(", "))
-        );
+                SELECT u.id, u.first_name, u.last_name
+                FROM users u
+                WHERE u.id_role IN (%s)
+                """, roleIds.stream()
+                .map(String::valueOf)
+                .collect(Collectors.joining(", ")));
         Connection connection = MySQLConfig.getConnection();
 
         try {
@@ -220,11 +210,7 @@ public class UserRepositoryImpl implements UserRepository {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                UserEntity user = new UserEntity(
-                        resultSet.getInt("id"),
-                        resultSet.getString("first_name"),
-                        resultSet.getString("last_name")
-                );
+                UserEntity user = new UserEntity(resultSet.getInt("id"), resultSet.getString("first_name"), resultSet.getString("last_name"));
 
                 users.add(user);
             }
@@ -269,17 +255,15 @@ public class UserRepositoryImpl implements UserRepository {
         Connection connection = MySQLConfig.getConnection();
 
         String sql = String.format("""
-                        SELECT u.id, u.first_name, u.last_name, u.username, r.name
-                        FROM users u
-                                 LEFT JOIN users_project up ON up.id_user = u.id
-                                 JOIN roles r ON r.id = u.id_role
-                        WHERE up.id_project IN (%s)
-                        GROUP BY u.id;
-                        """,
-                projectIds.stream()
-                        .map(String::valueOf)
-                        .collect(Collectors.joining(", "))
-        );
+                SELECT u.id, u.first_name, u.last_name, u.username, r.name
+                FROM users u
+                         LEFT JOIN users_project up ON up.id_user = u.id
+                         JOIN roles r ON r.id = u.id_role
+                WHERE up.id_project IN (%s)
+                GROUP BY u.id;
+                """, projectIds.stream()
+                .map(String::valueOf)
+                .collect(Collectors.joining(", ")));
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -331,9 +315,7 @@ public class UserRepositoryImpl implements UserRepository {
                 user.setLastName(resultSet.getString("u.last_name"));
                 user.setUsername(resultSet.getString("u.username"));
 
-                RoleEntity role = new RoleEntity(
-                        resultSet.getString("r.name")
-                );
+                RoleEntity role = new RoleEntity(resultSet.getString("r.name"));
 
                 user.setRole(role);
             }
@@ -358,7 +340,7 @@ public class UserRepositoryImpl implements UserRepository {
                          LEFT JOIN project p ON p.id = t.id_project
                          LEFT JOIN users_project up ON up.id_project = t.id_project
                          LEFT JOIN status s ON s.id = t.id_status
-                         LEFT JOIN roles r ON r.id = u.id
+                         LEFT JOIN roles r ON r.id = u.id_role
                 WHERE up.id_user = ?
                 """;
 
@@ -370,13 +352,13 @@ public class UserRepositoryImpl implements UserRepository {
 
             while (resultSet.next()) {
                 UserEntity user = new UserEntity();
-                user.setId(resultSet.getInt("id"));
-                user.setFirstName(resultSet.getString("first_name"));
-                user.setLastName(resultSet.getString("last_name"));
-                user.setUsername(resultSet.getString("username"));
+                user.setId(resultSet.getInt("u.id"));
+                user.setFirstName(resultSet.getString("u.first_name"));
+                user.setLastName(resultSet.getString("u.last_name"));
+                user.setUsername(resultSet.getString("u.username"));
 
                 RoleEntity role = new RoleEntity();
-                role.setName(resultSet.getString("name"));
+                role.setName(resultSet.getString("r.name"));
                 user.setRole(role);
 
                 users.add(user);
