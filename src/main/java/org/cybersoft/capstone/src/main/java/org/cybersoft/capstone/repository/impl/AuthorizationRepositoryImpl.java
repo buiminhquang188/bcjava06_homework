@@ -31,8 +31,6 @@ public class AuthorizationRepositoryImpl implements AuthorizationRepository {
                          JOIN roles AS r ON ur.id_permission = r.id
                          JOIN roles_detail AS rd ON r.id = rd.id_permission
                 WHERE u.id = ?
-                  AND rd.action = 'VIEW'
-                  AND rd.method = ?
                   AND ur.licensed = ?
                   AND rd.check_action = ?;
                 """;
@@ -41,9 +39,8 @@ public class AuthorizationRepositoryImpl implements AuthorizationRepository {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, authorizationDTO.getId());
-            preparedStatement.setString(2, authorizationDTO.getMethod());
-            preparedStatement.setInt(3, authorizationDTO.getLicensed());
-            preparedStatement.setInt(4, authorizationDTO.getCheckAction());
+            preparedStatement.setInt(2, authorizationDTO.getLicensed());
+            preparedStatement.setInt(3, authorizationDTO.getCheckAction());
 
             ResultSet resultSet = preparedStatement.executeQuery();
 

@@ -5,17 +5,15 @@ import java.util.List;
 public class RoleDetailDTO {
     private Integer id;
     private String name;
-    private String action;
     private String url;
     private List<String> actionCode;
 
     public RoleDetailDTO() {
     }
 
-    public RoleDetailDTO(Integer id, String name, String action, String url, List<String> actionCode) {
+    public RoleDetailDTO(Integer id, String name, String url, List<String> actionCode) {
         this.id = id;
         this.name = name;
-        this.action = action;
         this.url = url;
         this.actionCode = actionCode;
     }
@@ -34,14 +32,6 @@ public class RoleDetailDTO {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getAction() {
-        return action;
-    }
-
-    public void setAction(String action) {
-        this.action = action;
     }
 
     public String getUrl() {

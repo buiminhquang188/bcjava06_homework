@@ -17,12 +17,20 @@ public class AuthorizationRequest {
 
         AuthorizationDTO authorizationDTO = null;
 
-        if (pathInfo != null) {
+        if (pathInfo != null && !url.isEmpty()) {
             String fullPath = url + "/*";
             authorizationDTO = this.authorizationMapper.toDTO(
                     userId,
                     method,
                     fullPath,
+                    Action.ACTIVE.ordinal(),
+                    Action.ACTIVE.ordinal()
+            );
+        } else if (pathInfo != null) {
+            authorizationDTO = this.authorizationMapper.toDTO(
+                    userId,
+                    method,
+                    pathInfo,
                     Action.ACTIVE.ordinal(),
                     Action.ACTIVE.ordinal()
             );

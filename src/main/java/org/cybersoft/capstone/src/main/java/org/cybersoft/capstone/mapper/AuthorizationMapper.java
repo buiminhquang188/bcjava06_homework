@@ -29,15 +29,15 @@ public class AuthorizationMapper {
         List<String> actionCode = new ArrayList<>();
         RoleDetailEntity roleDetailEntity = rolesDetailEntity.get(0);
 
-        rolesDetailEntity.forEach(roleEntity -> actionCode.add(roleEntity.getActionCode()));
+        rolesDetailEntity.forEach(roleEntity -> {
+            actionCode.add(roleEntity.getActionCode());
+        });
 
         return new RoleDetailDTO(
                 roleDetailEntity.getId(),
                 roleDetailEntity
                         .getRole()
                         .getName(),
-                roleDetailEntity
-                        .getAction(),
                 roleDetailEntity
                         .getUrl(),
                 actionCode
