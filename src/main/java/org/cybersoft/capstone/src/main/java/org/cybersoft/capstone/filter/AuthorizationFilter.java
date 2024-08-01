@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebFilter(filterName = "authorizationFilter", urlPatterns = {"/user-table", "/user-add", "/user-details/*", "/role-table", "/role-add", "/groupwork", "/groupwork-add", "/groupwork/*", "/groupwork-details/*", "/task", "/task-add", "/task/*", "/profile"})
+@WebFilter(filterName = "authorizationFilter", urlPatterns = {"/", "/user-table", "/user-add", "/user-details/*", "/role-table", "/role-add", "/groupwork", "/groupwork-add", "/groupwork/*", "/groupwork-details/*", "/task", "/task-add", "/task/*", "/profile"})
 public class AuthorizationFilter implements Filter {
     private final AuthorizationRequest authorizationRequest = new AuthorizationRequest();
     private final AuthorizationService authorizationService = new AuthorizationServiceImpl();
@@ -34,12 +34,16 @@ public class AuthorizationFilter implements Filter {
         }
 
         AuthorizationDTO authorizationDTO = this.authorizationRequest.getAuthorizationDTO(request, userId);
-        RoleDetailDTO roleDetailDTO = this.authorizationService.getAuthorizationByUserId(authorizationDTO);
+        RoleDetailDTO roleDetailDTO = (RoleDetailDTO) SessionUtil.getInstance()
+                .getValue(request, "roleDetailDTO");
+
+        if (roleDetailDTO == null) {
+            roleDetailDTO = this.authorizationService.getAuthorizationByUserId(authorizationDTO);
+            SessionUtil.getInstance()
+                    .putValue(request, "roleDetailDTO", roleDetailDTO);
+        }
 
         System.out.println(new Gson().toJson(roleDetailDTO));
-
-        SessionUtil.getInstance()
-                .putValue(request, "roleDetailDTO", roleDetailDTO);
 
         if (roleDetailDTO != null) {
             filterChain.doFilter(request, response);
