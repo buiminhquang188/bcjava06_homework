@@ -55,6 +55,11 @@ public class ProjectServiceImpl implements ProjectService {
                             .getId(),
                     project.getId()
             );
+        } else if (project.getUser()
+                           .getId() == null && project.getId() != null) {
+            usersProjectEntity = this.projectRepository.getUsersProjectByProjectIdAndUserIdIsNull(
+                    project.getId()
+            );
         } else {
             usersProjectEntity = this.projectRepository.getUsersProjectByUserIdAndProjectIdIsNull(
                     project.getUser()
@@ -63,10 +68,8 @@ public class ProjectServiceImpl implements ProjectService {
         }
 
         if (usersProjectEntity != null) {
-            this.projectRepository.updateUserProjectByUserIdAndProjectId(
-                    project.getUser()
-                            .getId(),
-                    project.getId(),
+            this.projectRepository.updateUserProjectById(
+                    usersProjectEntity.getId(),
                     projectDTO.getUserIdProject(),
                     id
             );

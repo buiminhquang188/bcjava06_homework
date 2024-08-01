@@ -431,7 +431,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
         UsersProjectEntity usersProjectEntity = null;
         Connection connection = MySQLConfig.getConnection();
         String sql = """
-                SELECT up.id_user
+                SELECT up.id ,up.id_user
                 FROM users_project up
                 WHERE up.id_user = ? AND up.id_project IS NULL
                 """;
@@ -444,8 +444,40 @@ public class ProjectRepositoryImpl implements ProjectRepository {
 
             while (resultSet.next()) {
                 usersProjectEntity = new UsersProjectEntity();
+                usersProjectEntity.setId(resultSet.getInt("up.id"));
                 usersProjectEntity.setIdUser(resultSet.getInt("up.id_user"));
                 usersProjectEntity.setIdProject(null);
+            }
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return usersProjectEntity;
+    }
+
+    @Override
+    public UsersProjectEntity getUsersProjectByProjectIdAndUserIdIsNull(Integer projectId) {
+        UsersProjectEntity usersProjectEntity = null;
+        Connection connection = MySQLConfig.getConnection();
+        String sql = """
+                SELECT up.id, up.id_project
+                FROM users_project up
+                WHERE up.id_project = ?
+                  AND up.id_user IS NULL
+                """;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, projectId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                usersProjectEntity = new UsersProjectEntity();
+                usersProjectEntity.setId(resultSet.getInt("up.id"));
+                usersProjectEntity.setIdUser(null);
+                usersProjectEntity.setIdProject(resultSet.getInt("up.id_project"));
             }
             connection.close();
         } catch (SQLException e) {
@@ -516,21 +548,20 @@ public class ProjectRepositoryImpl implements ProjectRepository {
     }
 
     @Override
-    public void updateUserProjectByUserIdAndProjectId(Integer userId, Integer projectId, Integer inputUserId, Integer inputProjectId) {
+    public void updateUserProjectById(Integer userProjectId, Integer inputUserId, Integer inputProjectId) {
         Connection connection = MySQLConfig.getConnection();
         String sql = """
                 UPDATE users_project up
                 SET up.id_user = ?,
                     up.id_project = ?
-                WHERE up.id_user = ? AND up.id_project = ?;
+                WHERE up.id = ?
                 """;
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, inputUserId);
             preparedStatement.setInt(2, inputProjectId);
-            preparedStatement.setInt(3, userId);
-            preparedStatement.setInt(4, projectId);
+            preparedStatement.setInt(3, userProjectId);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

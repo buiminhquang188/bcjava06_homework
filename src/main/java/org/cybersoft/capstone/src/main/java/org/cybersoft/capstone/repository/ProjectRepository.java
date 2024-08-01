@@ -34,13 +34,15 @@ public interface ProjectRepository {
 
     UsersProjectEntity getUsersProjectByUserIdAndProjectIdIsNull(Integer userId);
 
+    UsersProjectEntity getUsersProjectByProjectIdAndUserIdIsNull(Integer projectId);
+
     Integer createUserProject(Integer userId, Integer projectId);
 
     void updateUserProject(Integer userId, Integer projectId);
 
     void deleteUserProjectByProjectId(Integer id);
 
-    void updateUserProjectByUserIdAndProjectId(Integer userId, Integer projectId, Integer inputUserId, Integer inputProjectId);
+    void updateUserProjectById(Integer userProjectId, Integer inputUserId, Integer inputProjectId);
 
     void updateUserProjectByUserId(Integer id);
 }
