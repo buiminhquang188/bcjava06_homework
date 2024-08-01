@@ -345,4 +345,48 @@ public class UserRepositoryImpl implements UserRepository {
 
         return user;
     }
+
+    @Override
+    public List<UserEntity> getUserInProjectByOwnerId(Integer ownerId) {
+        List<UserEntity> users = new ArrayList<>();
+
+        Connection connection = MySQLConfig.getConnection();
+        String sql = """
+                SELECT u.id, u.first_name, u.last_name, u.username, r.name
+                FROM users u
+                         LEFT JOIN task t ON u.id = t.id_user
+                         LEFT JOIN project p ON p.id = t.id_project
+                         LEFT JOIN users_project up ON up.id_project = t.id_project
+                         LEFT JOIN status s ON s.id = t.id_status
+                         LEFT JOIN roles r ON r.id = u.id
+                WHERE up.id_user = ?
+                """;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, ownerId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            System.out.println("execute query getUserInProjectByOwnerId");
+
+            while (resultSet.next()) {
+                UserEntity user = new UserEntity();
+                user.setId(resultSet.getInt("id"));
+                user.setFirstName(resultSet.getString("first_name"));
+                user.setLastName(resultSet.getString("last_name"));
+                user.setUsername(resultSet.getString("username"));
+
+                RoleEntity role = new RoleEntity();
+                role.setName(resultSet.getString("name"));
+                user.setRole(role);
+
+                users.add(user);
+            }
+
+            connection.close();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return users;
+    }
 }

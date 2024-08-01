@@ -26,4 +26,6 @@ public interface UserRepository {
     List<UserEntity> getUsersInProject(List<Integer> projectIds);
 
     UserEntity getUserWithRole(Integer id);
+
+    List<UserEntity> getUserInProjectByOwnerId(Integer ownerId);
 }

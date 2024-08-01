@@ -22,4 +22,6 @@ public interface UserService {
     List<UserEntity> getUserOptionsByRole(RoleDetailDTO roleDetailDTO);
 
     UserEntity getUserWithRole(Integer id);
+
+    List<UserEntity> getUserInProjectByOwnerId(Integer ownerId);
 }

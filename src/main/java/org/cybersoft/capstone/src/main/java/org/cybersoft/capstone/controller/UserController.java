@@ -97,6 +97,11 @@ public class UserController extends CustomServlet {
                 .contains("VIEW_ALL_MEMBERS")) {
             this.getUsers(req);
             return;
+        } else if (roleDetailDTO.getActionCode()
+                .contains("VIEW_MEMBERS_PROJECT")) {
+            List<UserEntity> users = this.userService.getUserInProjectByOwnerId(roleDetailDTO.getId());
+            req.setAttribute("users", users);
+            return;
         }
         this.getUsersInProject(req, userId);
     }

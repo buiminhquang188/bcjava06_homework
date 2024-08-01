@@ -69,4 +69,9 @@ public class UserServiceImpl implements UserService {
     public UserEntity getUserWithRole(Integer id) {
         return this.userRepository.getUserWithRole(id);
     }
+
+    @Override
+    public List<UserEntity> getUserInProjectByOwnerId(Integer ownerId) {
+        return this.userRepository.getUserInProjectByOwnerId(ownerId);
+    }
 }
