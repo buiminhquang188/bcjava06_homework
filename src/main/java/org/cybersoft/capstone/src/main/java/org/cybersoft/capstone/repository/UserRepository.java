@@ -17,7 +17,7 @@ public interface UserRepository {
 
     List<UserEntity> getUserOptions();
 
-    List<UserEntity> getUserOptionsByRole(Integer id);
+    List<UserEntity> getUserOptionsByRoleIdAndUserId(Integer roleId, Integer userId);
 
     List<UserEntity> getUserOptionsInRole(List<Integer> roleIds);
 

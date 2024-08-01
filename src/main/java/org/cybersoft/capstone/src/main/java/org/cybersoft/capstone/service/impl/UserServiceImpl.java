@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
             ));
         }
 
-        return this.userRepository.getUserOptionsByRole(Role.LEADER.getId());
+        return this.userRepository.getUserOptionsByRoleIdAndUserId(Role.LEADER.getId(), roleDetailDTO.getId());
     }
 
     @Override

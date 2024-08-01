@@ -168,18 +168,19 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public List<UserEntity> getUserOptionsByRole(Integer id) {
+    public List<UserEntity> getUserOptionsByRoleIdAndUserId(Integer roleId, Integer userId) {
         List<UserEntity> users = new ArrayList<>();
         String sql = """
                 SELECT u.id, u.first_name, u.last_name
                 FROM users u
-                WHERE u.id_role = ?
+                WHERE u.id_role = ? AND u.id = ?
                 """;
         Connection connection = MySQLConfig.getConnection();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, id);
+            preparedStatement.setInt(1, roleId);
+            preparedStatement.setInt(2, userId);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
