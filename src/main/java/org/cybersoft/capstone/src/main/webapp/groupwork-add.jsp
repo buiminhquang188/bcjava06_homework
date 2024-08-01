@@ -115,6 +115,11 @@
                                                 ${errors.endDate}
                                         </small>
                                     </c:if>
+                                    <c:if test="${errors.rangeDate != null}">
+                                        <small class="form-text text-danger mt-2">
+                                                ${errors.rangeDate}
+                                        </small>
+                                    </c:if>
                                 </div>
                             </div>
                             <div class="form-group">

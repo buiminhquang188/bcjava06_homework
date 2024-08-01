@@ -84,4 +84,8 @@ public class Utils {
             return null;
         }
     }
+
+    public static Boolean isValidRangeDate(Timestamp startDate, Timestamp endDate) {
+        return startDate.before(endDate);
+    }
 }

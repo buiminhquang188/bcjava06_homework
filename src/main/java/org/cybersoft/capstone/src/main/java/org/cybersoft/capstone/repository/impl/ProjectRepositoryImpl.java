@@ -401,7 +401,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
         UsersProjectEntity usersProjectEntity = null;
         Connection connection = MySQLConfig.getConnection();
         String sql = """
-                SELECT up.id_user, up.id_project
+                SELECT up.id, up.id_user, up.id_project
                 FROM users_project up
                 WHERE up.id_user = ? AND up.id_project = ?
                 """;
@@ -415,6 +415,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
 
             while (resultSet.next()) {
                 usersProjectEntity = new UsersProjectEntity();
+                usersProjectEntity.setId(resultSet.getInt("up.id"));
                 usersProjectEntity.setIdUser(resultSet.getInt("up.id_user"));
                 usersProjectEntity.setIdProject(resultSet.getInt("up.id_project"));
             }

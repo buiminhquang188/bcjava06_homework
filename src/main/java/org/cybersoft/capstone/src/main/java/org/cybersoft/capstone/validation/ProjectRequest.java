@@ -38,6 +38,14 @@ public class ProjectRequest {
             req.setAttribute("endDate", Utils.parseStringToTimeStamp(endDate, LocalTime.MAX));
         }
 
+        if (!startDate.isEmpty() && !endDate.isEmpty()) {
+            Boolean isValidRangeDate = Utils.isValidRangeDate(Utils.parseStringToTimeStamp(startDate, LocalTime.MIN), Utils.parseStringToTimeStamp(endDate, LocalTime.MAX));
+
+            if (!isValidRangeDate) errors.put("rangeDate", "End date must after start date");
+            req.setAttribute("startDate", Utils.parseStringToTimeStamp(startDate, LocalTime.MIN));
+            req.setAttribute("endDate", Utils.parseStringToTimeStamp(endDate, LocalTime.MAX));
+        }
+
         if (userIdProject == null || userIdProject.isEmpty() || userIdProject.isEmpty()) {
             errors.put("userIdProject", Validation.IS_REQUIRED.getText("Project Manager"));
         } else {

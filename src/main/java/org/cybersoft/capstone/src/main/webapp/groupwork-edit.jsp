@@ -60,13 +60,34 @@
                             <div class="form-group">
                                 <label class="col-md-12">Ngày bắt đầu</label>
                                 <div class="col-md-12">
-                                    <input
-                                            type="date"
-                                            name="startDate"
-                                            value="<fmt:formatDate pattern="yyyy-MM-dd"
+                                    <c:choose>
+                                        <c:when test="${startDate != null}">
+                                            <input
+                                                    type="date"
+                                                    name="startDate"
+                                                    value="<fmt:formatDate pattern="yyyy-MM-dd"
+                                                            value="${startDate}"/>"
+                                                    placeholder="dd/MM/yyyy"
+                                                    class="form-control form-control-line">
+                                        </c:when>
+                                        <c:when test="${errors.startDate == null && startDate == null}">
+                                            <input
+                                                    type="date"
+                                                    name="startDate"
+                                                    value="<fmt:formatDate pattern="yyyy-MM-dd"
                                                             value="${project.startDate}"/>"
-                                            placeholder="dd/MM/yyyy"
-                                            class="form-control form-control-line">
+                                                    placeholder="dd/MM/yyyy"
+                                                    class="form-control form-control-line">
+                                        </c:when>
+                                        <c:when test="${errors.startDate != null}">
+                                            <input
+                                                    type="date"
+                                                    name="startDate"
+                                                    value=""
+                                                    placeholder="dd/MM/yyyy"
+                                                    class="form-control form-control-line">
+                                        </c:when>
+                                    </c:choose>
                                     <c:if test="${errors.startDate != null}">
                                         <small class="form-text text-danger mt-2">
                                                 ${errors.startDate}
@@ -77,16 +98,42 @@
                             <div class="form-group">
                                 <label class="col-md-12">Ngày kết thúc</label>
                                 <div class="col-md-12">
-                                    <input
-                                            type="date"
-                                            name="endDate"
-                                            value="<fmt:formatDate pattern="yyyy-MM-dd"
+                                    <c:choose>
+                                        <c:when test="${endDate != null}">
+                                            <input
+                                                    type="date"
+                                                    name="endDate"
+                                                    value="<fmt:formatDate pattern="yyyy-MM-dd"
+                                                            value="${endDate}"/>"
+                                                    placeholder="dd/MM/yyyy"
+                                                    class="form-control form-control-line">
+                                        </c:when>
+                                        <c:when test="${errors.endDate == null && endDate == null}">
+                                            <input
+                                                    type="date"
+                                                    name="endDate"
+                                                    value="<fmt:formatDate pattern="yyyy-MM-dd"
                                                             value="${project.endDate}"/>"
-                                            placeholder="dd/MM/yyyy"
-                                            class="form-control form-control-line">
+                                                    placeholder="dd/MM/yyyy"
+                                                    class="form-control form-control-line">
+                                        </c:when>
+                                        <c:when test="${errors.endDate != null}">
+                                            <input
+                                                    type="date"
+                                                    name="endDate"
+                                                    value=""
+                                                    placeholder="dd/MM/yyyy"
+                                                    class="form-control form-control-line">
+                                        </c:when>
+                                    </c:choose>
                                     <c:if test="${errors.endDate != null}">
                                         <small class="form-text text-danger mt-2">
                                                 ${errors.endDate}
+                                        </small>
+                                    </c:if>
+                                    <c:if test="${errors.rangeDate != null}">
+                                        <small class="form-text text-danger mt-2">
+                                                ${errors.rangeDate}
                                         </small>
                                     </c:if>
                                 </div>
@@ -124,6 +171,19 @@
                                             </select>
                                         </c:when>
                                         <c:when test="${errors.userIdProject == null && userIdProject != null && project.user.id == null}">
+                                            <select name="userIdProject" class="form-control form-control-line">
+                                                <option disabled>Chọn người
+                                                    thực
+                                                    hiện
+                                                </option>
+                                                <c:forEach items="${users}" var="user">
+                                                    <option value="${user.id}" ${user.id == userIdProject ? "selected" : null}>
+                                                            ${user.firstName} ${user.lastName}
+                                                    </option>
+                                                </c:forEach>
+                                            </select>
+                                        </c:when>
+                                        <c:when test="${errors.userIdProject == null && userIdProject != null && project.user.id != null}">
                                             <select name="userIdProject" class="form-control form-control-line">
                                                 <option disabled>Chọn người
                                                     thực

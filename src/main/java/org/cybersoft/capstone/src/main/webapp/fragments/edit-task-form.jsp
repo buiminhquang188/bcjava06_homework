@@ -143,29 +143,31 @@
         <label class="col-md-12">Ngày bắt đầu</label>
         <div class="col-md-12">
             <c:choose>
-                <c:when test="${errors.startDate == null && startDate == null}">
-                    <input type="date"
-                           name="startDate"
-                           value="<fmt:formatDate pattern="yyyy-MM-dd"
-                                                            value="${task.startDate}"/>"
-                           placeholder="dd/MM/yyyy"
-                           class="form-control form-control-line">
-                </c:when>
-                <c:when test="${errors.startDate == null && startDate != null}">
-                    <input type="date"
-                           name="startDate"
-                           value="<fmt:formatDate pattern="yyyy-MM-dd"
+                <c:when test="${startDate != null}">
+                    <input
+                            type="date"
+                            name="startDate"
+                            value="<fmt:formatDate pattern="yyyy-MM-dd"
                                                             value="${startDate}"/>"
-                           placeholder="dd/MM/yyyy"
-                           class="form-control form-control-line">
+                            placeholder="dd/MM/yyyy"
+                            class="form-control form-control-line">
+                </c:when>
+                <c:when test="${errors.startDate == null && startDate == null}">
+                    <input
+                            type="date"
+                            name="startDate"
+                            value="<fmt:formatDate pattern="yyyy-MM-dd"
+                                                            value="${task.startDate}"/>"
+                            placeholder="dd/MM/yyyy"
+                            class="form-control form-control-line">
                 </c:when>
                 <c:when test="${errors.startDate != null}">
-                    <input type="date"
-                           name="startDate"
-                           value="<fmt:formatDate pattern="yyyy-MM-dd"
-                                                            value="${task.startDate}"/>"
-                           placeholder="dd/MM/yyyy"
-                           class="form-control form-control-line">
+                    <input
+                            type="date"
+                            name="startDate"
+                            value=""
+                            placeholder="dd/MM/yyyy"
+                            class="form-control form-control-line">
                 </c:when>
             </c:choose>
             <c:if test="${errors.startDate != null}">
@@ -179,34 +181,41 @@
         <label class="col-md-12">Ngày kết thúc</label>
         <div class="col-md-12">
             <c:choose>
-                <c:when test="${errors.endDate == null && endDate == null}">
-                    <input type="date"
-                           name="endDate"
-                           value="<fmt:formatDate pattern="yyyy-MM-dd"
-                                                            value="${task.endDate}"/>"
-                           placeholder="dd/MM/yyyy"
-                           class="form-control form-control-line">
-                </c:when>
-                <c:when test="${errors.endDate == null && endDate != null}">
-                    <input type="date"
-                           name="endDate"
-                           value="<fmt:formatDate pattern="yyyy-MM-dd"
+                <c:when test="${endDate != null}">
+                    <input
+                            type="date"
+                            name="endDate"
+                            value="<fmt:formatDate pattern="yyyy-MM-dd"
                                                             value="${endDate}"/>"
-                           placeholder="dd/MM/yyyy"
-                           class="form-control form-control-line">
+                            placeholder="dd/MM/yyyy"
+                            class="form-control form-control-line">
+                </c:when>
+                <c:when test="${errors.endDate == null && endDate == null}">
+                    <input
+                            type="date"
+                            name="endDate"
+                            value="<fmt:formatDate pattern="yyyy-MM-dd"
+                                                            value="${task.endDate}"/>"
+                            placeholder="dd/MM/yyyy"
+                            class="form-control form-control-line">
                 </c:when>
                 <c:when test="${errors.endDate != null}">
-                    <input type="date"
-                           name="endDate"
-                           value="<fmt:formatDate pattern="yyyy-MM-dd"
-                                                            value="${task.endDate}"/>"
-                           placeholder="dd/MM/yyyy"
-                           class="form-control form-control-line">
+                    <input
+                            type="date"
+                            name="endDate"
+                            value=""
+                            placeholder="dd/MM/yyyy"
+                            class="form-control form-control-line">
                 </c:when>
             </c:choose>
             <c:if test="${errors.endDate != null}">
                 <small class="form-text text-danger mt-2">
                         ${errors.endDate}
+                </small>
+            </c:if>
+            <c:if test="${errors.rangeDate != null}">
+                <small class="form-text text-danger mt-2">
+                        ${errors.rangeDate}
                 </small>
             </c:if>
         </div>

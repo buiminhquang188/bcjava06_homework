@@ -41,6 +41,14 @@ public class TaskRequest {
             req.setAttribute("endDate", Utils.parseStringToTimeStamp(endDate, LocalTime.MAX));
         }
 
+        if (!startDate.isEmpty() && !endDate.isEmpty()) {
+            Boolean isValidRangeDate = Utils.isValidRangeDate(Utils.parseStringToTimeStamp(startDate, LocalTime.MIN), Utils.parseStringToTimeStamp(endDate, LocalTime.MAX));
+
+            if (!isValidRangeDate) errors.put("rangeDate", "End date must after start date");
+            req.setAttribute("startDate", Utils.parseStringToTimeStamp(startDate, LocalTime.MIN));
+            req.setAttribute("endDate", Utils.parseStringToTimeStamp(endDate, LocalTime.MAX));
+        }
+
         if (projectId == null || projectId.isEmpty() || projectId.isBlank()) {
             errors.put("projectId", Validation.IS_REQUIRED.getText("Project"));
         } else {
