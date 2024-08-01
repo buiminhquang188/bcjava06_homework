@@ -93,7 +93,7 @@ public class TaskRepositoryImpl implements TaskRepository {
                          LEFT JOIN project p ON p.id = t.id_project
                          LEFT JOIN users u ON u.id = t.id_user
                          LEFT JOIN status s ON s.id = t.id_status
-                WHERE up.id_user = ?;
+                WHERE t.id_user = ?;
                 """;
         Connection connection = MySQLConfig.getConnection();
 
