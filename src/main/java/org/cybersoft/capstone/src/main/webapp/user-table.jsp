@@ -68,7 +68,6 @@
                                         <td>${user.username}</td>
                                         <td>${user.role.name}</td>
                                         <td>
-                                            <a href="#" class="btn btn-sm btn-primary">Sửa</a>
                                             <a href="#" class="btn-xoa btn btn-sm btn-danger"
                                                data-id="${user.id}">Xóa</a>
                                             <a href="user-details/${user.id}" class="btn btn-sm btn-info">Xem</a>

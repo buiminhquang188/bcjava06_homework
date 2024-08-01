@@ -30,9 +30,9 @@ public class ProfileRepositoryImpl implements ProfileRepository {
                        s.id,
                        s.name
                 FROM users u
-                         LEFT JOIN task t ON t.id_user = u.id
-                         LEFT JOIN project p ON p.id = t.id_project
-                         LEFT JOIN status s ON s.id = t.id_status
+                         INNER JOIN task t ON t.id_user = u.id
+                         INNER JOIN project p ON p.id = t.id_project
+                         INNER JOIN status s ON s.id = t.id_status
                 WHERE u.id = ?
                 """;
         try {

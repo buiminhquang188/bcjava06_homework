@@ -72,7 +72,7 @@
                                 <div class="user-content">
                                     <a href="javascript:void(0)">
                                         <img
-                                                src="https://joesch.moe/api/v1/${profile.user.id}"
+                                                src="https://joesch.moe/api/v1/${sessionScope.roleDetailDTO.id}"
                                                 class="thumb-lg img-circle" alt="img"/>
                                     </a>
                                     <h4 class="text-white">${profile.user.firstName} ${profile.user.lastName}</h4>
