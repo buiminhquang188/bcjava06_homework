@@ -48,14 +48,14 @@ public class AuthorizationFilter implements Filter {
         }
 
         AuthorizationDTO authorizationDTO = this.authorizationRequest.getAuthorizationDTO(request, userId);
-//        RoleDetailDTO roleDetailDTO = (RoleDetailDTO) SessionUtil.getInstance()
-//                .getValue(request, "roleDetailDTO");
+        RoleDetailDTO roleDetailDTO = (RoleDetailDTO) SessionUtil.getInstance()
+                .getValue(request, "roleDetailDTO");
 
-//        if (roleDetailDTO == null) {
-        RoleDetailDTO roleDetailDTO = this.authorizationService.getAuthorizationByUserId(authorizationDTO);
-        SessionUtil.getInstance()
-                .putValue(request, "roleDetailDTO", roleDetailDTO);
-//        }
+        if (roleDetailDTO == null) {
+            roleDetailDTO = this.authorizationService.getAuthorizationByUserId(authorizationDTO);
+            SessionUtil.getInstance()
+                    .putValue(request, "roleDetailDTO", roleDetailDTO);
+        }
 
         System.out.println(new Gson().toJson(roleDetailDTO));
         Boolean isValid = this.authorizationService.isValidAction(authorizationDTO);
