@@ -93,7 +93,6 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-md-12">Người quản lý dự án</label>
-                                <c:out value="${project.user.id}"/>
                                 <div class="col-md-12">
                                     <c:choose>
                                         <c:when test="${errors.userIdProject == null && userIdProject == null && project.user.id == null}">
