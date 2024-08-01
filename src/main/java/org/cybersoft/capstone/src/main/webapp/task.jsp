@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,9 +33,11 @@
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                     <h4 class="page-title">Danh sách công việc</h4>
                 </div>
-                <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12 text-right">
-                    <a href="task-add" class="btn btn-sm btn-success">Thêm mới</a>
-                </div>
+                <c:if test="${fn:contains(sessionScope.roleDetailDTO.actionCode, 'VIEW_CREATE_TASK')}">
+                    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12 text-right">
+                        <a href="task-add" class="btn btn-sm btn-success">Thêm mới</a>
+                    </div>
+                </c:if>
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /row -->
@@ -61,7 +64,14 @@
                                         <td>${task.id}</td>
                                         <td>${task.name}</td>
                                         <td>${task.project.name != null ? task.project.name : "N/A"}</td>
-                                        <td>${task.user.firstName} ${task.user.lastName}</td>
+                                        <c:choose>
+                                            <c:when test="${task.user.id != null}">
+                                                <td>${task.user.firstName} ${task.user.lastName}</td>
+                                            </c:when>
+                                            <c:when test="${task.user.id == null}">
+                                                <td>N/A</td>
+                                            </c:when>
+                                        </c:choose>
                                         <td>
                                             <fmt:formatDate
                                                     pattern="yyyy-MM-dd"
@@ -77,8 +87,10 @@
                                         <td>${task.status.name != null ? task.status.name : "N/A"}</td>
                                         <td>
                                             <a href="task/${task.id}" class="btn btn-sm btn-primary">Sửa</a>
-                                            <a href="#" data-id="${task.id}"
-                                               class="btn btn-xoa btn-sm btn-danger">Xóa</a>
+                                            <c:if test="${fn:contains(sessionScope.roleDetailDTO.actionCode, 'DELETE_TASK')}">
+                                                <a href="#" data-id="${task.id}"
+                                                   class="btn btn-xoa btn-sm btn-danger">Xóa</a>
+                                            </c:if>
                                         </td>
                                     </tr>
                                 </c:forEach>

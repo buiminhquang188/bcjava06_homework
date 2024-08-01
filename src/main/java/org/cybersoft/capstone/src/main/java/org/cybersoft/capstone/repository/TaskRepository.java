@@ -29,4 +29,6 @@ public interface TaskRepository {
     List<TaskEntity> getTaskByUserId(Integer userId);
 
     List<TaskEntity> getTaskByOwnerId(Integer projectId);
+
+    Integer updateTaskByUserId(Integer userId);
 }

@@ -5,8 +5,10 @@ import org.cybersoft.capstone.dto.RoleDetailDTO;
 import org.cybersoft.capstone.dto.UserDTO;
 import org.cybersoft.capstone.entity.UserEntity;
 import org.cybersoft.capstone.repository.ProjectRepository;
+import org.cybersoft.capstone.repository.TaskRepository;
 import org.cybersoft.capstone.repository.UserRepository;
 import org.cybersoft.capstone.repository.impl.ProjectRepositoryImpl;
+import org.cybersoft.capstone.repository.impl.TaskRepositoryImpl;
 import org.cybersoft.capstone.repository.impl.UserRepositoryImpl;
 import org.cybersoft.capstone.service.UserService;
 
@@ -15,6 +17,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository = new UserRepositoryImpl();
     private final ProjectRepository projectRepository = new ProjectRepositoryImpl();
+    private final TaskRepository taskRepository = new TaskRepositoryImpl();
 
     @Override
     public List<UserEntity> getUsers() {
@@ -36,7 +39,6 @@ public class UserServiceImpl implements UserService {
     public Integer createUser(UserDTO userDTO) {
         Integer resultIndex = this.userRepository.createUser(userDTO);
         Boolean result = this.createUserPermission(userDTO.getRole(), resultIndex);
-
         if (result) return resultIndex;
         return 0;
     }
@@ -44,6 +46,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Boolean deleteUser(Integer id) {
         Integer resultIndex = this.userRepository.deleteUser(id);
+        Integer resultDeleteTask = this.taskRepository.updateTaskByUserId(id);
         return this.deleteUserPermission(id);
     }
 

@@ -25,6 +25,7 @@ public class TaskRepositoryImpl implements TaskRepository {
                        t.name,
                        t.start_date,
                        t.end_date,
+                       u.id,
                        u.first_name,
                        u.last_name,
                        p.name,
@@ -50,7 +51,10 @@ public class TaskRepositoryImpl implements TaskRepository {
                 ProjectEntity project = new ProjectEntity(
                         resultSet.getString("p.name")
                 );
+
+                int userId = resultSet.getInt("u.id");
                 UserEntity user = new UserEntity(
+                        userId > 0 ? userId : null,
                         resultSet.getString("u.first_name"),
                         resultSet.getString("u.last_name")
                 );
@@ -460,5 +464,27 @@ public class TaskRepositoryImpl implements TaskRepository {
         }
 
         return tasks;
+    }
+
+    @Override
+    public Integer updateTaskByUserId(Integer userId) {
+        Integer resultIndex = null;
+        String sql = """
+                UPDATE task t
+                SET t.id_user = null
+                WHERE t.id_user = ?;
+                """;
+        Connection connection = MySQLConfig.getConnection();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, userId);
+
+            resultIndex = preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return resultIndex;
     }
 }
