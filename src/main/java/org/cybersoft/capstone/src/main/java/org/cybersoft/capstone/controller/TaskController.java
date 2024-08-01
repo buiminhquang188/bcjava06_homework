@@ -104,14 +104,18 @@ public class TaskController extends CustomServlet {
     private void getAuthorizationAction(HttpServletRequest req) {
         RoleDetailDTO roleDetailDTO = (RoleDetailDTO) SessionUtil.getInstance()
                 .getValue(req, "roleDetailDTO");
-        Integer userId = Utils.getUserSessionId(req);
 
         if (roleDetailDTO.getActionCode()
                 .contains("VIEW_ALL_TASKS")) {
             this.getTasks(req);
             return;
+        } else if (roleDetailDTO.getActionCode()
+                .contains("VIEW_PROJECT_TASKS")) {
+            List<TaskEntity> tasks = this.taskService.getTaskByOwnerId(roleDetailDTO.getId());
+            req.setAttribute("tasks", tasks);
+            return;
         }
-        this.getTasks(req, userId);
+        this.getTasks(req, roleDetailDTO.getId());
     }
 
     private void getTasks(HttpServletRequest req) {

@@ -65,4 +65,9 @@ public class TaskServiceImpl implements TaskService {
     public List<TaskEntity> getTasksByUserId(Integer userId) {
         return this.taskRepository.getTaskByUserId(userId);
     }
+
+    @Override
+    public List<TaskEntity> getTaskByOwnerId(Integer projectId) {
+        return this.taskRepository.getTaskByOwnerId(projectId);
+    }
 }

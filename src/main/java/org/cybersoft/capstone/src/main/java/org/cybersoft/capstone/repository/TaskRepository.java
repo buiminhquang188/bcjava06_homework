@@ -27,4 +27,6 @@ public interface TaskRepository {
     List<StatusEntity> getTaskStatisticByUserId(Integer userId);
 
     List<TaskEntity> getTaskByUserId(Integer userId);
+
+    List<TaskEntity> getTaskByOwnerId(Integer projectId);
 }

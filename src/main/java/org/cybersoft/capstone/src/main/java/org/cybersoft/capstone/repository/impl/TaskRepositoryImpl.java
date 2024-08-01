@@ -397,4 +397,68 @@ public class TaskRepositoryImpl implements TaskRepository {
 
         return tasks;
     }
+
+    @Override
+    public List<TaskEntity> getTaskByOwnerId(Integer projectId) {
+        List<TaskEntity> tasks = new ArrayList<>();
+        String sql = """
+                SELECT t.id,
+                       t.name,
+                       t.start_date,
+                       t.end_date,
+                       u.first_name,
+                       u.last_name,
+                       p.name,
+                       s.name,
+                       t.id_user,
+                       u.id,
+                       up.id_user,
+                       up.id_project
+                FROM task t
+                         LEFT JOIN project p ON p.id = t.id_project
+                         LEFT JOIN users_project up ON up.id_project = t.id_project
+                         LEFT JOIN users u ON u.id = t.id_user
+                         LEFT JOIN status s ON s.id = t.id_status
+                where up.id_user = ?
+                """;
+        Connection connection = MySQLConfig.getConnection();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, projectId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                TaskEntity task = new TaskEntity(
+                        resultSet.getInt("id"),
+                        resultSet.getString("t.name"),
+                        resultSet.getTimestamp("start_date"),
+                        resultSet.getTimestamp("end_date")
+                );
+                ProjectEntity project = new ProjectEntity(
+                        resultSet.getInt("up.id_project"),
+                        resultSet.getString("p.name")
+                );
+                UserEntity user = new UserEntity(
+                        resultSet.getString("u.first_name"),
+                        resultSet.getString("u.last_name")
+                );
+                StatusEntity status = new StatusEntity(
+                        resultSet.getString("s.name")
+                );
+
+                task.setProject(project);
+                task.setUser(user);
+                task.setStatus(status);
+                tasks.add(task);
+            }
+
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return tasks;
+    }
 }
