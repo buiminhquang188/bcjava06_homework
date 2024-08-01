@@ -48,7 +48,9 @@ public class UserServiceImpl implements UserService {
         Integer resultIndex = this.userRepository.deleteUser(id);
         Integer resultDeleteTask = this.taskRepository.updateTaskByUserId(id);
         this.projectRepository.updateUserProjectByUserId(id);
-        return this.deleteUserPermission(id);
+        this.deleteUserPermission(id);
+
+        return resultIndex > 0;
     }
 
     @Override
