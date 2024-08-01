@@ -228,6 +228,12 @@ VALUES ('VIEW', 'View statistic', 'VIEW_STATISTIC', '/', 'GET', '1', NULL, 1),
        ('VIEW', 'View profile task detail', 'VIEW_PROFILE_TASK', '/profile-edit', 'GET', '1', NULL, 2),
        ('EDIT', 'Edit profile task detail', 'EDIT_PROFILE_TASK', '/profile-edit', 'PUT', '1', NULL, 2);
 
+INSERT INTO crmapp.users (id, password, first_name, last_name, username, phone, id_role)
+VALUES  (1, '123', 'Quang', 'Bui Minh', 'nguyenvana@gmail.com', '12312131', 1),
+        (2, '123', 'Dũng', 'Hoàng Anh', 'email@gmail.com', '1', 3),
+        (3, '123', 'Trân', 'Huỳnh Khánh', 'quangggg@email.com', '222321313', 2),
+        (4, '123', 'Anh', 'Phạm Hoàng Huy', 'nnn@email.com', '1233', 3);
+
 INSERT INTO users_roles(id_permission, id_user, licensed)
 VALUES (1, 1, 1),
        (2, 2, 1),
