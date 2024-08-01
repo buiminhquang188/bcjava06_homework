@@ -58,13 +58,14 @@ public class AuthorizationFilter implements Filter {
 //        }
 
         System.out.println(new Gson().toJson(roleDetailDTO));
+        Boolean isValid = this.authorizationService.isValidAction(authorizationDTO);
 
-        if (roleDetailDTO != null) {
-            filterChain.doFilter(request, response);
+        if (roleDetailDTO == null && !isValid) {
+            response.sendRedirect(request.getContextPath() + "/404");
             return;
         }
 
-        response.sendRedirect(request.getContextPath() + "/404");
+        filterChain.doFilter(request, response);
     }
 
     @Override

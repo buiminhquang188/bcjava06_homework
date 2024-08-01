@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,9 +33,11 @@
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                     <h4 class="page-title">Danh sách thành viên</h4>
                 </div>
-                <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12 text-right">
-                    <a href="user-add" class="btn btn-sm btn-success">Thêm mới</a>
-                </div>
+                <c:if test="${fn:contains(sessionScope.roleDetailDTO, 'VIEW_CREATE_MEMBER')}">
+                    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12 text-right">
+                        <a href="user-add" class="btn btn-sm btn-success">Thêm mới</a>
+                    </div>
+                </c:if>
                 <!-- /.col-lg-12 -->
             </div>
             <div class="alert alert-danger hidden" role="alert">

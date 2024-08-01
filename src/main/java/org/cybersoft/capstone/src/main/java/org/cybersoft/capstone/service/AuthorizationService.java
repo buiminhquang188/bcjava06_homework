@@ -5,4 +5,6 @@ import org.cybersoft.capstone.dto.RoleDetailDTO;
 
 public interface AuthorizationService {
     RoleDetailDTO getAuthorizationByUserId(AuthorizationDTO authorizationDTO);
+
+    Boolean isValidAction(AuthorizationDTO authorizationDTO);
 }

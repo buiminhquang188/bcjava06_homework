@@ -20,4 +20,10 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         List<RoleDetailEntity> roleDetailEntities = this.authorizationRepository.getAuthorizationByUserId(authorizationDTO);
         return this.authorizationMapper.entityToDTO(roleDetailEntities);
     }
+
+    @Override
+    public Boolean isValidAction(AuthorizationDTO authorizationDTO) {
+        List<RoleDetailEntity> roleDetailEntities = this.authorizationRepository.getValidAction(authorizationDTO);
+        return roleDetailEntities != null && !roleDetailEntities.isEmpty();
+    }
 }

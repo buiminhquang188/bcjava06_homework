@@ -47,10 +47,10 @@
                 <div class="col-md-8 col-xs-12">
                     <div class="white-box">
                         <c:choose>
-                            <c:when test="${fn:contains(roleDetail.actionCode, 'EDIT_PROGRESS_TASK') && !fn:contains(roleDetail.actionCode, 'EDIT_TASK')}">
+                            <c:when test="${fn:contains(sessionScope.roleDetailDTO.actionCode, 'EDIT_PROGRESS_TASK') && !fn:contains(sessionScope.roleDetailDTO.actionCode, 'EDIT_TASK')}">
                                 <jsp:include page="fragments/update-progress-task-form.jsp"/>
                             </c:when>
-                            <c:when test="${fn:contains(roleDetail.actionCode, 'EDIT_TASK') && fn:contains(roleDetail.actionCode, 'EDIT_PROGRESS_TASK')}">
+                            <c:when test="${fn:contains(sessionScope.roleDetailDTO.actionCode, 'EDIT_TASK') && fn:contains(sessionScope.roleDetailDTO.actionCode, 'EDIT_PROGRESS_TASK')}">
                                 <jsp:include page="fragments/edit-task-form.jsp"/>
                             </c:when>
                         </c:choose>

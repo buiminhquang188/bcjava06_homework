@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface AuthorizationRepository {
     List<RoleDetailEntity> getAuthorizationByUserId(AuthorizationDTO authorizationDTO);
+
+    List<RoleDetailEntity> getValidAction(AuthorizationDTO authorizationDTO);
 }
