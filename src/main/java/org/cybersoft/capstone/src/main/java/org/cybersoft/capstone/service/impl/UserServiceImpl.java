@@ -47,6 +47,7 @@ public class UserServiceImpl implements UserService {
     public Boolean deleteUser(Integer id) {
         Integer resultIndex = this.userRepository.deleteUser(id);
         Integer resultDeleteTask = this.taskRepository.updateTaskByUserId(id);
+        this.projectRepository.updateUserProjectByUserId(id);
         return this.deleteUserPermission(id);
     }
 

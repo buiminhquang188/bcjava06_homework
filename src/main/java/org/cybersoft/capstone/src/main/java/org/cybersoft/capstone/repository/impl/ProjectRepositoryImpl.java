@@ -87,8 +87,8 @@ public class ProjectRepositoryImpl implements ProjectRepository {
         String sql = """
                 SELECT p.id, p.name, p.start_date, p.end_date, u.id, u.first_name, u.last_name
                 FROM project p
-                         INNER JOIN users_project up ON up.id_project = p.id
-                         INNER JOIN users u ON u.id = up.id_user
+                         LEFT JOIN users_project up ON up.id_project = p.id
+                         LEFT JOIN users u ON u.id = up.id_user
                 WHERE p.id = ?
                 """;
         Connection connection = MySQLConfig.getConnection();
@@ -108,7 +108,10 @@ public class ProjectRepositoryImpl implements ProjectRepository {
                 );
 
                 UserEntity user = new UserEntity();
-                user.setId(resultSet.getInt("u.id"));
+                int userId = resultSet.getInt("u.id");
+                user.setId(
+                        userId > 0 ? userId : null
+                );
                 user.setFirstName(resultSet.getString("u.first_name"));
                 user.setLastName(resultSet.getString("u.last_name"));
 
@@ -528,6 +531,25 @@ public class ProjectRepositoryImpl implements ProjectRepository {
             preparedStatement.setInt(2, inputProjectId);
             preparedStatement.setInt(3, userId);
             preparedStatement.setInt(4, projectId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void updateUserProjectByUserId(Integer id) {
+        String sql = """
+                UPDATE users_project up
+                SET up.id_user = null
+                WHERE up.id_user = ?;
+                """;
+        Connection connection = MySQLConfig.getConnection();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -93,9 +93,24 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-md-12">Người quản lý dự án</label>
+                                <c:out value="${project.user.id}"/>
                                 <div class="col-md-12">
                                     <c:choose>
-                                        <c:when test="${errors.userIdProject == null && userIdProject == null}">
+                                        <c:when test="${errors.userIdProject == null && userIdProject == null && project.user.id == null}">
+                                            <select name="userIdProject" class="form-control form-control-line">
+                                                <option disabled selected>Chọn
+                                                    người
+                                                    thực
+                                                    hiện
+                                                </option>
+                                                <c:forEach items="${users}" var="user">
+                                                    <option value="${user.id}">
+                                                            ${user.firstName} ${user.lastName}
+                                                    </option>
+                                                </c:forEach>
+                                            </select>
+                                        </c:when>
+                                        <c:when test="${errors.userIdProject == null && userIdProject == null && project.user.id != null}">
                                             <select name="userIdProject" class="form-control form-control-line">
                                                 <option disabled ${project.user.id == null ? "selected" : null}>Chọn
                                                     người
@@ -109,7 +124,7 @@
                                                 </c:forEach>
                                             </select>
                                         </c:when>
-                                        <c:when test="${errors.userIdProject == null && userIdProject != null}">
+                                        <c:when test="${errors.userIdProject == null && userIdProject != null && project.user.id == null}">
                                             <select name="userIdProject" class="form-control form-control-line">
                                                 <option disabled>Chọn người
                                                     thực

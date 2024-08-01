@@ -41,4 +41,6 @@ public interface ProjectRepository {
     void deleteUserProjectByProjectId(Integer id);
 
     void updateUserProjectByUserIdAndProjectId(Integer userId, Integer projectId, Integer inputUserId, Integer inputProjectId);
+
+    void updateUserProjectByUserId(Integer id);
 }
