@@ -33,7 +33,7 @@
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                     <h4 class="page-title">Danh sách thành viên</h4>
                 </div>
-                <c:if test="${fn:contains(sessionScope.roleDetailDTO, 'VIEW_CREATE_MEMBER')}">
+                <c:if test="${fn:contains(sessionScope.roleDetailDTO.actionCode, 'VIEW_CREATE_MEMBER')}">
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12 text-right">
                         <a href="user-add" class="btn btn-sm btn-success">Thêm mới</a>
                     </div>

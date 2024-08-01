@@ -1,5 +1,6 @@
 package org.cybersoft.capstone.validation;
 
+import org.cybersoft.capstone.constant.Role;
 import org.cybersoft.capstone.constant.Validation;
 import org.cybersoft.capstone.dto.UserDTO;
 
@@ -50,6 +51,16 @@ public class UserRequest {
 
         if (role == null || role.isEmpty() || role.isBlank()) {
             errors.put("role", Validation.IS_REQUIRED.getText("Role"));
+        } else if (
+                role != null && !(role.equals(Role.ADMIN.getId()
+                        .toString()) ||
+                                  role.equals(Role.LEADER.getId()
+                                          .toString()) ||
+                                  role.equals(Role.USER.getId()
+                                          .toString()))
+        ) {
+            errors.put("role", "Cannot choose this role");
+            req.setAttribute("roleId", role);
         } else {
             req.setAttribute("roleId", role);
         }

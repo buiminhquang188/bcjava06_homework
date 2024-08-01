@@ -199,6 +199,14 @@
                                                 </c:forEach>
                                             </select>
                                         </c:when>
+                                        <c:when test="${errors.role != null && roleId != null}">
+                                            <select name="role" class="form-control form-control-line">
+                                                <option disabled>Select user role</option>
+                                                <c:forEach items="${roles}" var="role">
+                                                    <option value="${role.id}" ${role.id == roleId ? "selected" : null}>${role.name}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </c:when>
                                         <c:when test="${errors.role != null}">
                                             <select name="role" class="form-control form-control-line">
                                                 <option disabled selected>Select user role</option>
