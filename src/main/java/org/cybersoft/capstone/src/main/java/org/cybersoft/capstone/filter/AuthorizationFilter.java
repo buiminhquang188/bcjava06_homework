@@ -1,6 +1,5 @@
 package org.cybersoft.capstone.filter;
 
-import com.google.gson.Gson;
 import org.cybersoft.capstone.dto.AuthorizationDTO;
 import org.cybersoft.capstone.dto.RoleDetailDTO;
 import org.cybersoft.capstone.service.AuthorizationService;
@@ -57,7 +56,6 @@ public class AuthorizationFilter implements Filter {
                     .putValue(request, "roleDetailDTO", roleDetailDTO);
         }
 
-        System.out.println(new Gson().toJson(roleDetailDTO));
         Boolean isValid = this.authorizationService.isValidAction(authorizationDTO);
 
         if (roleDetailDTO == null || !isValid) {

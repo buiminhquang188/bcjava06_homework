@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -133,7 +134,8 @@
                                         <c:when test="${errors.startDate == null}">
                                             <input type="date"
                                                    name="startDate"
-                                                   value="${startDate}"
+                                                   value="<fmt:formatDate pattern="yyyy-MM-dd"
+                                                            value="${startDate}"/>"
                                                    placeholder="dd/MM/yyyy"
                                                    class="form-control form-control-line">
                                         </c:when>
@@ -158,7 +160,8 @@
                                         <c:when test="${errors.endDate == null}">
                                             <input type="date"
                                                    name="endDate"
-                                                   value="${endDate}"
+                                                   value="<fmt:formatDate pattern="yyyy-MM-dd"
+                                                            value="${endDate}"/>"
                                                    placeholder="dd/MM/yyyy"
                                                    class="form-control form-control-line">
                                         </c:when>
