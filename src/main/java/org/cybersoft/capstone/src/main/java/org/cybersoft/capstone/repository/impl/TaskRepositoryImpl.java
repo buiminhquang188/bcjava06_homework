@@ -444,7 +444,10 @@ public class TaskRepositoryImpl implements TaskRepository {
                         resultSet.getInt("up.id_project"),
                         resultSet.getString("p.name")
                 );
+
+                int userId = resultSet.getInt("u.id");
                 UserEntity user = new UserEntity(
+                        userId > 0 ? userId : null,
                         resultSet.getString("u.first_name"),
                         resultSet.getString("u.last_name")
                 );
