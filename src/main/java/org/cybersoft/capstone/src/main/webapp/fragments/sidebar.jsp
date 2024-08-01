@@ -18,6 +18,15 @@
                             aria-hidden="true"></i><span class="hide-menu">Dashboard</span></a>
                 </li>
             </c:if>
+            <c:if test="${fn:contains(sessionScope.roleDetailDTO.actionCode, 'VIEW_MEMBERS')}">
+                <li>
+                    <a href="${pageContext.request.contextPath}/user-table" class="waves-effect"><i
+                            class="fa fa-user fa-fw"
+                            aria-hidden="true"></i><span
+                            class="hide-menu">Thành viên</span>
+                    </a>
+                </li>
+            </c:if>
             <c:if test="${fn:contains(sessionScope.roleDetailDTO.actionCode, 'VIEW_ROLES')}">
                 <li>
                     <a href="${pageContext.request.contextPath}/role-table" class="waves-effect"><i

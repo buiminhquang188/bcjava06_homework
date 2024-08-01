@@ -26,6 +26,20 @@ public class AuthorizationFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         request.setCharacterEncoding("UTF-8");
 
+        if (request.getPathInfo() != null && request.getPathInfo()
+                .equals("/logout")) {
+            SessionUtil sessionUtil = SessionUtil.getInstance();
+
+            sessionUtil.removeValue(request, "userId");
+            sessionUtil.removeValue(request, "isValid");
+
+            SessionUtil.getInstance()
+                    .removeValue(request, "roleDetailDTO");
+
+            response.sendRedirect(request.getContextPath() + "/login");
+            return;
+        }
+
         Integer userId = Utils.getUserSessionId(request);
 
         if (userId == null) {
