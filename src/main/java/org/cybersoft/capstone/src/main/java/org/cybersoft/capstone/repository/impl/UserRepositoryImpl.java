@@ -350,6 +350,7 @@ public class UserRepositoryImpl implements UserRepository {
                          LEFT JOIN status s ON s.id = t.id_status
                          LEFT JOIN roles r ON r.id = u.id_role
                 WHERE up.id_user = ?
+                GROUP BY u.id
                 """;
 
         try {

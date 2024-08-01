@@ -48,7 +48,8 @@
                         <li>
                             <a id="logout-btn" href="#">Đăng xuất</a>
                         </li>
-                        <form id="logout-form" class="hidden" method="POST" action="logout">
+                        <form id="logout-form" class="hidden" method="POST"
+                              action="${pageContext.servletContext.contextPath}/logout">
                         </form>
                     </ul>
                 </div>

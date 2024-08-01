@@ -17,6 +17,9 @@ public class LogoutController extends HttpServlet {
         sessionUtil.removeValue(req, "userId");
         sessionUtil.removeValue(req, "isValid");
 
+        SessionUtil.getInstance()
+                .removeValue(req, "roleDetailDTO");
+
         resp.sendRedirect(req.getContextPath() + "/login");
     }
 }

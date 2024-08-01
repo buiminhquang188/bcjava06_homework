@@ -24,7 +24,9 @@ public interface TaskService {
 
     List<StatusEntity> getTaskStatisticByUserId(Integer userId);
 
+    List<StatusEntity> getTaskStatisticByOwnerId(Integer ownerId);
+
     List<TaskEntity> getTasksByUserId(Integer userId);
 
-    List<TaskEntity> getTaskByOwnerId(Integer projectId);
+    List<TaskEntity> getTaskByOwnerId(Integer ownerId);
 }

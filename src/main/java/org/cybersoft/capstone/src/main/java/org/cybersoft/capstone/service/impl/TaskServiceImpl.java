@@ -62,6 +62,11 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public List<StatusEntity> getTaskStatisticByOwnerId(Integer ownerId) {
+        return this.taskRepository.getTaskStatisticByOwnerId(ownerId);
+    }
+
+    @Override
     public List<TaskEntity> getTasksByUserId(Integer userId) {
         return this.taskRepository.getTaskByUserId(userId);
     }

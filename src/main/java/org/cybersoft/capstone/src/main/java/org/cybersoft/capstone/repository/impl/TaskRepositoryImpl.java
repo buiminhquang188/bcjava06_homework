@@ -364,6 +364,44 @@ public class TaskRepositoryImpl implements TaskRepository {
     }
 
     @Override
+    public List<StatusEntity> getTaskStatisticByOwnerId(Integer ownerId) {
+        List<StatusEntity> statuses = new ArrayList<>();
+        Connection connection = MySQLConfig.getConnection();
+        String sql = """
+                SELECT s.id, s.name, COUNT(s.id) AS total
+                FROM task t
+                         LEFT JOIN project p ON p.id = t.id_project
+                         LEFT JOIN users_project up ON up.id_project = t.id_project
+                         LEFT JOIN users u ON u.id = t.id_user
+                         LEFT JOIN status s ON s.id = t.id_status
+                WHERE up.id_user = ?
+                GROUP BY s.id
+                """;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, ownerId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                StatusEntity status = new StatusEntity(
+                        resultSet.getInt("s.id"),
+                        resultSet.getString("s.name"),
+                        resultSet.getInt("total")
+                );
+
+                statuses.add(status);
+            }
+
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return statuses;
+    }
+
+    @Override
     public List<TaskEntity> getTaskByUserId(Integer userId) {
         List<TaskEntity> tasks = new ArrayList<>();
         String sql = """
