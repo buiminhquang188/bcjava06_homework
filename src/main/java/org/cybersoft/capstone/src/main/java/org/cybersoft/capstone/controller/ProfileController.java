@@ -23,7 +23,6 @@ import java.util.List;
 public class ProfileController extends HttpServlet {
     private final StatisticMapper statisticMapper = new StatisticMapper();
     private final ProfileService profileService = new ProfileServiceImpl();
-
     private final TaskService taskService = new TaskServiceImpl();
 
     @Override

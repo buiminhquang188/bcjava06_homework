@@ -26,6 +26,7 @@ public class ProfileRepositoryImpl implements ProfileRepository {
                        t.name,
                        t.start_date,
                        t.end_date,
+                       p.id,
                        p.name,
                        s.id,
                        s.name
@@ -49,6 +50,7 @@ public class ProfileRepositoryImpl implements ProfileRepository {
                 );
 
                 ProjectEntity project = new ProjectEntity(
+                        resultSet.getInt("p.id"),
                         resultSet.getString("p.name")
                 );
 
