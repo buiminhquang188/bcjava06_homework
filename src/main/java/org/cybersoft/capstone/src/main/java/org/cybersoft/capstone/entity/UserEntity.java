@@ -8,7 +8,7 @@ public class UserEntity {
     private String firstName;
     private String lastName;
     private String username;
-    private String phone;
+    private String phoneNumber;
     private RoleEntity role;
     private List<ProjectEntity> projects;
 
@@ -88,12 +88,12 @@ public class UserEntity {
         this.username = username;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public RoleEntity getRole() {

@@ -59,7 +59,7 @@ public class UserRepositoryImpl implements UserRepository {
 
         Connection connection = MySQLConfig.getConnection();
         String sql = """
-                SELECT u.id, u.first_name, u.last_name, u.username
+                SELECT u.id, u.first_name, u.last_name, u.username, u.phone
                 FROM users u
                 WHERE u.id = ?
                 """;
@@ -75,6 +75,7 @@ public class UserRepositoryImpl implements UserRepository {
                 user.setFirstName(resultSet.getString("first_name"));
                 user.setLastName(resultSet.getString("last_name"));
                 user.setUsername(resultSet.getString("username"));
+                user.setPhoneNumber(resultSet.getString("phone"));
             }
 
             connection.close();

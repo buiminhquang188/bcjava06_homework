@@ -1,6 +1,7 @@
 package org.cybersoft.capstone.repository.impl;
 
 import org.cybersoft.capstone.config.MySQLConfig;
+import org.cybersoft.capstone.dto.ProfileDTO;
 import org.cybersoft.capstone.entity.*;
 import org.cybersoft.capstone.repository.ProfileRepository;
 import org.cybersoft.capstone.util.Utils;
@@ -115,5 +116,69 @@ public class ProfileRepositoryImpl implements ProfileRepository {
         }
 
         return statuses;
+    }
+
+    @Override
+    public Integer updateProfile(ProfileDTO profileDTO, Integer userId) {
+        if (profileDTO.getPassword() == null || profileDTO.getPassword()
+                .isEmpty() || profileDTO.getPassword()
+                    .isBlank()) {
+            return this.updateProfileWithoutPassword(profileDTO, userId);
+        }
+        return this.updateProfileWithPassword(profileDTO, userId);
+    }
+
+    private Integer updateProfileWithPassword(ProfileDTO profileDTO, Integer userId) {
+        Integer resultIndex = null;
+        Connection connection = MySQLConfig.getConnection();
+        String sql = """
+                UPDATE users u
+                SET u.first_name = ?,
+                    u.last_name  = ?,
+                    u.password = ?,
+                    u.phone      = ?
+                WHERE u.id = ?;
+                """;
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, profileDTO.getFirstName());
+            preparedStatement.setString(2, profileDTO.getLastName());
+            preparedStatement.setString(3, profileDTO.getPassword());
+            preparedStatement.setString(4, profileDTO.getPhoneNumber());
+            preparedStatement.setInt(5, userId);
+
+            resultIndex = preparedStatement.executeUpdate();
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return resultIndex;
+    }
+
+    private Integer updateProfileWithoutPassword(ProfileDTO profileDTO, Integer userId) {
+        Integer resultIndex = null;
+        Connection connection = MySQLConfig.getConnection();
+        String sql = """
+                UPDATE users u
+                SET u.first_name = ?,
+                    u.last_name  = ?,
+                    u.phone      = ?
+                WHERE u.id = ?;
+                """;
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, profileDTO.getFirstName());
+            preparedStatement.setString(2, profileDTO.getLastName());
+            preparedStatement.setString(3, profileDTO.getPhoneNumber());
+            preparedStatement.setInt(4, userId);
+
+            resultIndex = preparedStatement.executeUpdate();
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return resultIndex;
     }
 }

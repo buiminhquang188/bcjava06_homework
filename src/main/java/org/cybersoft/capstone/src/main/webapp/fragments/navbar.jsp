@@ -43,6 +43,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a href="${pageContext.servletContext.contextPath}/profile">Thống kê công việc</a></li>
+                        <li><a href="${pageContext.servletContext.contextPath}/profile-edit">Thông tin cá nhân</a></li>
                         <li class="divider"></li>
                         <li>
                             <a id="logout-btn" href="#">Đăng xuất</a>

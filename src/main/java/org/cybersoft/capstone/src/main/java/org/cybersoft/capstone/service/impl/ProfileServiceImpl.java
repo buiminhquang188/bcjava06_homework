@@ -1,5 +1,6 @@
 package org.cybersoft.capstone.service.impl;
 
+import org.cybersoft.capstone.dto.ProfileDTO;
 import org.cybersoft.capstone.entity.ProfileEntity;
 import org.cybersoft.capstone.entity.StatusEntity;
 import org.cybersoft.capstone.repository.ProfileRepository;
@@ -19,5 +20,11 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public List<StatusEntity> getStatProfile(Integer id) {
         return this.profileRepository.getStatProfile(id);
+    }
+
+    @Override
+    public Boolean updateProfile(ProfileDTO profileDTO, Integer userId) {
+        Integer resultIndex = this.profileRepository.updateProfile(profileDTO, userId);
+        return resultIndex > 0;
     }
 }
