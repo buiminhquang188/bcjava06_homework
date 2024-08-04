@@ -55,9 +55,9 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach var="role" items="${roles}">
+                                <c:forEach var="role" items="${roles}" varStatus="roleStatus">
                                     <tr>
-                                        <td>${role.id}</td>
+                                        <td>${roleStatus.index + 1}</td>
                                         <td>${role.name}</td>
                                         <td>${role.description}</td>
                                         <td>

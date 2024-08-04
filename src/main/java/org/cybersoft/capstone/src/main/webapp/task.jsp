@@ -59,9 +59,9 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach items="${tasks}" var="task">
+                                <c:forEach items="${tasks}" var="task" varStatus="taskStatus">
                                     <tr>
-                                        <td>${task.id}</td>
+                                        <td>${taskStatus.index + 1}</td>
                                         <td>${task.name}</td>
                                         <td>${task.project.name != null ? task.project.name : "N/A"}</td>
                                         <c:choose>

@@ -60,9 +60,9 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach items="${users}" var="user">
+                                <c:forEach items="${users}" var="user" varStatus="userStatus">
                                     <tr>
-                                        <td>${user.id}</td>
+                                        <td>${userStatus.index + 1}</td>
                                         <td>${user.firstName}</td>
                                         <td>${user.lastName}</td>
                                         <td>${user.username}</td>

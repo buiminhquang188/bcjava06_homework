@@ -54,9 +54,9 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach items="${projects}" var="project">
+                                <c:forEach items="${projects}" var="project" varStatus="projectStatus">
                                     <tr>
-                                        <td>${project.id}</td>
+                                        <td>${projectStatus.index + 1}</td>
                                         <td>${project.name}</td>
                                         <td>
                                             <fmt:formatDate pattern="yyyy-MM-dd"

@@ -197,9 +197,9 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach var="task" items="${profile.tasks}">
+                                <c:forEach var="task" items="${profile.tasks}" varStatus="profileStatus">
                                     <tr>
-                                        <td>${task.id}</td>
+                                        <td>${profileStatus.index + 1}</td>
                                         <td>${task.name}</td>
                                         <c:choose>
                                             <c:when test="${task.project.id != null}">
