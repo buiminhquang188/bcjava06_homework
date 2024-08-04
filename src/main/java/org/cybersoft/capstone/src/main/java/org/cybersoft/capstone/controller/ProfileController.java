@@ -46,8 +46,17 @@ public class ProfileController extends CustomServlet {
     }
 
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp, Integer pathParameter) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ProfileDTO profileDTO = this.profileRequest.getParameter(req, resp);
+        Integer pathParameter = Integer.parseInt(String.valueOf(req.getParameter("pathParameter")));
+
+        if (profileDTO == null) {
+            this.getUserDetail(req, pathParameter);
+            req.getRequestDispatcher("/profile-edit.jsp")
+                    .forward(req, resp);
+            return;
+        }
+
         Boolean isUpdated = this.profileService.updateProfile(profileDTO, pathParameter);
 
         if (isUpdated) {

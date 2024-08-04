@@ -39,6 +39,10 @@ public class ProfileRequest {
             return null;
         }
 
+        if (password == null || password.isEmpty() || password.isBlank()) {
+            password = null;
+        }
+
         return new ProfileDTO(firstName, lastName, password, phoneNumber);
     }
 }

@@ -52,7 +52,7 @@
         <div class="container-fluid">
             <div class="row bg-title">
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                    <h4 class="page-title">Thêm mới thành viên</h4>
+                    <h4 class="page-title">Cập nhật thông tin</h4>
                 </div>
             </div>
             <!-- /.row -->
@@ -62,29 +62,28 @@
                 <div class="col-md-8 col-xs-12">
                     <div class="white-box">
                         <form class="form-horizontal form-material" method="POST"
-                              action="${pageContext.servletContext.contextPath}/profile-edit/${user.id}">
+                              action="${pageContext.servletContext.contextPath}/profile-edit">
                             <div class="form-group">
                                 <label class="col-md-12">First Name</label>
                                 <div class="col-md-12">
                                     <c:choose>
-                                        <c:when test="${firstName != null && user.firstName == null}">
+                                        <c:when test="${errors.firstName == null && firstName == null && user.firstName != null}">
+                                            <input type="text"
+                                                   name="firstName"
+                                                   value="${user.firstName}"
+                                                   placeholder="Enter you first name"
+                                                   class="form-control form-control-line">
+                                        </c:when>
+                                        <c:when test="${errors.firstName == null && firstName != null}">
                                             <input type="text"
                                                    name="firstName"
                                                    value="${firstName}"
                                                    placeholder="Enter you first name"
                                                    class="form-control form-control-line">
                                         </c:when>
-                                        <c:when test="${firstName == null && user.firstName != null}">
+                                        <c:when test="${errors.firstName != null && firstName == null}">
                                             <input type="text"
                                                    name="firstName"
-                                                   value="${user.firstName}"
-                                                   placeholder="Enter you first name"
-                                                   class="form-control form-control-line">
-                                        </c:when>
-                                        <c:when test="${errors.firstName != null}">
-                                            <input type="text"
-                                                   name="firstName"
-                                                   value="${user.firstName}"
                                                    placeholder="Enter you first name"
                                                    class="form-control form-control-line">
                                         </c:when>
@@ -100,24 +99,23 @@
                                 <label class="col-md-12">Last Name</label>
                                 <div class="col-md-12">
                                     <c:choose>
-                                        <c:when test="${lastName != null && user.lastName == null}">
+                                        <c:when test="${errors.lastName == null && lastName == null && user.lastName != null}">
+                                            <input type="text"
+                                                   name="lastName"
+                                                   value="${user.lastName}"
+                                                   placeholder="Enter you last name"
+                                                   class="form-control form-control-line">
+                                        </c:when>
+                                        <c:when test="${errors.lastName == null && lastName != null}">
                                             <input type="text"
                                                    name="lastName"
                                                    value="${lastName}"
                                                    placeholder="Enter you last name"
                                                    class="form-control form-control-line">
                                         </c:when>
-                                        <c:when test="${lastName == null && user.lastName != null}">
+                                        <c:when test="${errors.lastName != null && lastName == null}">
                                             <input type="text"
                                                    name="lastName"
-                                                   value="${user.lastName}"
-                                                   placeholder="Enter you last name"
-                                                   class="form-control form-control-line">
-                                        </c:when>
-                                        <c:when test="${errors.lastName != null}">
-                                            <input type="text"
-                                                   name="lastName"
-                                                   value="${user.lastName}"
                                                    placeholder="Enter you last name"
                                                    class="form-control form-control-line">
                                         </c:when>
@@ -132,23 +130,11 @@
                             <div class="form-group">
                                 <label class="col-md-12">Password (Optional)</label>
                                 <div class="col-md-12">
-                                    <c:choose>
-                                        <c:when test="${errors.password == null}">
-                                            <input type="password"
-                                                   name="password"
-                                                   value="${password}"
-                                                   placeholder="Enter user password"
-                                                   class="form-control form-control-line"
-                                            >
-                                        </c:when>
-                                        <c:when test="${errors.password != null}">
-                                            <input type="password"
-                                                   name="password"
-                                                   placeholder="Enter user password"
-                                                   class="form-control form-control-line"
-                                            >
-                                        </c:when>
-                                    </c:choose>
+                                    <input type="password"
+                                           name="password"
+                                           placeholder="Enter user password"
+                                           class="form-control form-control-line"
+                                    >
                                     <c:if test="${errors.password != null}">
                                         <small class="form-text text-danger mt-2">
                                                 ${errors.password}
@@ -160,7 +146,15 @@
                                 <label class="col-md-12">Phone No</label>
                                 <div class="col-md-12">
                                     <c:choose>
-                                        <c:when test="${phoneNumber != null && user.phoneNumber == null}">
+                                        <c:when test="${errors.phoneNumber == null && phoneNumber == null && user.phoneNumber != null}">
+                                            <input type="text"
+                                                   name="phoneNumber"
+                                                   value="${user.phoneNumber}"
+                                                   placeholder="Enter user phone number"
+                                                   class="form-control form-control-line"
+                                            >
+                                        </c:when>
+                                        <c:when test="${errors.phoneNumber == null && phoneNumber != null}">
                                             <input type="text"
                                                    name="phoneNumber"
                                                    value="${phoneNumber}"
@@ -168,18 +162,9 @@
                                                    class="form-control form-control-line"
                                             >
                                         </c:when>
-                                        <c:when test="${phoneNumber == null && user.phoneNumber != null}">
+                                        <c:when test="${errors.phoneNumber != null && phoneNumber == null}">
                                             <input type="text"
                                                    name="phoneNumber"
-                                                   value="${user.phoneNumber}"
-                                                   placeholder="Enter user phone number"
-                                                   class="form-control form-control-line"
-                                            >
-                                        </c:when>
-                                        <c:when test="${errors.phoneNumber != null}">
-                                            <input type="text"
-                                                   name="phoneNumber"
-                                                   value="${user.phoneNumber}"
                                                    placeholder="Enter user phone number"
                                                    class="form-control form-control-line"
                                             >
@@ -191,12 +176,13 @@
                                         </small>
                                     </c:if>
                                 </div>
+                                <input hidden="hidden" name="pathParameter" value="${user.id}">
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-12">
                                     <button type="submit" class="btn btn-success">Cập nhật</button>
-                                    <a href="user-table" class="btn btn-primary">Quay lại</a>
-                                    <input type="hidden" name="_method" value="PUT">
+                                    <a href="${pageContext.servletContext.contextPath}/" class="btn btn-primary">Quay
+                                        lại</a>
                                 </div>
                             </div>
                         </form>
