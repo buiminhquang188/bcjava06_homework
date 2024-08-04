@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class UserRepositoryImpl implements UserRepository {
     @Override
-    public List<UserEntity> getUsers() {
+    public List<UserEntity> getUsers(Integer excludeID) {
         List<UserEntity> users = new ArrayList<>();
 
         Connection connection = MySQLConfig.getConnection();
@@ -22,10 +22,12 @@ public class UserRepositoryImpl implements UserRepository {
                 SELECT u.id, u.first_name, u.last_name, u.username, r.name
                 FROM users u
                          JOIN roles r ON r.id = u.id_role
+                WHERE u.id != ?
                 """;
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, excludeID);
             ResultSet resultSet = preparedStatement.executeQuery();
             System.out.println("execute query getUsers");
 

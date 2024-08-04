@@ -45,4 +45,6 @@ public interface ProjectRepository {
     void updateUserProjectById(Integer userProjectId, Integer inputUserId, Integer inputProjectId);
 
     void updateUserProjectByUserId(Integer id);
+
+    Integer getProjectIdByOwnerIdAndUserId(Integer ownerId, Integer userId);
 }

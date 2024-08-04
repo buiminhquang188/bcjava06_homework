@@ -587,4 +587,37 @@ public class ProjectRepositoryImpl implements ProjectRepository {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public Integer getProjectIdByOwnerIdAndUserId(Integer ownerId, Integer userId) {
+        Connection connection = MySQLConfig.getConnection();
+        Integer projectId = null;
+        String sql = """
+                SELECT p.id
+                FROM task t
+                         LEFT JOIN task p ON t.id_project = p.id
+                         LEFT JOIN users_project up ON up.id_project = p.id
+                         LEFT JOIN users u ON u.id = t.id_user
+                WHERE u.id = ?
+                  AND up.id_user = ?;
+                """;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setInt(2, ownerId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                projectId = resultSet.getInt("p.id");
+                break;
+            }
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return projectId;
+    }
 }

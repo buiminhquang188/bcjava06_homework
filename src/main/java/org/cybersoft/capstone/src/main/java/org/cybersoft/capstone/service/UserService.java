@@ -7,7 +7,7 @@ import org.cybersoft.capstone.entity.UserEntity;
 import java.util.List;
 
 public interface UserService {
-    List<UserEntity> getUsers();
+    List<UserEntity> getUsers(Integer excludeID);
 
     List<UserEntity> getUsersInProject(Integer id);
 
@@ -15,7 +15,7 @@ public interface UserService {
 
     Integer createUser(UserDTO userDTO);
 
-    Boolean deleteUser(Integer id);
+    Boolean deleteUser(Integer id, RoleDetailDTO roleDetailDTO);
 
     List<UserEntity> getUserOptions(RoleDetailDTO roleDetailDTO);
 

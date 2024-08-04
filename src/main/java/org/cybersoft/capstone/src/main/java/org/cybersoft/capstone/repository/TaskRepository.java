@@ -26,11 +26,15 @@ public interface TaskRepository {
 
     List<StatusEntity> getTaskStatisticByUserId(Integer userId);
 
-    List<StatusEntity> getTaskStatisticByOwnerId(Integer ownerId);
+    List<StatusEntity> getTaskStatisticByOwnerIdAndUserId(Integer ownerId, Integer userId);
 
     List<TaskEntity> getTaskByUserId(Integer userId);
 
     List<TaskEntity> getTaskByOwnerId(Integer projectId);
 
     Integer updateTaskByUserId(Integer userId);
+
+    Integer deleteUserTaskByUserIdAndProjectId(Integer userId, Integer projectId);
+
+    List<TaskEntity> getProjectIdByOwnerIdAndUserId(Integer ownerId, Integer userId);
 }

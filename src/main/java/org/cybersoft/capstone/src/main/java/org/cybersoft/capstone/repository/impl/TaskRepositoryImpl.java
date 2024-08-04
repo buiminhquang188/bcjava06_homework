@@ -364,7 +364,7 @@ public class TaskRepositoryImpl implements TaskRepository {
     }
 
     @Override
-    public List<StatusEntity> getTaskStatisticByOwnerId(Integer ownerId) {
+    public List<StatusEntity> getTaskStatisticByOwnerIdAndUserId(Integer ownerId, Integer userId) {
         List<StatusEntity> statuses = new ArrayList<>();
         Connection connection = MySQLConfig.getConnection();
         String sql = """
@@ -374,13 +374,14 @@ public class TaskRepositoryImpl implements TaskRepository {
                          LEFT JOIN users_project up ON up.id_project = t.id_project
                          LEFT JOIN users u ON u.id = t.id_user
                          LEFT JOIN status s ON s.id = t.id_status
-                WHERE up.id_user = ?
+                WHERE u.id = ? AND up.id_user = ?
                 GROUP BY s.id
                 """;
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, ownerId);
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setInt(2, ownerId);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -461,7 +462,7 @@ public class TaskRepositoryImpl implements TaskRepository {
                          LEFT JOIN users_project up ON up.id_project = t.id_project
                          LEFT JOIN users u ON u.id = t.id_user
                          LEFT JOIN status s ON s.id = t.id_status
-                where up.id_user = ?
+                WHERE up.id_user = ?
                 """;
         Connection connection = MySQLConfig.getConnection();
 
@@ -527,5 +528,98 @@ public class TaskRepositoryImpl implements TaskRepository {
         }
 
         return resultIndex;
+    }
+
+    @Override
+    public Integer deleteUserTaskByUserIdAndProjectId(Integer userId, Integer projectId) {
+        Connection connection = MySQLConfig.getConnection();
+        Integer resultIndex = null;
+        String sql = """
+                UPDATE task t
+                SET t.id_project = NULL
+                WHERE t.id_user = ?
+                  AND t.id_project = ?
+                """;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setInt(2, projectId);
+
+            resultIndex = preparedStatement.executeUpdate();
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return resultIndex;
+    }
+
+    @Override
+    public List<TaskEntity> getProjectIdByOwnerIdAndUserId(Integer ownerId, Integer userId) {
+        List<TaskEntity> tasks = new ArrayList<>();
+        String sql = """
+                SELECT t.id,
+                       t.name,
+                       t.start_date,
+                       t.end_date,
+                       u.first_name,
+                       u.last_name,
+                       p.name,
+                       s.name,
+                       t.id_user,
+                       u.id,
+                       up.id_user,
+                       up.id_project
+                FROM task t
+                         LEFT JOIN project p ON p.id = t.id_project
+                         LEFT JOIN users_project up ON up.id_project = p.id
+                         LEFT JOIN users u ON u.id = t.id_user
+                         LEFT JOIN status s ON s.id = t.id_status
+                WHERE u.id = ?
+                  AND up.id_user = ?;
+                """;
+        Connection connection = MySQLConfig.getConnection();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setInt(2, ownerId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                TaskEntity task = new TaskEntity(
+                        resultSet.getInt("id"),
+                        resultSet.getString("t.name"),
+                        resultSet.getTimestamp("start_date"),
+                        resultSet.getTimestamp("end_date")
+                );
+                ProjectEntity project = new ProjectEntity(
+                        resultSet.getInt("up.id_project"),
+                        resultSet.getString("p.name")
+                );
+
+                int userIdResultSet = resultSet.getInt("u.id");
+                UserEntity user = new UserEntity(
+                        userIdResultSet > 0 ? userIdResultSet : null,
+                        resultSet.getString("u.first_name"),
+                        resultSet.getString("u.last_name")
+                );
+                StatusEntity status = new StatusEntity(
+                        resultSet.getString("s.name")
+                );
+
+                task.setProject(project);
+                task.setUser(user);
+                task.setStatus(status);
+                tasks.add(task);
+            }
+
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return tasks;
     }
 }

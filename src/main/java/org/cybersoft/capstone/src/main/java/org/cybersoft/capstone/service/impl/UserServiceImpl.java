@@ -20,8 +20,8 @@ public class UserServiceImpl implements UserService {
     private final TaskRepository taskRepository = new TaskRepositoryImpl();
 
     @Override
-    public List<UserEntity> getUsers() {
-        return this.userRepository.getUsers();
+    public List<UserEntity> getUsers(Integer excludeID) {
+        return this.userRepository.getUsers(excludeID);
     }
 
     @Override
@@ -44,13 +44,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean deleteUser(Integer id) {
-        Integer resultIndex = this.userRepository.deleteUser(id);
-        Integer resultDeleteTask = this.taskRepository.updateTaskByUserId(id);
-        this.projectRepository.updateUserProjectByUserId(id);
-        this.deleteUserPermission(id);
+    public Boolean deleteUser(Integer id, RoleDetailDTO roleDetailDTO) {
+        if (roleDetailDTO.getActionCode()
+                .contains("DELETE_MEMBER")) {
+            return this.deleteUser(id);
+        } else if (roleDetailDTO.getActionCode()
+                .contains("DELETE_MEMBER_PROJECT")) {
+            return this.deleteUserInProject(id, roleDetailDTO.getId());
+        }
 
-        return resultIndex > 0;
+        return false;
     }
 
     @Override
@@ -95,5 +98,20 @@ public class UserServiceImpl implements UserService {
     public Boolean deleteUserPermission(Integer userId) {
         Integer result = this.userRepository.deleteUserPermission(userId);
         return result > 0;
+    }
+
+    private Boolean deleteUser(Integer id) {
+        Integer resultIndex = this.userRepository.deleteUser(id);
+        Integer resultDeleteTask = this.taskRepository.updateTaskByUserId(id);
+        this.projectRepository.updateUserProjectByUserId(id);
+        this.deleteUserPermission(id);
+
+        return resultIndex > 0;
+    }
+
+    private Boolean deleteUserInProject(Integer id, Integer ownerId) {
+        Integer projectId = this.projectRepository.getProjectIdByOwnerIdAndUserId(ownerId, id);
+        Integer resultIndex = this.taskRepository.deleteUserTaskByUserIdAndProjectId(id, projectId);
+        return resultIndex > 0;
     }
 }

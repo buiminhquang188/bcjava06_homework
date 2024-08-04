@@ -22,15 +22,17 @@ public class UserApiController extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        RoleDetailDTO roleDetailDTO = (RoleDetailDTO) SessionUtil.getInstance()
+                .getValue(req, "roleDetailDTO");
         Integer id = Utils.getPathParameter(req);
         Integer userId = Utils.getUserSessionId(req);
 
         String message = null;
         Boolean data = null;
-        Boolean isValid = this.isValid(req, id, userId);
+        Boolean isValid = this.isValid(req, id, userId, roleDetailDTO);
 
         if (isValid) {
-            data = this.userService.deleteUser(id);
+            data = this.userService.deleteUser(id, roleDetailDTO);
         } else {
             data = false;
             message = "NOT_ALLOWED";
@@ -48,13 +50,11 @@ public class UserApiController extends HttpServlet {
         Utils.appendServletResponseWriter(resp, jsonData);
     }
 
-    private Boolean isValid(HttpServletRequest req, Integer pathParameter, Integer userId) {
+    private Boolean isValid(HttpServletRequest req, Integer pathParameter, Integer userId, RoleDetailDTO roleDetailDTO) {
 
         if (pathParameter == null || userId == null) return false;
         if (pathParameter.intValue() == userId.intValue()) return false;
 
-        RoleDetailDTO roleDetailDTO = (RoleDetailDTO) SessionUtil.getInstance()
-                .getValue(req, "roleDetailDTO");
         UserEntity user = this.userService.getUserWithRole(pathParameter);
 
         return !roleDetailDTO.getName()

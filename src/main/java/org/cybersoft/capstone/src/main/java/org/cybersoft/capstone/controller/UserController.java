@@ -91,7 +91,7 @@ public class UserController extends CustomServlet {
 
         if (roleDetailDTO.getActionCode()
                 .contains("VIEW_ALL_MEMBERS")) {
-            this.getUsers(req);
+            this.getUsers(req, roleDetailDTO.getId());
             return;
         } else if (roleDetailDTO.getActionCode()
                 .contains("VIEW_MEMBERS_PROJECT")) {
@@ -113,16 +113,16 @@ public class UserController extends CustomServlet {
             this.getUserStatistic(req, pathParameter);
         } else if (roleDetailDTO.getActionCode()
                 .contains("VIEW_MEMBERS_PROJECT")) {
-            this.getUserTaskUnderOwner(req, roleDetailDTO.getId());
-            this.getUserStatisticUnderOwner(req, roleDetailDTO.getId());
+            this.getUserTaskUnderOwner(req, roleDetailDTO.getId(), pathParameter);
+            this.getUserStatisticUnderOwner(req, roleDetailDTO.getId(), pathParameter);
         }
 
         req.getRequestDispatcher("/user-details.jsp")
                 .forward(req, resp);
     }
 
-    private void getUsers(HttpServletRequest req) {
-        List<UserEntity> users = this.userService.getUsers();
+    private void getUsers(HttpServletRequest req, Integer excludeID) {
+        List<UserEntity> users = this.userService.getUsers(excludeID);
         req.setAttribute("users", users);
     }
 
@@ -153,14 +153,14 @@ public class UserController extends CustomServlet {
         req.setAttribute("projectStat", projectStat);
     }
 
-    private void getUserTaskUnderOwner(HttpServletRequest req, Integer ownerId) {
-        List<TaskEntity> tasks = this.taskService.getTaskByOwnerId(ownerId);
+    private void getUserTaskUnderOwner(HttpServletRequest req, Integer ownerId, Integer userId) {
+        List<TaskEntity> tasks = this.taskService.getTaskByOwnerIdAndUserId(ownerId, userId);
         Map<String, List<TaskEntity>> userTasks = this.userMapper.tasksEntitiesToResponse(tasks);
         req.setAttribute("userTasks", userTasks);
     }
 
-    private void getUserStatisticUnderOwner(HttpServletRequest req, Integer ownerId) {
-        List<StatusEntity> statuses = this.taskService.getTaskStatisticByOwnerId(ownerId);
+    private void getUserStatisticUnderOwner(HttpServletRequest req, Integer ownerId, Integer userId) {
+        List<StatusEntity> statuses = this.taskService.getTaskStatisticByOwnerIdAndUserId(ownerId, userId);
         ProjectStatResponse projectStat = this.statisticMapper.statusEntityToResponse(statuses);
         req.setAttribute("projectStat", projectStat);
     }

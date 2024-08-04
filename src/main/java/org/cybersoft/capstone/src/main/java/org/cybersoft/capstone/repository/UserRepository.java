@@ -7,7 +7,7 @@ import org.cybersoft.capstone.entity.UserEntity;
 import java.util.List;
 
 public interface UserRepository {
-    List<UserEntity> getUsers();
+    List<UserEntity> getUsers(Integer excludeID);
 
     UserEntity getUser(Integer id);
 

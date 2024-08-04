@@ -62,8 +62,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<StatusEntity> getTaskStatisticByOwnerId(Integer ownerId) {
-        return this.taskRepository.getTaskStatisticByOwnerId(ownerId);
+    public List<StatusEntity> getTaskStatisticByOwnerIdAndUserId(Integer ownerId, Integer userId) {
+        return this.taskRepository.getTaskStatisticByOwnerIdAndUserId(ownerId, userId);
     }
 
     @Override
@@ -74,5 +74,10 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public List<TaskEntity> getTaskByOwnerId(Integer projectId) {
         return this.taskRepository.getTaskByOwnerId(projectId);
+    }
+
+    @Override
+    public List<TaskEntity> getTaskByOwnerIdAndUserId(Integer ownerId, Integer userId) {
+        return this.taskRepository.getProjectIdByOwnerIdAndUserId(ownerId, userId);
     }
 }
